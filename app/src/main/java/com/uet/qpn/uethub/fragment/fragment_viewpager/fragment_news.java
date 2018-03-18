@@ -8,6 +8,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +20,7 @@ public class fragment_news extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
 
     public fragment_news() {
     }
@@ -35,14 +37,13 @@ public class fragment_news extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        PagerAdapter pagerAdapter = new PagerAdapter(fragmentManager);
+        Log.d("onViewCreated frag_news","run in");
 
+        FragmentManager fragmentManager = getFragmentManager();
+        pagerAdapter = new PagerAdapter(fragmentManager);
         viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setupWithViewPager(viewPager,true);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-
-
     }
 }

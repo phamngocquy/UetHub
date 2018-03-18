@@ -4,17 +4,19 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
-        android:textColor="@color/white"
-        android:gravity="center"
-        android:text="Exam"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
     <ImageView
-        android:layout_marginBottom="3dp"
+        android:layout_marginTop="@dimen/img_indicator_margin_top"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_gravity="center_horizontal"
         android:src="@mipmap/ic_launcher_round" />
+
+    <TextView
+        android:textSize="@dimen/text_size"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Exam"
+        android:textColor="@color/black_gray" />
 
 </LinearLayout>

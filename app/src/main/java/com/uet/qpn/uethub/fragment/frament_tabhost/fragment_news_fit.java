@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ public class fragment_news_fit extends Fragment {
 
     public static fragment_news_fit getInstance() {
         if (newsFit == null) {
+            Log.d("init fragment_new_fit","run in");
             newsFit = new fragment_news_fit();
         }
         return newsFit;
