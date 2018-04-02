@@ -45,5 +45,6 @@ public class fragment_news extends Fragment {
         tabLayout.setupWithViewPager(viewPager,true);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
+        //tabLayout.getTabAt(0).setIcon(R.drawable.uet);
     }
 }

@@ -42,13 +42,13 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position) {
             case 0:
-                title = "UET";
+                title = "Uet";
                 break;
             case 1:
-                title = "FIT";
+                title = "Fit";
                 break;
             case 2:
-                title = "FET";
+                title = "Fet";
                 break;
         }
         return title;
