@@ -13,7 +13,7 @@
         android:text="@string/demo_title" />
 
     <TextView
-        android:id="@+id/textDescription"
+        android:id="@+id/txtDescription"
         style="@style/newsDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -23,7 +23,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp">
+        android:layout_marginTop="12dp">
 
         <ImageView
             android:id="@+id/imgPublicTime"
@@ -63,5 +63,28 @@
             android:layout_toRightOf="@+id/imgCategories"
             android:maxLines="1"
             android:text="@string/demo_news_category" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
+
+        <ImageView
+            android:id="@+id/imgAuthor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_news_human" />
+
+        <TextView
+            android:id="@+id/txtAuthor"
+            style="@style/newsPublicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@id/imgAuthor"
+            android:layout_toRightOf="@id/imgAuthor"
+            android:text="@string/tuy_t_nga" />
     </RelativeLayout>
 </LinearLayout>
