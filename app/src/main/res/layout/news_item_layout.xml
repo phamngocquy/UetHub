@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/txtTitle"
+        style="@style/newsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/demo_title" />
+
+    <TextView
+        android:id="@+id/textDescription"
+        style="@style/newsDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:text="@string/demo_desciption" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <ImageView
+            android:id="@+id/imgPublicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/clock_circular_outline" />
+
+        <TextView
+            android:id="@+id/txtPublicTime"
+            style="@style/newsPublicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/imgPublicTime"
+            android:layout_toRightOf="@id/imgPublicTime"
+            android:text="@string/new_demo_createTime" />
+
+        <ImageView
+            android:id="@+id/imgCategories"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_toEndOf="@+id/txtPublicTime"
+            android:layout_toRightOf="@+id/txtPublicTime"
+            android:src="@drawable/ic_news_category" />
+
+        <TextView
+            android:id="@+id/txtCategories"
+            style="@style/newsPublicTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_marginLeft="4dp"
+            android:layout_toEndOf="@+id/imgCategories"
+            android:layout_toRightOf="@+id/imgCategories"
+            android:maxLines="1"
+            android:text="@string/demo_news_category" />
+    </RelativeLayout>
+</LinearLayout>
