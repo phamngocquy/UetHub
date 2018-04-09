@@ -69,5 +69,10 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
         notifyItemInserted(newsEntities.size() - 1);
     }
 
+    public void upDateData(ArrayList<NewsEntity> list) {
+        newsEntities = list;
+        notifyDataSetChanged();
+    }
+
 
 }

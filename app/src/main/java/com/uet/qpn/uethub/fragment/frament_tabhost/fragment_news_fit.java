@@ -1,6 +1,7 @@
 package com.uet.qpn.uethub.fragment.frament_tabhost;
 
 import android.annotation.SuppressLint;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -12,10 +13,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.rclViewAdapter.RclNewsViewAdapter;
@@ -30,8 +31,6 @@ public class fragment_news_fit extends Fragment {
     public static fragment_news_fit newsFit = null;
 
     private RclNewsViewAdapter adapter;
-    private RecyclerView recyclerView;
-    private RecyclerView.LayoutManager layoutManager;
 
 
     public static fragment_news_fit getInstance() {
@@ -55,35 +54,39 @@ public class fragment_news_fit extends Fragment {
     }
 
     void init(View view) {
-        ArrayList<NewsEntity> newsEntities = new ArrayList<>();
-        newsEntities.add(new NewsEntity("a", "A", "a", "a", "a"));
-        newsEntities.add(new NewsEntity("a", "A", "a", "a", "a"));
-        recyclerView = view.findViewById(R.id.rclViewNewsFit);
-        if (recyclerView == null) {
-            Log.d("xx", "xx");
-        }
-        layoutManager = new LinearLayoutManager(getContext());
+        ArrayList<NewsEntity> mData = new ArrayList<>();
+        RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFit);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        adapter = new RclNewsViewAdapter(newsEntities, getContext());
+        adapter = new RclNewsViewAdapter(mData, getContext());
         recyclerView.setAdapter(adapter);
+        initData();
+    }
 
-        String url = "https://jsonplaceholder.typicode.com/albums";
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+    public void initData() {
+
+        Uri.Builder builder = new Uri.Builder();
+        builder.scheme("http")
+                .encodedAuthority("192.168.0.107:8080")
+                .appendPath("api")
+                .appendPath("v1")
+                .appendPath("news")
+                .appendPath("getEntitiesByNews")
+                .appendQueryParameter("news", "FIT")
+                .appendQueryParameter("page", "0");
+        StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                NewsEntity entity = new NewsEntity("a","A","a","A","B");
-                adapter.addItem(entity);
+                adapter.upDateData(Helper.getNewsEntity(response));
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("xxx", "error");
+                Log.d("Error", error.toString());
             }
         });
-
-
-        RequestQueue requestQueue = VolleySingleton.getInstance(getContext()).getRequestQueue();
-        requestQueue.add(stringRequest);
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
 
 }

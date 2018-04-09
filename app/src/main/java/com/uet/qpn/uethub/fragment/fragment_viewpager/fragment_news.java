@@ -57,22 +57,6 @@ public class fragment_news extends Fragment {
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
 
-        String url = "https://jsonplaceholder.typicode.com/todos";
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("xxx", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-
-        RequestQueue requestQueue = VolleySingleton.getInstance(getContext()).getRequestQueue();
-        requestQueue.add(stringRequest);
-
     }
 
 

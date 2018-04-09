@@ -12,6 +12,8 @@ import com.android.volley.toolbox.Volley;
 
 import org.junit.Test;
 
+import java.util.Date;
+
 import static org.junit.Assert.*;
 
 /**
@@ -22,7 +24,8 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        assertEquals(4, 2 + 2);
+        Date date = new Date(1487833154000L);
+        System.out.println(date.toString());
     }
 
     @Test
