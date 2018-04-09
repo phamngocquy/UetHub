@@ -8,13 +8,24 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.fragment.adapter.PagerAdapter;
+import com.uet.qpn.uethub.rclViewAdapter.RclNewsViewAdapter;
+import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
+
+import java.util.ArrayList;
 
 public class fragment_news extends Fragment {
 
@@ -37,14 +48,32 @@ public class fragment_news extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 
-        Log.d("onViewCreated frag_news","run in");
+        Log.d("onViewCreated frag_news", "run in");
 
         FragmentManager fragmentManager = getFragmentManager();
         pagerAdapter = new PagerAdapter(fragmentManager);
         viewPager.setAdapter(pagerAdapter);
-        tabLayout.setupWithViewPager(viewPager,true);
+        tabLayout.setupWithViewPager(viewPager, true);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
-        //tabLayout.getTabAt(0).setIcon(R.drawable.uet);
+
+        String url = "https://jsonplaceholder.typicode.com/todos";
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("xxx", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+
+        RequestQueue requestQueue = VolleySingleton.getInstance(getContext()).getRequestQueue();
+        requestQueue.add(stringRequest);
+
     }
+
+
 }

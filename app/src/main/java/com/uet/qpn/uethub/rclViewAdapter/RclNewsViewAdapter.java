@@ -12,13 +12,23 @@ import com.uet.qpn.uethub.entity.NewsEntity;
 
 import java.util.ArrayList;
 
-public class RclNewsViewApdapter extends RecyclerView.Adapter<RclNewsViewApdapter.ViewHolder> {
+public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.ViewHolder> {
     private ArrayList<NewsEntity> newsEntities;
     private Context context;
 
+
+    public RclNewsViewAdapter() {
+
+    }
+
+    public RclNewsViewAdapter(ArrayList<NewsEntity> newsEntities, Context context) {
+        this.newsEntities = newsEntities;
+        this.context = context;
+    }
+
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_layout, parent);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_layout, null);
         return new ViewHolder(view);
     }
 
@@ -53,4 +63,11 @@ public class RclNewsViewApdapter extends RecyclerView.Adapter<RclNewsViewApdapte
             txtDescription = itemView.findViewById(R.id.txtDescription);
         }
     }
+
+    public void addItem(NewsEntity newsEntity) {
+        newsEntities.add(newsEntity);
+        notifyItemInserted(newsEntities.size() - 1);
+    }
+
+
 }
