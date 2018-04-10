@@ -9,6 +9,6 @@
     <color name="black_gray">#737070</color>
     <color name="black_gray_">#cacaca</color>
     <color name="tab_layoutColor">#1c3475</color>
-    <color name="status_bar_color">#326362</color>
+    <color name="status_bar_color">#1c3475</color>
     <color name="tabTextColor">#9ab6b5</color>
 </resources>

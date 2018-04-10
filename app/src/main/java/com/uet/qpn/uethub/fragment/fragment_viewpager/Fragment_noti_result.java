@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.uet.qpn.uethub.R;
 
-public class fragment_noti_result extends Fragment {
+public class Fragment_noti_result extends Fragment {
 
-    public fragment_noti_result() {
+    public Fragment_noti_result() {
     }
 
     @Nullable

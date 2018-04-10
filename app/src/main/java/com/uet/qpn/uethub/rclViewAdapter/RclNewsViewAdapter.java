@@ -1,6 +1,7 @@
 package com.uet.qpn.uethub.rclViewAdapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.ReadNewsActivity;
 import com.uet.qpn.uethub.entity.NewsEntity;
 
 import java.util.ArrayList;
@@ -34,12 +36,21 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        NewsEntity entity = newsEntities.get(position);
+        final NewsEntity entity = newsEntities.get(position);
         holder.txtDescription.setText(entity.getDescription());
         holder.txtPublicTime.setText(entity.getPublictime());
         holder.txtAuthor.setText(entity.getAuthor());
         holder.txtTitle.setText(entity.getTitle());
         holder.txtCategory.setText(entity.getCategories());
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, ReadNewsActivity.class);
+                intent.putExtra("news", entity);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

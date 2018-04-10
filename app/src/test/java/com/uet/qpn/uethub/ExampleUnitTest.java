@@ -10,8 +10,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -29,33 +34,69 @@ public class ExampleUnitTest {
     }
 
     @Test
-    public void getNewsData() {
-       /* Context context = new MainActivity();
-        RequestQueue requestQueue = Volley.newRequestQueue(context);*/
-        Uri uri = new Uri.Builder()
-                .scheme("http")
-                .authority("localhost")
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("news")
-                .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news","FIT")
-                .appendQueryParameter("page","0").build();
-        System.out.println(uri.toString());
+    public void getNewsDataUET() {
+        try {
+            Document document = Jsoup.connect("https://uet.vnu.edu.vn/11476/").timeout(10000).get();
+
+            Elements element_ = document.select(".single-content-title");
+            System.out.println(element_);
+            Elements element = document.select(".single-post-content-text").addClass("content-pad");
+            System.out.println(element);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getNewsDataFIT() {
+        try {
+            Document document = Jsoup.connect("http://fit.uet.vnu.edu.vn/20161124/").timeout(10000).get();
+
+            Elements element = document.select(".entry-header");
+            System.out.println(element);
+
+            Elements element_ = document.select(".entry-content").addClass("clearfix");
+            System.out.println(element_);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void getNewsDataFet() {
+
+        try {
+            Document document = Jsoup.connect("http://fet.uet.vnu.edu.vn/tuyen-dung-ky-su-cu-nhan-lam-viec-tai-samsung-r-d-ha-noi.html").timeout(10000).get();
+
+            Elements element = document.select(".post-content").addClass("clearfix");
+            System.out.println(element.select("h2"));
+
+            Elements element_ = document.select(".entry").addClass("clearfix");
+            System.out.println(element_);
 
 
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://localhost:8080/api/v1/news/getEntitiesByNews?news=fit&page=0", new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
+    @Test
+    public void getNewsDataFepn() {
+        try {
+            Document document = Jsoup.connect("http://fepn.uet.vnu.edu.vn/sinh-vien/thong-bao/2018/04/hoc-bong-thac-si-tien-si/").timeout(10000).get();
 
-            }
-        });
+            Elements element_ = document.select(".title").addClass("adelle");
+            System.out.println(element_);
 
-       // requestQueue.add(stringRequest);
+            Elements element = document.select(".post-content");
+            System.out.println(element);
+
+
+
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

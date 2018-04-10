@@ -11,9 +11,9 @@ import android.view.ViewGroup;
 
 import com.uet.qpn.uethub.R;
 
-public class fragment_noti_exam extends Fragment {
+public class Fragment_noti_exam extends Fragment {
 
-    public fragment_noti_exam() {
+    public Fragment_noti_exam() {
     }
 
     @Nullable

@@ -23,15 +23,15 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
 
-public class fragment_news_fet extends Fragment {
-    private static fragment_news_fet newsFet = null;
+public class Fragment_news_fet extends Fragment {
+    private static Fragment_news_fet newsFet = null;
 
     private RclNewsViewAdapter adapter;
 
-    public static fragment_news_fet getInstance() {
+    public static Fragment_news_fet getInstance() {
         if (newsFet == null) {
             Log.d("init fragment_new_fet", "run in");
-            newsFet = new fragment_news_fet();
+            newsFet = new Fragment_news_fet();
         }
         return newsFet;
     }

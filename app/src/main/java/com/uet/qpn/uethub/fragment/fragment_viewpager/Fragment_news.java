@@ -27,13 +27,13 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
 
-public class fragment_news extends Fragment {
+public class Fragment_news extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
 
-    public fragment_news() {
+    public Fragment_news() {
     }
 
     @Nullable

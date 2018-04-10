@@ -5,9 +5,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
-import com.uet.qpn.uethub.fragment.frament_tabhost.fragment_news_fet;
-import com.uet.qpn.uethub.fragment.frament_tabhost.fragment_news_fit;
-import com.uet.qpn.uethub.fragment.frament_tabhost.fragment_news_uet;
+import com.uet.qpn.uethub.fragment.frament_tabhost.Fragment_news_fepn;
+import com.uet.qpn.uethub.fragment.frament_tabhost.Fragment_news_fet;
+import com.uet.qpn.uethub.fragment.frament_tabhost.Fragment_news_fit;
+import com.uet.qpn.uethub.fragment.frament_tabhost.Fragment_news_uet;
 
 public class PagerAdapter extends FragmentStatePagerAdapter {
     public PagerAdapter(FragmentManager fm) {
@@ -19,13 +20,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = fragment_news_uet.getInstance();
+                fragment = Fragment_news_uet.getInstance();
                 break;
             case 1:
-                fragment = fragment_news_fit.getInstance();
+                fragment = Fragment_news_fit.getInstance();
                 break;
             case 2:
-                fragment = fragment_news_fet.getInstance();
+                fragment = Fragment_news_fet.getInstance();
+                break;
+            case 3:
+                fragment = Fragment_news_fepn.getInstance();
                 break;
         }
         return fragment;
@@ -33,7 +37,7 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 4;
     }
 
     @Nullable
@@ -42,13 +46,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         String title = "";
         switch (position) {
             case 0:
-                title = "Uet";
+                title = "UET";
                 break;
             case 1:
-                title = "Fit";
+                title = "FIT";
                 break;
             case 2:
-                title = "Fet";
+                title = "FET";
+                break;
+            case 3:
+                title = "FEPN";
                 break;
         }
         return title;

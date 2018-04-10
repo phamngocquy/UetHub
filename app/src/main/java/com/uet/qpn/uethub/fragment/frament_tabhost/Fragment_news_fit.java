@@ -1,5 +1,6 @@
 package com.uet.qpn.uethub.fragment.frament_tabhost;
 
+import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -23,24 +24,27 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
 
-public class fragment_news_uet extends Fragment {
+public class Fragment_news_fit extends Fragment {
 
-    public static fragment_news_uet newsUet = null;
+
+    @SuppressLint("StaticFieldLeak")
+    public static Fragment_news_fit newsFit = null;
 
     private RclNewsViewAdapter adapter;
 
-    public static fragment_news_uet getInstance() {
-        if (newsUet == null) {
-            Log.d("init fragment_new_uet", "run in");
-            newsUet = new fragment_news_uet();
+
+    public static Fragment_news_fit getInstance() {
+        if (newsFit == null) {
+            Log.d("init fragment_new_fit", "run in");
+            newsFit = new Fragment_news_fit();
         }
-        return newsUet;
+        return newsFit;
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_news_uet, container, false);
+        return inflater.inflate(R.layout.faragment_news_fit, container, false);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class fragment_news_uet extends Fragment {
 
     void init(View view) {
         ArrayList<NewsEntity> mData = new ArrayList<>();
-        RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsUet);
+        RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFit);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RclNewsViewAdapter(mData, getContext());
@@ -68,7 +72,7 @@ public class fragment_news_uet extends Fragment {
                 .appendPath("v1")
                 .appendPath("news")
                 .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "UET")
+                .appendQueryParameter("news", "FIT")
                 .appendQueryParameter("page", "0");
         StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
             @Override
@@ -83,5 +87,6 @@ public class fragment_news_uet extends Fragment {
         });
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
 
 }

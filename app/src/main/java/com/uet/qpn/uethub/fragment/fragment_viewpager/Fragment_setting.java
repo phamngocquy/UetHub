@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 
 import com.uet.qpn.uethub.R;
 
-public class fragment_setting extends Fragment {
+public class Fragment_setting extends Fragment {
 
-    public fragment_setting() {
+    public Fragment_setting() {
 
     }
 

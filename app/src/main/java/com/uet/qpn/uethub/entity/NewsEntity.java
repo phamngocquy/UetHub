@@ -1,12 +1,16 @@
 package com.uet.qpn.uethub.entity;
 
-public class NewsEntity {
+import java.io.Serializable;
+
+public class NewsEntity implements Serializable {
 
     private String title;
     private String description;
     private String categories;
     private String publictime;
     private String author;
+    private String url;
+    private String newsName;
 
     public NewsEntity() {
     }
@@ -57,5 +61,21 @@ public class NewsEntity {
 
     public void setAuthor(String author) {
         this.author = author;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getNewsName() {
+        return newsName;
+    }
+
+    public void setNewsName(String newsName) {
+        this.newsName = newsName;
     }
 }

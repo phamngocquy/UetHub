@@ -1,9 +1,8 @@
 package com.uet.qpn.uethub.fragment.frament_tabhost;
 
-import android.annotation.SuppressLint;
+
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -24,38 +23,37 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
 
-public class fragment_news_fit extends Fragment {
-
-
-    @SuppressLint("StaticFieldLeak")
-    public static fragment_news_fit newsFit = null;
+public class Fragment_news_fepn extends Fragment {
 
     private RclNewsViewAdapter adapter;
 
+    public static Fragment_news_fepn newsFepn = null;
 
-    public static fragment_news_fit getInstance() {
-        if (newsFit == null) {
-            Log.d("init fragment_new_fit", "run in");
-            newsFit = new fragment_news_fit();
+    public static Fragment_news_fepn getInstance() {
+        if (newsFepn == null) {
+            Log.d("init fragment_new_fepn", "run in");
+            newsFepn = new Fragment_news_fepn();
         }
-        return newsFit;
+        return newsFepn;
     }
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.faragment_news_fit, container, false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_news_fepn, container, false);
     }
 
+
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
+
     }
 
     void init(View view) {
         ArrayList<NewsEntity> mData = new ArrayList<>();
-        RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFit);
+        RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFepn);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         adapter = new RclNewsViewAdapter(mData, getContext());
@@ -72,7 +70,7 @@ public class fragment_news_fit extends Fragment {
                 .appendPath("v1")
                 .appendPath("news")
                 .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "FIT")
+                .appendQueryParameter("news", "FEPN")
                 .appendQueryParameter("page", "0");
         StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
             @Override
@@ -87,6 +85,4 @@ public class fragment_news_fit extends Fragment {
         });
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
-
 }
