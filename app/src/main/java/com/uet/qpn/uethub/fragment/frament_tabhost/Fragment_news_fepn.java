@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.rclViewAdapter.RclNewsViewAdapter;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
@@ -65,7 +66,7 @@ public class Fragment_news_fepn extends Fragment {
 
         Uri.Builder builder = new Uri.Builder();
         builder.scheme("http")
-                .encodedAuthority("192.168.0.107:8080")
+                .encodedAuthority(Configuration.SERVER_HOST)
                 .appendPath("api")
                 .appendPath("v1")
                 .appendPath("news")
@@ -75,7 +76,7 @@ public class Fragment_news_fepn extends Fragment {
         StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response));
+                adapter.upDateData(Helper.getNewsEntity(response,"FEPN"));
             }
         }, new Response.ErrorListener() {
             @Override

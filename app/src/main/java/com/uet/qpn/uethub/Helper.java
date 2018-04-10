@@ -16,7 +16,7 @@ import java.util.Date;
 
 public class Helper {
 
-    public static ArrayList<NewsEntity> getNewsEntity(String response) {
+    public static ArrayList<NewsEntity> getNewsEntity(String response, String newsName) {
         ArrayList<NewsEntity> entities = new ArrayList<>();
         try {
             JSONArray jsonArray = new JSONArray(response);
@@ -28,7 +28,7 @@ public class Helper {
                 entity.setDescription(jsonObject.getString("description"));
                 entity.setTitle(jsonObject.getString("title"));
                 entity.setUrl(jsonObject.getString("url"));
-                entity.setNewsName(jsonObject.getString("newsName"));
+                entity.setNewsName(newsName);
 
                 Long dataNum = Long.valueOf(jsonObject.getString("date"));
                 Date date = new Date(dataNum);

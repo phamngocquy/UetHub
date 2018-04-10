@@ -15,6 +15,11 @@ public class NewsEntity implements Serializable {
     public NewsEntity() {
     }
 
+    public NewsEntity(String url, String newsName) {
+        this.url = url;
+        this.newsName = newsName;
+    }
+
     public NewsEntity(String title, String description, String categories, String publictime, String author) {
         this.title = title;
         this.description = description;

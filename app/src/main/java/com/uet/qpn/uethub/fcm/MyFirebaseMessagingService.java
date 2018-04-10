@@ -18,6 +18,10 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 import com.uet.qpn.uethub.MainActivity;
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.ReadNewsActivity;
+import com.uet.qpn.uethub.entity.NewsEntity;
+
+import java.util.Map;
 
 /**
  * Created by javis on 3/18/18.
@@ -50,9 +54,23 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Log.d(TAG, "From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
+
+        String url; // duong dan den tin tuc (file diem)
+        String type; // UET, FIT, FET, FEPN, GRADE
+
         if (remoteMessage.getData().size() > 0) {
             Log.d(TAG, "Message data payload: " + remoteMessage.getData());
-/*
+            Map<String, String> data = remoteMessage.getData();
+            url = data.get("url");
+            type = data.get("type");
+            Log.w("url", url);
+            Log.w("type", type);
+
+
+
+
+
+            /*
             if (*//* Check if data needs to be processed by long running job *//* true) {
                 // For long-running tasks (10 seconds or more) use Firebase Job Dispatcher.
                 scheduleJob();
@@ -61,13 +79,19 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                 handleNow();
             }*/
 
+
+            Intent intent = preparePendingIntent(url, type);
+            sendNotification(intent,
+                    remoteMessage.getNotification().getTitle(),
+                    remoteMessage.getNotification().getBody());
+
         }
 
         // Check if message contains a notification payload.
-        if (remoteMessage.getNotification() != null) {
+      /*  if (remoteMessage.getNotification() != null) {
             Log.d(TAG, "Message Notification Body: " + remoteMessage.getNotification().getBody());
             sendNotification(remoteMessage.getNotification().getBody());
-        }
+        }*/
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
@@ -100,6 +124,8 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
      *
      * @param messageBody FCM message body received.
      */
+
+
     private void sendNotification(String messageBody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -130,4 +156,66 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
         notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
     }
+
+    private void sendNotification(Intent intent, String title, String body) {
+        Log.w("title", title);
+        Log.w("body", body);
+
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
+                PendingIntent.FLAG_ONE_SHOT);
+
+
+        String channelId = getResources().getString(R.string.default_notification_channel_name);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        NotificationCompat.Builder notificationBuilder =
+                new NotificationCompat.Builder(this, channelId)
+                        .setSmallIcon(R.drawable.ic_stat_ic_notification)
+                        .setContentTitle(title)
+                        .setContentText(body)
+                        .setAutoCancel(true)
+                        .setSound(defaultSoundUri)
+                        .setContentIntent(pendingIntent);
+
+        NotificationManager notificationManager =
+                (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Since android Oreo notification channel is needed.
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(channelId,
+                    "Channel human readable title",
+                    NotificationManager.IMPORTANCE_DEFAULT);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build());
+    }
+
+
+    Intent preparePendingIntent(String url, String type) {
+        Intent intent;
+        try {
+            if (url == null || type == null || url.equals("") || type.equals("")) {
+                intent = new Intent(this, MainActivity.class);
+            }
+            if (type.equals("GRADE")) {
+
+                // thong bao diem
+                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+
+            } else {
+                // thong bao tin tuc
+
+                intent = new Intent(this, ReadNewsActivity.class);
+                NewsEntity newsEntity = new NewsEntity(url, type);
+                intent.putExtra("news", newsEntity);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new Intent(this, MainActivity.class);
+        }
+        return intent;
+    }
+
 }
