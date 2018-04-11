@@ -38,9 +38,10 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(tabHost.newTabSpec("exam").setIndicator(noti_exam), Fragment_noti_exam.class, null);
         tabHost.addTab(tabHost.newTabSpec("result").setIndicator(noti_result), Fragment_noti_result.class, null);
         tabHost.addTab(tabHost.newTabSpec("setting").setIndicator(setting), Fragment_setting.class, null);
+
         ImageView img_news = tabHost.getTabWidget().getChildTabViewAt(0).findViewById(R.id.news_ic);
         img_news.setImageResource(R.drawable.ic_24_hours);
-        Log.d("onCreate ManiActivity", "run in");
+
         tabHost.setOnTabChangedListener(onTab_Change);
 
 

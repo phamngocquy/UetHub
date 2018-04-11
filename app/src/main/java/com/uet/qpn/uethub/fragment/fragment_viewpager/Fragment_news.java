@@ -31,8 +31,6 @@ public class Fragment_news extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private PagerAdapter pagerAdapter;
-
     public Fragment_news() {
     }
 
@@ -45,19 +43,24 @@ public class Fragment_news extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 
-        Log.d("onViewCreated frag_news", "run in");
-
         FragmentManager fragmentManager = getFragmentManager();
-        pagerAdapter = new PagerAdapter(fragmentManager);
+        PagerAdapter pagerAdapter = new PagerAdapter(fragmentManager);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager, true);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
 
+
     }
 
-
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 }

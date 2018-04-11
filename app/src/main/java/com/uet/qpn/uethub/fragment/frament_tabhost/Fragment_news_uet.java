@@ -30,13 +30,13 @@ public class Fragment_news_uet extends Fragment {
 
     private RclNewsViewAdapter adapter;
 
-    public static Fragment_news_uet getInstance() {
+   /* public static Fragment_news_uet getInstance() {
         if (newsUet == null) {
-            Log.d("init fragment_new_uet", "run in");
+
             newsUet = new Fragment_news_uet();
         }
         return newsUet;
-    }
+    }*/
 
     @Nullable
     @Override
@@ -47,6 +47,7 @@ public class Fragment_news_uet extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("init fragment_new_uet", "run in");
         init(view);
     }
 
@@ -61,20 +62,13 @@ public class Fragment_news_uet extends Fragment {
     }
 
     public void initData() {
+        String url = Configuration.API_PATH +
+                "news=UET&page=" + Helper.getPageNumber(adapter.getItemCount());
 
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .encodedAuthority(Configuration.SERVER_HOST)
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("news")
-                .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "UET")
-                .appendQueryParameter("page", "0");
-        StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response,"UET"));
+                adapter.upDateData(Helper.getNewsEntity(response, "UET"));
             }
         }, new Response.ErrorListener() {
             @Override

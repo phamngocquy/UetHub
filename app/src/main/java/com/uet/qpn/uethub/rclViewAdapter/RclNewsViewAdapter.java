@@ -81,9 +81,14 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
     }
 
     public void upDateData(ArrayList<NewsEntity> list) {
-        newsEntities = list;
+        for (NewsEntity entity : list) {
+            if (!newsEntities.contains(entity)) newsEntities.add(entity);
+        }
+
         notifyDataSetChanged();
     }
 
-
+    public ArrayList<NewsEntity> getNewsEntities() {
+        return newsEntities;
+    }
 }

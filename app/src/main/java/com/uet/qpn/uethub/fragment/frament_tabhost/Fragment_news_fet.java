@@ -29,13 +29,13 @@ public class Fragment_news_fet extends Fragment {
 
     private RclNewsViewAdapter adapter;
 
-    public static Fragment_news_fet getInstance() {
+   /* public static Fragment_news_fet getInstance() {
         if (newsFet == null) {
-            Log.d("init fragment_new_fet", "run in");
+
             newsFet = new Fragment_news_fet();
         }
         return newsFet;
-    }
+    }*/
 
     @Nullable
     @Override
@@ -46,6 +46,7 @@ public class Fragment_news_fet extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("init fragment_new_fet", "run in");
         init(view);
     }
 
@@ -61,19 +62,12 @@ public class Fragment_news_fet extends Fragment {
 
     public void initData() {
 
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .encodedAuthority(Configuration.SERVER_HOST)
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("news")
-                .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "FET")
-                .appendQueryParameter("page", "0");
-        StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
+        String url = Configuration.API_PATH +
+                "news=FET&page=" + Helper.getPageNumber(adapter.getItemCount());
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response,"FET"));
+                adapter.upDateData(Helper.getNewsEntity(response, "FET"));
             }
         }, new Response.ErrorListener() {
             @Override

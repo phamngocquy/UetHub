@@ -1,7 +1,5 @@
 package com.uet.qpn.uethub.fragment.frament_tabhost;
 
-
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -30,13 +28,13 @@ public class Fragment_news_fepn extends Fragment {
 
     public static Fragment_news_fepn newsFepn = null;
 
-    public static Fragment_news_fepn getInstance() {
+   /* public static Fragment_news_fepn getInstance() {
         if (newsFepn == null) {
             Log.d("init fragment_new_fepn", "run in");
             newsFepn = new Fragment_news_fepn();
         }
         return newsFepn;
-    }
+    }*/
 
     @Nullable
     @Override
@@ -48,6 +46,7 @@ public class Fragment_news_fepn extends Fragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("init fragment_new_fepn", "run in");
         init(view);
 
     }
@@ -62,21 +61,18 @@ public class Fragment_news_fepn extends Fragment {
         initData();
     }
 
-    public void initData() {
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .encodedAuthority(Configuration.SERVER_HOST)
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("news")
-                .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "FEPN")
-                .appendQueryParameter("page", "0");
-        StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
+    public void initData() {
+        String url = Configuration.API_PATH +
+                "news=FEPN&page=" + Helper.getPageNumber(adapter.getItemCount());
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response,"FEPN"));
+                adapter.upDateData(Helper.getNewsEntity(response, "FEPN"));
             }
         }, new Response.ErrorListener() {
             @Override

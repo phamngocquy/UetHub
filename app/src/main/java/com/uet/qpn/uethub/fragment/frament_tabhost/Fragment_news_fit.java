@@ -34,14 +34,14 @@ public class Fragment_news_fit extends Fragment {
     private RclNewsViewAdapter adapter;
 
 
-    public static Fragment_news_fit getInstance() {
+    /*public static Fragment_news_fit getInstance() {
         if (newsFit == null) {
-            Log.d("init fragment_new_fit", "run in");
+
             newsFit = new Fragment_news_fit();
         }
         return newsFit;
     }
-
+*/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -51,6 +51,7 @@ public class Fragment_news_fit extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("init fragment_new_fit", "run in");
         init(view);
     }
 
@@ -64,21 +65,22 @@ public class Fragment_news_fit extends Fragment {
         initData();
     }
 
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState == null) Log.d("abc", "null");
+    }
+
     public void initData() {
 
-        Uri.Builder builder = new Uri.Builder();
-        builder.scheme("http")
-                .encodedAuthority(Configuration.SERVER_HOST)
-                .appendPath("api")
-                .appendPath("v1")
-                .appendPath("news")
-                .appendPath("getEntitiesByNews")
-                .appendQueryParameter("news", "FIT")
-                .appendQueryParameter("page", "0");
-        StringRequest stringRequest = new StringRequest(builder.toString(), new Response.Listener<String>() {
+        String url = Configuration.API_PATH +
+                "news=FIT&page=" + Helper.getPageNumber(adapter.getItemCount());
+
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response,"FIT"));
+                Log.d("json", response);
+                adapter.upDateData(Helper.getNewsEntity(response, "FIT"));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -89,5 +91,9 @@ public class Fragment_news_fit extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putSerializable("data", adapter.getNewsEntities());
+    }
 }

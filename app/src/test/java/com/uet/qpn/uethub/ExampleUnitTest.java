@@ -29,8 +29,8 @@ import static org.junit.Assert.*;
 public class ExampleUnitTest {
     @Test
     public void addition_isCorrect() throws Exception {
-        Date date = new Date(1487833154000L);
-        System.out.println(date.toString());
+        int r = 10 / 100;
+        System.out.println(r);
     }
 
     @Test
@@ -85,16 +85,10 @@ public class ExampleUnitTest {
     public void getNewsDataFepn() {
         try {
             Document document = Jsoup.connect("http://fepn.uet.vnu.edu.vn/sinh-vien/thong-bao/2018/04/hoc-bong-thac-si-tien-si/").timeout(10000).get();
-
             Elements element_ = document.select(".title").addClass("adelle");
             System.out.println(element_);
-
             Elements element = document.select(".post-content");
             System.out.println(element);
-
-
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }

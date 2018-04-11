@@ -20,16 +20,16 @@ public class PagerAdapter extends FragmentStatePagerAdapter {
         Fragment fragment = null;
         switch (position) {
             case 0:
-                fragment = Fragment_news_uet.getInstance();
+                fragment = new Fragment_news_uet();
                 break;
             case 1:
-                fragment = Fragment_news_fit.getInstance();
+                fragment = new Fragment_news_fit();
                 break;
             case 2:
-                fragment = Fragment_news_fet.getInstance();
+                fragment = new Fragment_news_fet();
                 break;
             case 3:
-                fragment = Fragment_news_fepn.getInstance();
+                fragment = new Fragment_news_fepn();
                 break;
         }
         return fragment;
