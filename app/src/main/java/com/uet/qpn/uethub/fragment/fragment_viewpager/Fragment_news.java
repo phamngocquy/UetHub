@@ -49,7 +49,7 @@ public class Fragment_news extends Fragment {
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getChildFragmentManager();
         PagerAdapter pagerAdapter = new PagerAdapter(fragmentManager);
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager, true);
