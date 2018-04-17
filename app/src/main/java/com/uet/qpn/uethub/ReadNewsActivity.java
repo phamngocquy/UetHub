@@ -84,10 +84,14 @@ public class ReadNewsActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
-            String newContent = Helper.getNewsPage(content.toString());
-            Log.d("dataHTMK", newContent);
-            webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
-            progressBar.setVisibility(View.GONE);
+            try {
+                String newContent = Helper.getNewsPage(content.toString());
+                Log.d("dataHTMK", newContent);
+                webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
+                progressBar.setVisibility(View.GONE);
+            } catch (NullPointerException e) {
+                Log.e("Null", "Helper.getNewsPage(content.toString());");
+            }
 
         }
     }
