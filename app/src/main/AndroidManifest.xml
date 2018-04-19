@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.uet.qpn.uethub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/CustomTheme">
+        android:theme="@style/CustomTheme"
+        tools:replace="android:icon">
 
         <!--
           Set custom default icon. This is used when no icon is set for incoming notification messages.
@@ -48,8 +52,10 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+        <service android:name=".DownloadService.DownloadService" />
 
-        <activity android:name=".ReadNewsActivity"></activity>
+        <activity android:name=".ReadNewsActivity" />
+        <activity android:name=".Activity_pdf_viewer"></activity>
     </application>
 
 </manifest>

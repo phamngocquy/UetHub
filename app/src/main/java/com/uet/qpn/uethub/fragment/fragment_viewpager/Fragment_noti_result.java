@@ -24,6 +24,8 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 import java.util.ArrayList;
 import java.util.List;
 
+import is.arontibo.library.ElasticDownloadView;
+
 public class Fragment_noti_result extends Fragment {
 
     private RclExamResultViewAdapter adapter;
@@ -39,7 +41,6 @@ public class Fragment_noti_result extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init(view);
-
     }
 
     public void init(View view) {
@@ -61,7 +62,7 @@ public class Fragment_noti_result extends Fragment {
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Json_Result: ", response);
+                //Log.d("Json_Result: ", response);
                 adapter.upDateData(Helper.getSubjectEntity(response));
             }
         }, new Response.ErrorListener() {

@@ -1,28 +1,43 @@
 package com.uet.qpn.uethub;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import android.os.Environment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
+import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_news;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_noti_exam;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_noti_result;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_setting;
 
+import java.io.File;
+import java.io.IOException;
+
 public class MainActivity extends AppCompatActivity {
 
     private FragmentTabHost tabHost;
+    private static final int MY_PERMISSIONS_WRITE_STORAGE = 101;
+    private static final int MY_PERMISSIONS_READ_STORAGE = 102;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        checkPermission();
+        createFolderStore();
         tabHost = findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
         //tabHost.setOnTabChangedListener(onTab_Change);
@@ -37,12 +52,9 @@ public class MainActivity extends AppCompatActivity {
         tabHost.addTab(tabHost.newTabSpec("exam").setIndicator(noti_exam), Fragment_noti_exam.class, null);
         tabHost.addTab(tabHost.newTabSpec("result").setIndicator(noti_result), Fragment_noti_result.class, null);
         tabHost.addTab(tabHost.newTabSpec("setting").setIndicator(setting), Fragment_setting.class, null);
-
         ImageView img_news = tabHost.getTabWidget().getChildTabViewAt(0).findViewById(R.id.news_ic);
         img_news.setImageResource(R.drawable.ic_24_hours);
-
         tabHost.setOnTabChangedListener(onTab_Change);
-
 
 
     }
@@ -86,11 +98,46 @@ public class MainActivity extends AppCompatActivity {
                     img_news.setImageResource(R.drawable.ic_24_hours_off);
                     break;
             }
-
-
         }
     };
 
+
+    private void checkPermission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                    MY_PERMISSIONS_WRITE_STORAGE);
+        }
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_READ_STORAGE);
+            }
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (grantResults.length > 0) {
+            for (int grantResult : grantResults) {
+                if (grantResult != PackageManager.PERMISSION_GRANTED) finish();
+            }
+            createFolderStore();
+        }
+    }
+
+    private void createFolderStore() {
+        String path = Environment.getExternalStorageDirectory().getPath() + File.separator;
+
+        File file = new File(path + Configuration.STORE_FOLDER);
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+    }
     /*Ngu lol function*/
 
 }

@@ -1,7 +1,9 @@
 package com.uet.qpn.uethub;
 
+import android.os.Environment;
 import android.util.Log;
 
+import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.entity.Subject;
 
@@ -12,6 +14,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,6 +49,26 @@ public class Helper {
 
 
         return entities;
+    }
+
+    public static Boolean checkFileExist(String fileName) {
+        try {
+            String path = Environment.getExternalStorageDirectory().getPath() + File.separator;
+            File file = new File(path + Configuration.STORE_FOLDER);
+            for (File file_ : file.listFiles()) {
+                if (file_.getName().equalsIgnoreCase(fileName)) return true;
+            }
+        } catch (NullPointerException e) {
+
+            e.printStackTrace();
+            String path = Environment.getExternalStorageDirectory().getPath() + File.separator;
+
+            File file = new File(path + Configuration.STORE_FOLDER);
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+        }
+        return false;
     }
 
     public static List<Subject> getSubjectEntity(String response) {
