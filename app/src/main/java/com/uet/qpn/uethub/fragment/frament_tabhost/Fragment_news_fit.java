@@ -1,7 +1,5 @@
 package com.uet.qpn.uethub.fragment.frament_tabhost;
 
-import android.annotation.SuppressLint;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -28,24 +26,12 @@ import java.util.ArrayList;
 public class Fragment_news_fit extends Fragment {
 
 
-    @SuppressLint("StaticFieldLeak")
-    public static Fragment_news_fit newsFit = null;
-
     private RclNewsViewAdapter adapter;
 
-
-    /*public static Fragment_news_fit getInstance() {
-        if (newsFit == null) {
-
-            newsFit = new Fragment_news_fit();
-        }
-        return newsFit;
-    }
-*/
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.faragment_news_fit, container, false);
+        return inflater.inflate(R.layout.fragment_news_fit, container, false);
     }
 
     @Override
@@ -73,7 +59,7 @@ public class Fragment_news_fit extends Fragment {
 
     public void initData() {
 
-        String url = Configuration.API_PATH +
+        String url = Configuration.HOST + Configuration.API_PATH_NEWS +
                 "news=FIT&page=" + Helper.getPageNumber(adapter.getItemCount());
 
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {

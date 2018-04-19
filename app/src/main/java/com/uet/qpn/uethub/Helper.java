@@ -3,6 +3,7 @@ package com.uet.qpn.uethub;
 import android.util.Log;
 
 import com.uet.qpn.uethub.entity.NewsEntity;
+import com.uet.qpn.uethub.entity.Subject;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,6 +14,7 @@ import org.jsoup.select.Elements;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Helper {
 
@@ -44,6 +46,38 @@ public class Helper {
 
 
         return entities;
+    }
+
+    public static List<Subject> getSubjectEntity(String response) {
+        List<Subject> subjects = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Subject subject = new Subject();
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                subject.setCode(jsonObject.getString("code"));
+                subject.setName(jsonObject.getString("name"));
+                subject.setUrl(jsonObject.getString("url"));
+                subject.setLocal_url(jsonObject.getString("localUrl"));
+
+                Long dataNumCreatedTime = Long.valueOf(jsonObject.getString("createdTime"));
+                Long dataNumUpdatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
+
+                Date dateCreated = new Date(dataNumCreatedTime);
+                Date dateUpdated = new Date(dataNumUpdatedTime);
+
+                subject.setPublic_time(dateCreated.toString());
+                subject.setUpdate_on(dateUpdated.toString());
+
+                subjects.add(subject);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return subjects;
+
     }
 
     public static String getNewsPage(String content) {

@@ -67,7 +67,7 @@ public class Fragment_news_fepn extends Fragment {
     }
 
     public void initData() {
-        String url = Configuration.API_PATH +
+        String url = Configuration.HOST + Configuration.API_PATH_NEWS +
                 "news=FEPN&page=" + Helper.getPageNumber(adapter.getItemCount());
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override

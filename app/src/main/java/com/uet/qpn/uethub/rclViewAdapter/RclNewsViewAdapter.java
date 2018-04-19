@@ -1,5 +1,6 @@
 package com.uet.qpn.uethub.rclViewAdapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -30,7 +31,7 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.news_item_layout, null);
+        @SuppressLint("InflateParams") View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_news_layout, null);
         return new ViewHolder(view);
     }
 

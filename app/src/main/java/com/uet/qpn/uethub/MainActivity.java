@@ -3,7 +3,6 @@ package com.uet.qpn.uethub;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,10 +28,10 @@ public class MainActivity extends AppCompatActivity {
         //tabHost.setOnTabChangedListener(onTab_Change);
 
         LayoutInflater layoutInflater = getLayoutInflater();
-        View news = layoutInflater.inflate(R.layout.news_indicator, null);
-        View noti_exam = layoutInflater.inflate(R.layout.noti_exam_indicator, null);
-        View noti_result = layoutInflater.inflate(R.layout.noti_result_indicator, null);
-        View setting = layoutInflater.inflate(R.layout.setting_indicator, null);
+        View news = layoutInflater.inflate(R.layout.indicator_news_fragment, null);
+        View noti_exam = layoutInflater.inflate(R.layout.indicator_noti_exam_fragment, null);
+        View noti_result = layoutInflater.inflate(R.layout.indicator_noti_result_fragment, null);
+        View setting = layoutInflater.inflate(R.layout.indicator_setting_fragment, null);
 
         tabHost.addTab(tabHost.newTabSpec("news").setIndicator(news), Fragment_news.class, null);
         tabHost.addTab(tabHost.newTabSpec("exam").setIndicator(noti_exam), Fragment_noti_exam.class, null);
