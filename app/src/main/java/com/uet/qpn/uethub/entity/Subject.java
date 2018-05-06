@@ -1,7 +1,11 @@
 package com.uet.qpn.uethub.entity;
 
-public class Subject {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class Subject extends RealmObject {
+    @PrimaryKey
+    private String id;
     private String code;
     private String public_time;
     private String local_url;
@@ -21,6 +25,25 @@ public class Subject {
         this.term = term;
         this.url = url;
         this.update_on = update_on;
+    }
+
+    public Subject(String id, String code, String public_time, String local_url, String name, String term, String url, String update_on) {
+        this.id = id;
+        this.code = code;
+        this.public_time = public_time;
+        this.local_url = local_url;
+        this.name = name;
+        this.term = term;
+        this.url = url;
+        this.update_on = update_on;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCode() {
