@@ -2,8 +2,13 @@ package com.uet.qpn.uethub.entity;
 
 import java.io.Serializable;
 
-public class NewsEntity implements Serializable {
+import io.realm.RealmObject;
+import io.realm.annotations.PrimaryKey;
 
+public class NewsEntity extends RealmObject implements Serializable {
+
+    @PrimaryKey
+    private String id;
     private String title;
     private String description;
     private String categories;
@@ -13,6 +18,17 @@ public class NewsEntity implements Serializable {
     private String newsName;
 
     public NewsEntity() {
+    }
+
+    public NewsEntity(String id, String title, String description, String categories, String publictime, String author, String url, String newsName) {
+        this.id = id;
+        this.title = title;
+        this.description = description;
+        this.categories = categories;
+        this.publictime = publictime;
+        this.author = author;
+        this.url = url;
+        this.newsName = newsName;
     }
 
     public NewsEntity(String url, String newsName) {
@@ -26,6 +42,14 @@ public class NewsEntity implements Serializable {
         this.categories = categories;
         this.publictime = publictime;
         this.author = author;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getTitle() {
