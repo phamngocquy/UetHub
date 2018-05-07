@@ -13,4 +13,9 @@
     <string name="tuy_t_nga">Tuyết Nga</string>
     <string name="trash_1">An toàn và an ninh mạng</string>
     <string name="trash_2">Lên mạng lúc: 2018-03-14 09:19:50</string>
+
+    <!--facebook setup SDK-->
+    <string name="facebook_app_id">817344528473651</string>
+    <string name="fb_login_protocol_scheme">fb817344528473651</string>
+
 </resources>
