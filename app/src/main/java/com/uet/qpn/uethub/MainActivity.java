@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.AppTheme);
+        setTheme(R.style.Theme_Design_Light_NoActionBar);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermission();

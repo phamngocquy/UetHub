@@ -47,8 +47,10 @@ public class Fragment_setting extends Fragment {
     private CallbackManager callbackManager;
     private CircleImageView imgAvt;
     private TextView txtUserName;
-
+    private boolean isLoggedIn = false;
     public Fragment_setting() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken == null;
     }
 
     @Nullable
@@ -74,26 +76,6 @@ public class Fragment_setting extends Fragment {
         loginButton.setFragment(this);
 
         // Callback registration
-        loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-            @Override
-            public void onSuccess(LoginResult loginResult) {
-                // App code
-
-            }
-
-            @Override
-            public void onCancel() {
-                // App code
-            }
-
-            @Override
-            public void onError(FacebookException exception) {
-                // App code
-            }
-        });
-
-
-        callbackManager = CallbackManager.Factory.create();
 
         LoginManager.getInstance().registerCallback(callbackManager,
                 new FacebookCallback<LoginResult>() {
@@ -141,9 +123,32 @@ public class Fragment_setting extends Fragment {
         boolean isExpired;
         if (!isLoggedIn) {
             isExpired = accessToken.isExpired();
-        }
-        LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
 
+            Profile profile = Profile.getCurrentProfile();
+
+            if (profile != null) {
+                final Uri uri = profile.getProfilePictureUri(150, 150);
+                Picasso.get().load(uri).into(imgAvt);
+                GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+
+                        try {
+                            txtUserName.setText(object.getString("name"));
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,picture");
+                request.setParameters(parameters);
+                request.executeAsync();
+
+            }
+
+        }
 
     }
 
