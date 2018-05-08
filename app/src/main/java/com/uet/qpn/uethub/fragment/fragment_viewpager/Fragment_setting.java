@@ -138,7 +138,10 @@ public class Fragment_setting extends Fragment {
 
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken == null;
-        boolean isExpired = accessToken.isExpired();
+        boolean isExpired;
+        if (!isLoggedIn) {
+            isExpired = accessToken.isExpired();
+        }
         LoginManager.getInstance().logInWithReadPermissions(this, Collections.singletonList("public_profile"));
 
 
