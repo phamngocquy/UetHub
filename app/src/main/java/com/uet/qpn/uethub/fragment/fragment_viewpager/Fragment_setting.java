@@ -25,12 +25,14 @@ import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
+import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.squareup.picasso.Picasso;
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.fcm.MyFirebaseInstanceIDService;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -47,10 +49,20 @@ public class Fragment_setting extends Fragment {
     private CallbackManager callbackManager;
     private CircleImageView imgAvt;
     private TextView txtUserName;
+    private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private boolean isLoggedIn = false;
+    ProfileTracker profileTracker;
+
     public Fragment_setting() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken == null;
+        profileTracker = new ProfileTracker() {
+            @Override
+            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
+                Profile.setCurrentProfile(currentProfile);
+            }
+        };
+        profileTracker.startTracking();
     }
 
     @Nullable
@@ -82,29 +94,30 @@ public class Fragment_setting extends Fragment {
                     @Override
                     public void onSuccess(LoginResult loginResult) {
 
-                        Profile profile = Profile.getCurrentProfile();
 
-                        if (profile != null) {
-                            final Uri uri = profile.getProfilePictureUri(150, 150);
-                            Picasso.get().load(uri).into(imgAvt);
-                            GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
-                                @Override
-                                public void onCompleted(JSONObject object, GraphResponse response) {
 
-                                    try {
-                                        txtUserName.setText(object.getString("name"));
-                                    } catch (JSONException e) {
-                                        e.printStackTrace();
-                                    }
+                   //     final Uri uri = profile.getProfilePictureUri(150, 150);
+                    //    Picasso.get().load(uri).into(imgAvt);
+                        GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+
+                                try {
+                                    txtUserName.setText(object.getString("name"));
+                                    String email = object.getString("email");
+                                    Log.d("emaillll", email);
+                                    myFirebaseInstanceIDService.updateDeviceToken(email, myFirebaseInstanceIDService.getInstanceID());
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
                                 }
-                            });
+                            }
+                        });
 
-                            Bundle parameters = new Bundle();
-                            parameters.putString("fields", "id,name,email,picture");
-                            request.setParameters(parameters);
-                            request.executeAsync();
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,picture");
+                        request.setParameters(parameters);
+                        request.executeAsync();
 
-                        }
                     }
 
                     @Override
