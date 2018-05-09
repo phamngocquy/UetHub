@@ -3,30 +3,26 @@ package com.uet.qpn.uethub;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
-import com.uet.qpn.uethub.NewsJsoupParser.Parser.GetContentNews;
+import com.roger.catloadinglibrary.CatLoadingView;
 import com.uet.qpn.uethub.entity.NewsEntity;
-import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.select.Elements;
 
 import java.io.IOException;
 
 public class ReadNewsActivity extends AppCompatActivity {
 
     private WebView webView;
-    private ProgressBar progressBar;
+    //private ProgressBarCircularIndeterminate progressBar;
     private NewsEntity entity;
+    private CatLoadingView catLoadingView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,12 +35,16 @@ public class ReadNewsActivity extends AppCompatActivity {
 
     @SuppressLint("SetJavaScriptEnabled")
     public void init() {
-        progressBar = findViewById(R.id.prgBar);
+        catLoadingView = new CatLoadingView();
+        catLoadingView.setText("  Bình tĩnh...");
+        catLoadingView.setCanceledOnTouchOutside(false);
+
+        // progressBar = findViewById(R.id.prgBar);
         webView = findViewById(R.id.readNewsWebView);
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setSupportZoom(true);
+       /* webView.getSettings().setSupportZoom(true);
         webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(true);
+        webView.getSettings().setDisplayZoomControls(true);*/
 
         Intent intent = getIntent();
         entity = (NewsEntity) intent.getSerializableExtra("news");
@@ -66,7 +66,8 @@ public class ReadNewsActivity extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setVisibility(View.VISIBLE);
+            catLoadingView.show(getSupportFragmentManager(), "");
+            // progressBar.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -89,8 +90,9 @@ public class ReadNewsActivity extends AppCompatActivity {
                 Log.d("dataHTMK", newContent);
 
                 webView.loadDataWithBaseURL(null, "<style>img{display: inline;height: auto;max-width: 100%;}</style>" + newContent, "text/html", "UTF-8", null);
-           //     webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
-                progressBar.setVisibility(View.GONE);
+                //     webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
+                // progressBar.setVisibility(View.GONE);
+                catLoadingView.dismiss();
             } catch (NullPointerException e) {
                 Log.e("Null", "Helper.getNewsPage(content.toString());");
             }
