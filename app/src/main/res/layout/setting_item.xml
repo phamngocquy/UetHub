@@ -4,14 +4,14 @@
     android:layout_height="match_parent">
 
     <RelativeLayout
-        android:layout_margin="5dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_margin="5dp"
         android:layout_weight="1">
         <TextView
             android:id="@+id/txtFit"
             style="@style/txtSettingItem"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="@string/fit" />
 
@@ -26,7 +26,7 @@
         <TextView
             android:id="@+id/txtUet"
             style="@style/txtSettingItem"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fitSwitch"
             android:text="@string/uet" />
@@ -62,7 +62,12 @@
 
 
     </RelativeLayout>
-
+    <View
+        android:layout_width="1dp"
+        android:layout_height="130dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="5dp"
+        android:background="#c5c5d5" />
     <RelativeLayout
         android:layout_margin="5dp"
         android:layout_width="0dp"
@@ -72,7 +77,7 @@
         <TextView
             android:id="@+id/txtFet"
             style="@style/txtSettingItem"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:text="@string/fet" />
 
@@ -87,7 +92,7 @@
         <TextView
             android:id="@+id/txtFepn"
             style="@style/txtSettingItem"
-            android:layout_width="50dp"
+            android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_below="@+id/fetSwitch"
             android:layout_marginTop="10dp"
