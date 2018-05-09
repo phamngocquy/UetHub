@@ -15,6 +15,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,8 +37,11 @@ public class Helper {
                 entity.setNewsName(newsName);
 
                 Long dataNum = Long.valueOf(jsonObject.getString("date"));
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+
+
                 Date date = new Date(dataNum);
-                entity.setPublictime(date.toString());
+                entity.setPublictime(simpleDateFormat.format(date));
 
 
                 //Log.d("xxx", entity.toString());
@@ -87,11 +91,12 @@ public class Helper {
                 Long dataNumCreatedTime = Long.valueOf(jsonObject.getString("createdTime"));
                 Long dataNumUpdatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
 
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
                 Date dateCreated = new Date(dataNumCreatedTime);
                 Date dateUpdated = new Date(dataNumUpdatedTime);
 
-                subject.setPublic_time(dateCreated.toString());
-                subject.setUpdate_on(dateUpdated.toString());
+                subject.setPublic_time(simpleDateFormat.format(dateCreated));
+                subject.setUpdate_on(simpleDateFormat.format(dateUpdated));
 
                 subjects.add(subject);
             }

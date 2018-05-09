@@ -87,7 +87,9 @@ public class ReadNewsActivity extends AppCompatActivity {
             try {
                 String newContent = Helper.getNewsPage(content.toString());
                 Log.d("dataHTMK", newContent);
-                webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
+
+                webView.loadDataWithBaseURL(null, "<style>img{display: inline;height: auto;max-width: 100%;}</style>" + newContent, "text/html", "UTF-8", null);
+           //     webView.loadDataWithBaseURL(null, newContent, "text/html", "UTF-8", null);
                 progressBar.setVisibility(View.GONE);
             } catch (NullPointerException e) {
                 Log.e("Null", "Helper.getNewsPage(content.toString());");
