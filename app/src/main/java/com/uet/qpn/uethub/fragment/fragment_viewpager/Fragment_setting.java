@@ -14,6 +14,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -52,6 +54,10 @@ public class Fragment_setting extends Fragment {
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private boolean isLoggedIn = false;
     ProfileTracker profileTracker;
+    EditText edtMSV;
+    Button btnMSV;
+    TextView tvMSV;
+    Button btnSaveMSV;
 
     public Fragment_setting() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
@@ -162,6 +168,30 @@ public class Fragment_setting extends Fragment {
             }
 
         }
+        btnMSV = view.findViewById(R.id.btnMSV);
+        edtMSV = view.findViewById(R.id.edtMSV);
+        tvMSV = view.findViewById(R.id.tvMSV);
+        btnSaveMSV = view.findViewById(R.id.btnSaveMSV);
+        btnMSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                edtMSV.setVisibility(View.VISIBLE);
+                edtMSV.setText(tvMSV.getText());
+                tvMSV.setVisibility(View.GONE);
+                btnMSV.setVisibility(View.GONE);
+                btnSaveMSV.setVisibility(View.VISIBLE);
+            }
+        });
+        btnSaveMSV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                tvMSV.setText(edtMSV.getText());
+                edtMSV.setVisibility(View.GONE);
+                tvMSV.setVisibility(View.VISIBLE);
+                btnMSV.setVisibility(View.VISIBLE);
+                btnSaveMSV.setVisibility(View.GONE);
+            }
+        });
 
     }
 

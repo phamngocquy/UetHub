@@ -60,11 +60,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginBottom="20dp"
             android:text="Nhận tin từ:"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <Switch
                 android:id="@+id/swUET"
@@ -72,7 +74,7 @@
                 android:layout_height="wrap_content"
                 android:text="UET" />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content" />
             <Switch
                 android:id="@+id/swFIT"
@@ -84,6 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="50dp"
+            android:layout_marginBottom="10dp"
             android:orientation="horizontal">
             <Switch
                 android:id="@+id/swFET"
@@ -91,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:text="FET" />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content" />
             <Switch
                 android:id="@+id/swFEPN"
@@ -110,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="EXAM" />
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="80dp"
                 android:layout_height="wrap_content" />
             <Switch
                 android:id="@+id/swRESULT"
@@ -135,17 +138,24 @@
                 android:text="15021473"
                 android:id="@+id/tvMSV"/>
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/btnMSV"
                 android:text="Thay đổi"/>
             <EditText
-                android:id="@+id/editMSV"
-                android:layout_width="wrap_content"
+                android:id="@+id/edtMSV"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:visibility="gone"
+                android:inputType="number"
                 android:textSize="15dp"
                 android:hint="15021473"/>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/btnSaveMSV"
+                android:text="Lưu"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>
