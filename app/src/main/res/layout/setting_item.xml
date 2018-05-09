@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_margin="5dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+        <TextView
+            android:id="@+id/txtFit"
+            style="@style/txtSettingItem"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fit" />
+
+        <com.gc.materialdesign.views.Switch
+            android:background="@color/switchColor"
+            android:id="@+id/fitSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/txtFit"
+            android:layout_toRightOf="@+id/txtFit" />
+
+        <TextView
+            android:id="@+id/txtUet"
+            style="@style/txtSettingItem"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fitSwitch"
+            android:text="@string/uet" />
+
+        <com.gc.materialdesign.views.Switch
+            android:background="@color/switchColor"
+            android:id="@+id/uetSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fitSwitch"
+            android:layout_toEndOf="@+id/txtUet"
+            android:layout_toRightOf="@+id/txtUet" />
+
+
+        <TextView
+            android:id="@+id/txtExam"
+            style="@style/txtSettingItem"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uetSwitch"
+            android:layout_marginTop="20dp"
+            android:text="@string/l_ch_thi" />
+
+        <com.gc.materialdesign.views.Switch
+            android:background="@color/switchColor"
+            android:id="@+id/uetExamSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/uetSwitch"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/txtExam"
+            android:layout_toRightOf="@+id/txtExam" />
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_margin="5dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/txtFet"
+            style="@style/txtSettingItem"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:text="@string/fet" />
+
+        <com.gc.materialdesign.views.Switch
+            android:id="@+id/fetSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/txtFet"
+            android:layout_toRightOf="@+id/txtFet"
+            android:background="@color/switchColor" />
+
+        <TextView
+            android:id="@+id/txtFepn"
+            style="@style/txtSettingItem"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fetSwitch"
+            android:layout_marginTop="10dp"
+            android:text="@string/fepn" />
+
+        <com.gc.materialdesign.views.Switch
+            android:id="@+id/fepnSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fetSwitch"
+            android:layout_toEndOf="@+id/txtFepn"
+            android:layout_toRightOf="@+id/txtFepn"
+            android:background="@color/switchColor" />
+
+        <TextView
+            android:id="@+id/txtResult"
+            style="@style/txtSettingItem"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fepnSwitch"
+            android:layout_marginTop="20dp"
+            android:text="@string/result" />
+
+        <com.gc.materialdesign.views.Switch
+            android:background="@color/switchColor"
+            android:id="@+id/resultSwitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/fepnSwitch"
+            android:layout_marginTop="10dp"
+            android:layout_toEndOf="@+id/txtResult"
+            android:layout_toRightOf="@+id/txtResult" />
+
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -9,7 +9,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0-alpha09'
+        classpath 'com.android.tools.build:gradle:3.2.0-alpha13'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.google.gms:google-services:3.2.0'
         classpath "io.realm:realm-gradle-plugin:5.1.0"
@@ -28,3 +28,8 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+configurations.all {
+    resolutionStrategy {
+        force 'com.android.support:support-v4:27.1.0'
+    }}

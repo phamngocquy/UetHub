@@ -1,4 +1,14 @@
 <resources>
     <string name="avatar">Avatar</string>
     <string name="username_demo">user name</string>
+    <string name="fit">FIT</string>
+    <string name="fet">FET</string>
+    <string name="uet">UET</string>
+    <string name="fepn">FEPN</string>
+    <string name="l_ch_thi">Lịch thi</string>
+    <string name="result">Kết quả</string>
+    <string name="nhantinmoi">Nhận tin mới</string>
+    <string name="msv">Mã sinh viên</string>
+    <string name="edit_msv">Sửa</string>
+    <string name="_15021169">15021169</string>
 </resources>

@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -56,8 +56,17 @@
         <item name="android:textColor">@color/black</item>
     </style>
 
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="SplashTheme" parent="CustomTheme">
         <item name="android:windowBackground">@drawable/splash</item>
+    </style>
+
+    <style name="txtSettingItem">
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">10dp</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">italic</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
 </resources>

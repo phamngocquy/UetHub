@@ -11,4 +11,5 @@
     <color name="tab_layoutColor">#1c3475</color>
     <color name="status_bar_color">#1c3475</color>
     <color name="tabTextColor">#9ab6b5</color>
+    <color name="switchColor">#1e9bc9</color>
 </resources>
