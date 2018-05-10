@@ -8,6 +8,9 @@
         android:layout_height="wrap_content" />
 
     <EditText
+        android:layout_marginRight="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/edtMsv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

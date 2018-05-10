@@ -36,7 +36,7 @@ public class ReadNewsActivity extends AppCompatActivity {
     @SuppressLint("SetJavaScriptEnabled")
     public void init() {
         catLoadingView = new CatLoadingView();
-        catLoadingView.setText("  Bình tĩnh...");
+        catLoadingView.setText("Bình tĩnh...");
         catLoadingView.setCanceledOnTouchOutside(false);
 
         // progressBar = findViewById(R.id.prgBar);

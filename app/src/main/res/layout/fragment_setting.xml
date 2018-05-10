@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -15,46 +16,55 @@
         android:layout_marginTop="30dp"
         tools:ignore="RelativeOverlap" />
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardView"
+    <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp">
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imgAvt"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_margin="10dp"
-                android:contentDescription="@string/avatar"
-                android:elevation="10dp"
-                android:src="@drawable/ic_launcher_background"
-                tools:ignore="UnusedAttribute" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgAvt"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center"
+            android:layout_margin="10dp"
+            android:contentDescription="@string/avatar"
+            android:elevation="10dp"
+            android:src="@drawable/ic_launcher_background"
+            tools:ignore="UnusedAttribute" />
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:layout_margin="5dp"
+            android:layout_weight="4"
+            app:cardCornerRadius="15dp">
 
             <TextView
                 android:id="@+id/txtUserName"
                 style="@style/textCodeSubject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_toEndOf="@+id/imgAvt"
                 android:layout_toRightOf="@+id/imgAvt"
                 android:text="@string/username_demo" />
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
+
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/cardView"
-        android:layout_margin="5dp">
+        android:layout_below="@+id/linearLayout"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="15dp">
 
         <TextView
             style="@style/txtSettingItem"
@@ -75,7 +85,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cardView_2"
-        android:layout_margin="5dp">
+        android:layout_margin="5dp"
+        app:cardCornerRadius="15dpg">
 
         <RelativeLayout
             android:layout_width="match_parent"
