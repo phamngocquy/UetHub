@@ -206,6 +206,8 @@ public class Fragment_setting extends Fragment {
                 });
 
                 AlertDialog dialogEditMsv = builder.create();
+                dialogEditMsv.getWindow().setBackgroundDrawableResource(R.drawable.dialog_setting);
+                edit_msv.setText(getMsvFromSharedPreference());
                 dialogEditMsv.show();
             }
         });
