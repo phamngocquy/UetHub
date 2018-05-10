@@ -47,7 +47,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class Fragment_setting extends Fragment {
     private CallbackManager callbackManager;
     private CircleImageView imgAvt;
-    private TextView txtUserName;
+    private TextView txtUserName, txtEmail;
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private ProfileTracker profileTracker;
 
@@ -86,6 +86,7 @@ public class Fragment_setting extends Fragment {
 
         imgAvt = view.findViewById(R.id.imgAvt);
         txtUserName = view.findViewById(R.id.txtUserName);
+        txtEmail = view.findViewById(R.id.txtEmail);
 
         LoginButton loginButton = view.findViewById(R.id.login_button);
         loginButton.setReadPermissions("email");
@@ -112,6 +113,7 @@ public class Fragment_setting extends Fragment {
                                 try {
                                     txtUserName.setText(object.getString("name"));
                                     String email = object.getString("email");
+                                    txtEmail.setText(email);
                                     Log.d("email_", email);
                                     myFirebaseInstanceIDService.updateDeviceToken(email, myFirebaseInstanceIDService.getInstanceID());
                                 } catch (JSONException e) {
@@ -151,6 +153,7 @@ public class Fragment_setting extends Fragment {
 
                         try {
                             txtUserName.setText(object.getString("name"));
+                            txtEmail.setText(object.getString("email"));
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
