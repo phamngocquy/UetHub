@@ -1,15 +1,22 @@
 package com.uet.qpn.uethub.fragment.fragment_viewpager;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +33,7 @@ import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
+import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.Switch;
 import com.squareup.picasso.Picasso;
 import com.uet.qpn.uethub.R;
@@ -42,6 +50,7 @@ public class Fragment_setting extends Fragment {
     private TextView txtUserName;
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private ProfileTracker profileTracker;
+
     private Switch fepnSwitch, fetSwitch, uetSwitch, resultSwitch, examSwitch, fitSwitch;
 
 
@@ -68,10 +77,10 @@ public class Fragment_setting extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         AppEventsLogger.activateApp(getContext());
-        initSwitch(view);
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         AppEventsLogger.activateApp(getContext());
         initSwitch(view);
+        initBtnMsv(view);
 
         callbackManager = CallbackManager.Factory.create();
 
@@ -163,6 +172,46 @@ public class Fragment_setting extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    private void initBtnMsv(View view) {
+        ButtonFlat btnMsv = view.findViewById(R.id.btnEditMsv);
+        final TextView txtMsv = view.findViewById(R.id.txtMsv);
+        txtMsv.setText(getMsvFromSharedPreference());
+
+        btnMsv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+
+                LayoutInflater layoutInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+                View dialog_view = layoutInflater.inflate(R.layout.setting_dialog, null);
+                final EditText edit_msv = dialog_view.findViewById(R.id.edtMsv);
+
+                builder.setView(dialog_view);
+                builder.setCancelable(false);
+                builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // store to shared_preference
+                        putMsvToSharedPreference(edit_msv);
+                        txtMsv.setText(edit_msv.getText().toString());
+                        dialog.dismiss();
+
+                    }
+                }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // cancel edit
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialogEditMsv = builder.create();
+                dialogEditMsv.show();
+            }
+        });
+
+
+    }
 
     private void initSwitch(View view) {
 
@@ -172,7 +221,6 @@ public class Fragment_setting extends Fragment {
         fetSwitch = view.findViewById(R.id.fetSwitch);
         examSwitch = view.findViewById(R.id.uetExamSwitch);
         resultSwitch = view.findViewById(R.id.resultSwitch);
-
 
         uetSwitch.setOncheckListener(changeUetSwitch);
         fitSwitch.setOncheckListener(changeFitSwitch);
@@ -232,5 +280,17 @@ public class Fragment_setting extends Fragment {
 
     private boolean checkLogin() {
         return AccessToken.getCurrentAccessToken() == null;
+    }
+
+    private void putMsvToSharedPreference(EditText edit_msv) {
+        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("msv", edit_msv.getText().toString());
+        editor.apply();
+    }
+
+    private String getMsvFromSharedPreference() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString("msv", null);
     }
 }

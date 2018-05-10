@@ -11,4 +11,7 @@
     <string name="msv">Mã sinh viên</string>
     <string name="edit_msv">Sửa</string>
     <string name="_15021169">15021169</string>
+    <string name="msv_hint">Mã sinh viên</string>
+    <string name="ok">Save</string>
+    <string name="cancel">Cancel</string>
 </resources>

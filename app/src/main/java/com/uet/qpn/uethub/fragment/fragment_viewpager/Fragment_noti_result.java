@@ -11,6 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
@@ -22,7 +24,9 @@ import com.uet.qpn.uethub.rclViewAdapter.RclExamResultViewAdapter;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import is.arontibo.library.ElasticDownloadView;
 
@@ -59,10 +63,10 @@ public class Fragment_noti_result extends Fragment {
     private void initData() {
 
         String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                //Log.d("Json_Result: ", response);
+                Log.d("Json_Result: ", response);
                 adapter.upDateData(Helper.getSubjectEntity(response));
             }
         }, new Response.ErrorListener() {
@@ -70,8 +74,15 @@ public class Fragment_noti_result extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
-        });
-
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Content-Type", "application/json; charset=utf-8");
+                headers.put("msv", "15021169");
+                return headers;
+            }
+        };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 

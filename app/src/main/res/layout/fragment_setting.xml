@@ -82,7 +82,7 @@
             android:layout_height="wrap_content">
 
             <TextView
-                android:id="@+id/txtMsv"
+                android:id="@+id/txtMasinhvien"
                 style="@style/txtSettingItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -94,22 +94,22 @@
                 android:id="@+id/btnEditMsv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/txtMsv"
+                android:layout_below="@+id/txtMasinhvien"
                 android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
-                android:text="@string/edit_msv">
-            </com.gc.materialdesign.views.ButtonFlat>
+                android:text="@string/edit_msv" />
 
             <TextView
-                android:layout_marginTop="5dp"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:text="@string/_15021169"
-                android:layout_below="@+id/txtMsv"
-                android:layout_toRightOf="@+id/btnEditMsv"
+                android:id="@+id/txtMsv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_toEndOf="@+id/btnEditMsv" />
+                android:layout_below="@+id/txtMasinhvien"
+                android:layout_marginTop="5dp"
+                android:layout_toEndOf="@+id/btnEditMsv"
+                android:layout_toRightOf="@+id/btnEditMsv"
+                android:text="@string/_15021169"
+                android:textColor="@color/black"
+                android:textSize="18sp" />
 
         </RelativeLayout>
 
