@@ -144,4 +144,8 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
             }
         }
     }
+
+    public List<Subject> getSubjects() {
+        return subjects;
+    }
 }

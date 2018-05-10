@@ -34,10 +34,12 @@ public class RealmDemo {
             RealmResults<Subject> abc = realm.where(Subject.class).findAll();
             List<Subject> subjects = new ArrayList<>();
             Iterator<Subject> def = abc.iterator();
+            Log.w("a","vck");
             while (def.hasNext()) {
                 Subject subject = def.next();
                 Log.w("name", subject.getName());
             }
+            Log.w("name","vck");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

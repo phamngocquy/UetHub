@@ -21,8 +21,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
+import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.rclViewAdapter.RclExamResultViewAdapter;
+import com.uet.qpn.uethub.saveRealm.SaveNew;
+import com.uet.qpn.uethub.saveRealm.SaveSubject;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
@@ -65,11 +68,16 @@ public class Fragment_noti_result extends Fragment {
     private void initData() {
 
         String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: ", response);
                 adapter.upDateData(Helper.getSubjectEntity(response));
+                ArrayList<Subject> subjects = (ArrayList<Subject>) adapter.getSubjects();
+                SaveSubject saveSubject = new SaveSubject();
+                for (int i = 0; i < subjects.size(); i++) {
+                    saveSubject.saveSubject(subjects.get(i));
+                }
             }
         }, new Response.ErrorListener() {
             @Override

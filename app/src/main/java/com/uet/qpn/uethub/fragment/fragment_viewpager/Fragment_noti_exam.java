@@ -21,7 +21,7 @@ import java.util.List;
 
 public class Fragment_noti_exam extends Fragment {
 
-
+//    List<Exam>
     public Fragment_noti_exam() {
     }
 
@@ -31,6 +31,11 @@ public class Fragment_noti_exam extends Fragment {
         Log.d("onCreateView frag__exam", "run in");
         return inflater.inflate(R.layout.fragment_noti_exam, container, false);
     }
+
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//    }
 
 
 }

@@ -20,6 +20,7 @@ import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.rclViewAdapter.RclNewsViewAdapter;
+import com.uet.qpn.uethub.saveRealm.SaveNew;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
@@ -68,6 +69,11 @@ public class Fragment_news_fet extends Fragment {
             @Override
             public void onResponse(String response) {
                 adapter.upDateData(Helper.getNewsEntity(response, "FET"));
+                ArrayList<NewsEntity> newsEntities = adapter.getNewsEntities();
+                SaveNew saveNew = new SaveNew();
+                for (int i = 0; i < newsEntities.size(); i++) {
+                    saveNew.saveNew(newsEntities.get(i));
+                }
             }
         }, new Response.ErrorListener() {
             @Override
