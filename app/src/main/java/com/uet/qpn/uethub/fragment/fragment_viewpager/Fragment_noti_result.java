@@ -1,5 +1,7 @@
 package com.uet.qpn.uethub.fragment.fragment_viewpager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -75,15 +77,26 @@ public class Fragment_noti_result extends Fragment {
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
         }) {
-            @Override
+            /*@Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
                 headers.put("Content-Type", "application/json; charset=utf-8");
                 headers.put("msv", "15021169");
                 return headers;
+            }*/
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("msv", getMsvFromSharedPreference());
+                return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private String getMsvFromSharedPreference() {
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        return sharedPref.getString("msv", null);
     }
 
 }

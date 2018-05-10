@@ -14,17 +14,28 @@
         android:elevation="6dp"
         app:titleTextColor="@color/white" />
 
-    <WebView
-        android:id="@+id/readNewsWebView"
+    <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/readNewsToolbar" />
+        android:layout_below="@+id/readNewsToolbar"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:elevation="20dp">
 
- <!--   <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
-        android:id="@+id/prgBar"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_centerInParent="true"
-        android:background="#1E88E5" />-->
+        <WebView
+            android:scrollbarSize="4dp"
+            android:id="@+id/readNewsWebView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/readNewsToolbar"
+            android:scrollbarThumbVertical="@drawable/scrollbar_style" />
+    </android.support.v7.widget.CardView>
+
+    <!--   <com.gc.materialdesign.views.ProgressBarCircularIndeterminate
+           android:id="@+id/prgBar"
+           android:layout_width="32dp"
+           android:layout_height="32dp"
+           android:layout_centerInParent="true"
+           android:background="#1E88E5" />-->
 
 </RelativeLayout>
