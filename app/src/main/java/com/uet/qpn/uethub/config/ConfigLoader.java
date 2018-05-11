@@ -5,6 +5,7 @@ import android.app.Application;
 import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.saveRealm.SaveNew;
 import com.uet.qpn.uethub.saveRealm.SaveSubject;
+import com.uet.qpn.uethub.saveRealm.SaveSubjectGroup;
 import com.uet.qpn.uethub.test.RealmDemo;
 
 import java.util.UUID;
@@ -20,11 +21,13 @@ public class ConfigLoader extends Application {
         RealmConfiguration config = new RealmConfiguration.Builder().name("myrealm.realm").build();
         Realm.setDefaultConfiguration(config);
         RealmDemo realmDemo = new RealmDemo();
-        realmDemo.saveSubjects(new Subject(UUID.randomUUID().toString(),"", "", "", "phuong", "", "", ""));
-        realmDemo.getAllSubjects();
+//        realmDemo.saveSubjects(new Subject(UUID.randomUUID().toString(),"", "", "", "phuong", "", "", ""));
+//        realmDemo.getAllSubjects();
         SaveNew saveNew = new SaveNew();
         saveNew.getAllNew();
         SaveSubject saveSubject = new SaveSubject();
         saveSubject.getAllNew();
+        SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
+        saveSubjectGroup.getAllSubjectGroup();
     }
 }

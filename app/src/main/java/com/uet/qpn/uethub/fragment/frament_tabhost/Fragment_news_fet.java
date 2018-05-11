@@ -65,6 +65,7 @@ public class Fragment_news_fet extends Fragment {
 
         String url = Configuration.HOST + Configuration.API_PATH_NEWS +
                 "news=FET&page=" + Helper.getPageNumber(adapter.getItemCount());
+        Log.w("url", url);
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {

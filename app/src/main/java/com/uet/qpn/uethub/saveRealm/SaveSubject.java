@@ -15,18 +15,21 @@ import io.realm.RealmResults;
 public class SaveSubject {
     public void saveSubject(Subject subject) {
         Realm realm = Realm.getDefaultInstance();
-
-        try {
-            realm.beginTransaction();
-            Long count = realm.where(Subject.class).count();
-            Log.w("nghia","start save subject " + count);
-            subject.setId(String.valueOf(count));
-            realm.copyToRealm(subject);
-            realm.commitTransaction();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            realm.close();
+        Subject subject_tmp = realm.where(Subject.class).equalTo("code", subject.getCode()).findFirst();
+        Log.w("why", "w");
+        if(subject_tmp == null) {
+            try {
+                realm.beginTransaction();
+                Long count = realm.where(Subject.class).count();
+                Log.w("nghia", "start save subject " + count);
+                subject.setId(String.valueOf(count));
+                realm.copyToRealm(subject);
+                realm.commitTransaction();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
         }
     }
     public void getAllNew() {

@@ -15,18 +15,21 @@ import io.realm.RealmResults;
 public class SaveNew {
     public void saveNew(NewsEntity newsEntity) {
         Realm realm = Realm.getDefaultInstance();
-
-        try {
-            realm.beginTransaction();
-            Long count = realm.where(NewsEntity.class).count();
-            Log.w("nghia","start save new " + count);
-            newsEntity.setId(String.valueOf(count));
-            realm.copyToRealm(newsEntity);
-            realm.commitTransaction();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            realm.close();
+        NewsEntity entity = realm.where(NewsEntity.class).equalTo("url", newsEntity.getUrl()).findFirst();
+        Log.w("why", "w");
+        if (entity == null) {
+            try {
+                    realm.beginTransaction();
+                    Long count = realm.where(NewsEntity.class).count();
+                    Log.w("nghia", "start save new " + count);
+                    newsEntity.setId(String.valueOf(count));
+                    realm.copyToRealm(newsEntity);
+                    realm.commitTransaction();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
         }
     }
     public void getAllNew() {

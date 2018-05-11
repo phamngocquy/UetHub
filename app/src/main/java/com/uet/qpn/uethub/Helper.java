@@ -6,6 +6,7 @@ import android.util.Log;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.entity.Subject;
+import com.uet.qpn.uethub.entity.SubjectGroup;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import org.jsoup.select.Elements;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -170,4 +172,35 @@ public class Helper {
         return result;
     }
 
+
+    public static List<SubjectGroup> getSubjectGroup(String response) {
+        List<SubjectGroup> subjectGroups = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                SubjectGroup subjectGroup = new SubjectGroup();
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                subjectGroup.setMsv(jsonObject.getString("msv"));
+                subjectGroup.setSbdUser(jsonObject.getString("sbdUser"));
+                subjectGroup.setExamDay(jsonObject.getString("examDay"));
+                subjectGroup.setExamRoom(jsonObject.getString("examRoom"));
+                subjectGroup.setTypeExam(jsonObject.getString("typeExam"));
+                subjectGroup.setSubjectName(jsonObject.getString("subjectName"));
+                subjectGroup.setSubjectCode(jsonObject.getString("subjectCode"));
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                Date dateUpdated = Calendar.getInstance().getTime();
+                subjectGroup.setUpdate_on(simpleDateFormat.format(dateUpdated));
+
+                subjectGroups.add(subjectGroup);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.w("length", String.valueOf(subjectGroups.size()));
+
+        return subjectGroups;
+
+    }
 }
