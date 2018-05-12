@@ -30,19 +30,24 @@ public class SaveSubjectGroup {
             }
         }
     }
-    public void getAllSubjectGroup() {
+    public List<SubjectGroup> getAllSubjectGroup() {
         Realm realm = Realm.getDefaultInstance();
+        List<SubjectGroup> subjectGroupList = new ArrayList<>();
         try {
             RealmResults<SubjectGroup> subjectGroups = realm.where(SubjectGroup.class).findAll();
-            List<SubjectGroup> subjectGroupList = new ArrayList<>();
-            Iterator<SubjectGroup> iterator = subjectGroupList.iterator();
+            Iterator<SubjectGroup> iterator = subjectGroups.iterator();
             while (iterator.hasNext()) {
                 SubjectGroup subjectGroup = iterator.next();
+                subjectGroupList.add(subjectGroup);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
             realm.close();
         }
+        for (int i = 0; i < subjectGroupList.size(); i++){
+            Log.w("en", subjectGroupList.get(i).getSubjectName());
+        }
+        return subjectGroupList;
     }
 }

@@ -32,16 +32,17 @@ public class SaveSubject {
             }
         }
     }
-    public void getAllNew() {
+    public List<Subject> getAllSubjects() {
         Realm realm = Realm.getDefaultInstance();
+        List<Subject> subjectList = new ArrayList<>();
         try {
             Log.w("nghia","get all of subjects");
             RealmResults<Subject> subjects = realm.where(Subject.class).findAll();
             Log.w("count", String.valueOf(realm.where(Subject.class).count()));
-            List<Subject> subjectList = new ArrayList<>();
             Iterator<Subject> iterator = subjects.iterator();
             while (iterator.hasNext()) {
                 Subject subject = iterator.next();
+                subjectList.add(subject);
                 Log.w("nameOfsubject", subject.getName());
             }
         } catch (Exception e) {
@@ -49,5 +50,9 @@ public class SaveSubject {
         } finally {
             realm.close();
         }
+        for (int i = 0; i < subjectList.size(); i++){
+            Log.w("en", subjectList.get(i).getName());
+        }
+        return subjectList;
     }
 }

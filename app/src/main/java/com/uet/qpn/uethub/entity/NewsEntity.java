@@ -1,11 +1,18 @@
 package com.uet.qpn.uethub.entity;
 
+import android.support.annotation.NonNull;
+import android.util.Log;
+
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Comparator;
+import java.util.Date;
 
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class NewsEntity extends RealmObject implements Serializable {
+public class NewsEntity extends RealmObject implements Serializable,Comparable<NewsEntity>{
 
     @PrimaryKey
     private String id;
@@ -106,5 +113,19 @@ public class NewsEntity extends RealmObject implements Serializable {
 
     public void setNewsName(String newsName) {
         this.newsName = newsName;
+    }
+
+    @Override
+    public int compareTo(@NonNull NewsEntity o) {
+        SimpleDateFormat format = new SimpleDateFormat("hh'h'mm dd-MM-yyyy");
+        Date date1 = null;
+        Date date2 = null;
+        try {
+           date1 = format.parse(getPublictime());
+           date2 = format.parse(o.getPublictime());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return date2.compareTo(date1);
     }
 }

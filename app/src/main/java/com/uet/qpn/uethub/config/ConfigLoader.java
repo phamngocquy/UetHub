@@ -1,6 +1,9 @@
 package com.uet.qpn.uethub.config;
 
 import android.app.Application;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+import android.util.Log;
 
 import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.saveRealm.SaveNew;
@@ -29,5 +32,8 @@ public class ConfigLoader extends Application {
         saveSubject.getAllNew();
         SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
         saveSubjectGroup.getAllSubjectGroup();*/
+//        SaveNew saveNew = new SaveNew();
+//        Log.w("why", "where");
+//        saveNew.getAllNews();
     }
 }
