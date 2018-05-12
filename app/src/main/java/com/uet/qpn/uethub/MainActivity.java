@@ -34,14 +34,14 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        setTheme(R.style.CustomTheme);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         checkPermission();
         createFolderStore();
         tabHost = findViewById(android.R.id.tabhost);
         tabHost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
-        //tabHost.setOnTabChangedListener(onTab_Change);
+
+
 
         LayoutInflater layoutInflater = getLayoutInflater();
         View news = layoutInflater.inflate(R.layout.indicator_news_fragment, null);

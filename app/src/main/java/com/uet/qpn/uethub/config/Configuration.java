@@ -5,6 +5,7 @@ public class Configuration {
     public static String API_PATH_EXAM_RESULT = "api/v1/grade/getAllSubjects";
     public static String API_PATH_EXAM = "api/v1/grade/getAllExam?";
     public static String API_PATH_UPDATE_FCM = "/api/v1/user/updatefcmToken";
+    public static String APT_PATH_UPDATE_NEW_REGISTER = "api/v1/user/updateNewsRegister";
     public static String API_PATH_UPDATE_MSV = "api/v1/user/updateMSV";
     public static String API_PATH_UPDATE_NEW_SW = "/api/v1/user/updateNewsRegister";
     public static String HOST = "http://192.168.0.104:8080/";

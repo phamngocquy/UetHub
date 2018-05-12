@@ -6,11 +6,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,8 +16,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -32,12 +33,16 @@ import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.gc.materialdesign.views.ButtonFlat;
+import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.Switch;
+import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.uet.qpn.uethub.LoginActivity;
 import com.uet.qpn.uethub.R;
+import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.fcm.MyFirebaseInstanceIDService;
+import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,15 +54,13 @@ public class Fragment_setting extends Fragment {
     private CircleImageView imgAvt;
     private TextView txtUserName, txtEmail;
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
-    private ProfileTracker profileTracker;
-
     private Switch fepnSwitch, fetSwitch, uetSwitch, resultSwitch, examSwitch, fitSwitch;
+    private ButtonFloat buttonFloat;
 
 
     public Fragment_setting() {
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        boolean isLoggedIn = accessToken == null;
-        profileTracker = new ProfileTracker() {
+        ProfileTracker profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
                 Profile.setCurrentProfile(currentProfile);
@@ -81,18 +84,17 @@ public class Fragment_setting extends Fragment {
         AppEventsLogger.activateApp(getContext());
         initSwitch(view);
         initBtnMsv(view);
-
+        buttonFloat = view.findViewById(R.id.btnLogout);
+        buttonFloat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logoutAcc();
+            }
+        });
         callbackManager = CallbackManager.Factory.create();
-
         imgAvt = view.findViewById(R.id.imgAvt);
         txtUserName = view.findViewById(R.id.txtUserName);
         txtEmail = view.findViewById(R.id.txtEmail);
-
-        LoginButton loginButton = view.findViewById(R.id.login_button);
-        loginButton.setReadPermissions("email");
-
-        // If using in a fragment
-        loginButton.setFragment(this);
 
         // Callback registration
         LoginManager.getInstance().registerCallback(callbackManager,
@@ -102,7 +104,6 @@ public class Fragment_setting extends Fragment {
 
                         examSwitch.setEnabled(true);
                         resultSwitch.setEnabled(true);
-
                         Profile profile = Profile.getCurrentProfile();
                         Uri uri = profile.getProfilePictureUri(150, 150);
                         Picasso.get().load(uri).into(imgAvt);
@@ -140,9 +141,7 @@ public class Fragment_setting extends Fragment {
                 });
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken == null;
-        boolean isExpired;
         if (!isLoggedIn) {
-            isExpired = accessToken.isExpired();
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
                 final Uri uri = profile.getProfilePictureUri(150, 150);
@@ -155,6 +154,8 @@ public class Fragment_setting extends Fragment {
                             txtUserName.setText(object.getString("name"));
                             txtEmail.setText(object.getString("email"));
                         } catch (JSONException e) {
+                            e.printStackTrace();
+                        } catch (NullPointerException e) {
                             e.printStackTrace();
                         }
                     }
@@ -211,80 +212,20 @@ public class Fragment_setting extends Fragment {
                 AlertDialog dialogEditMsv = builder.create();
                 dialogEditMsv.getWindow().setBackgroundDrawableResource(R.drawable.dialog_setting);
                 edit_msv.setText(getMsvFromSharedPreference());
+
                 dialogEditMsv.show();
             }
         });
 
-
     }
 
     private void initSwitch(View view) {
-
         uetSwitch = view.findViewById(R.id.uetSwitch);
         fitSwitch = view.findViewById(R.id.fitSwitch);
         fepnSwitch = view.findViewById(R.id.fepnSwitch);
         fetSwitch = view.findViewById(R.id.fetSwitch);
         examSwitch = view.findViewById(R.id.uetExamSwitch);
         resultSwitch = view.findViewById(R.id.resultSwitch);
-
-        uetSwitch.setOncheckListener(changeUetSwitch);
-        fitSwitch.setOncheckListener(changeFitSwitch);
-        fepnSwitch.setOncheckListener(changeFepnSwitch);
-
-        examSwitch.setOncheckListener(changeExamSwitch);
-        resultSwitch.setOncheckListener(changeResultSwitch);
-        fetSwitch.setOncheckListener(changeFetSwitch);
-
-    }
-
-    Switch.OnCheckListener changeUetSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-
-        }
-    };
-
-    Switch.OnCheckListener changeFitSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-
-        }
-    };
-
-    Switch.OnCheckListener changeFepnSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-
-        }
-    };
-
-    Switch.OnCheckListener changeFetSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-
-
-        }
-    };
-
-    Switch.OnCheckListener changeExamSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-            if (checkLogin()) {
-                Toast.makeText(getContext(), "Can dang nhap de su dung tinh nang nay", Toast.LENGTH_LONG).show();
-            }
-        }
-    };
-
-    Switch.OnCheckListener changeResultSwitch = new Switch.OnCheckListener() {
-        @Override
-        public void onCheck(Switch view, boolean check) {
-
-        }
-    };
-
-
-    private boolean checkLogin() {
-        return AccessToken.getCurrentAccessToken() == null;
     }
 
     private void putMsvToSharedPreference(EditText edit_msv) {
@@ -297,5 +238,51 @@ public class Fragment_setting extends Fragment {
     private String getMsvFromSharedPreference() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
         return sharedPref.getString("msv", null);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        updateNewRegister();
+
+    }
+
+    private void updateNewRegister() {
+        try {
+            JSONObject rootObject = new JSONObject();
+            JSONObject property = new JSONObject();
+
+            property.put("uet", uetSwitch.isCheck());
+            property.put("fit", fitSwitch.isCheck());
+            property.put("fet", fetSwitch.isCheck());
+            property.put("fepn", fepnSwitch.isCheck());
+            property.put("exam", examSwitch.isCheck());
+            property.put("grade", resultSwitch.isCheck());
+            rootObject.put("email", txtEmail.getText().toString());
+            rootObject.put("fcm", FirebaseInstanceId.getInstance().getToken());
+            rootObject.put("msv", getMsvFromSharedPreference());
+            rootObject.put("property", property);
+
+
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.HOST + Configuration.APT_PATH_UPDATE_NEW_REGISTER, rootObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                }
+            });
+            VolleySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void logoutAcc() {
+        LoginManager.getInstance().logOut();
+        getContext().startActivity(new Intent(getContext(), LoginActivity.class));
+        getActivity().finish();
     }
 }
