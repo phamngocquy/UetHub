@@ -277,11 +277,36 @@ public class Fragment_setting extends Fragment {
 
     private String getMsvFromSharedPreference() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", null);
+        return sharedPref.getString("msv", "");
     }
 
 
     private void updateNewRegister() {
+
+        String url = Configuration.HOST + Configuration.API_PATH_UPDATE_MSV;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("msv", getMsvFromSharedPreference());
+                params.put("email", txtEmail.getText().toString());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+
         try {
             JSONObject rootObject = new JSONObject();
             JSONObject property = new JSONObject();
@@ -310,6 +335,7 @@ public class Fragment_setting extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
 
     }
 
