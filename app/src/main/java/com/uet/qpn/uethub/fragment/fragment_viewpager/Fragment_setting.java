@@ -96,7 +96,7 @@ public class Fragment_setting extends Fragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                logoutAcc();
+                prelogoutAcc();
             }
         });
 
@@ -339,9 +339,70 @@ public class Fragment_setting extends Fragment {
 
     }
 
-    private void logoutAcc() {
+    private void prelogoutAcc() {
+        unRegNoti();
+
+    }
+
+    private void logout() {
         LoginManager.getInstance().logOut();
         getContext().startActivity(new Intent(getContext(), LoginActivity.class));
         getActivity().finish();
+    }
+
+    private void unRegNoti() {
+        AccessToken accessToken = AccessToken.getCurrentAccessToken();
+        boolean isLoggedIn = accessToken == null;
+        if (!isLoggedIn) {
+
+            final GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+
+                    try {
+                        MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
+
+                        String email = object.getString("email");
+                        String fcm = myFirebaseInstanceIDService.getInstanceID();
+
+                        String url = Configuration.HOST + Configuration.API_PATH_REMOVE_FCM;
+                        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                if (response.equals("true")) {
+                                    // da xoa thong tin thanh cong
+                                    logout();
+
+                                }
+                            }
+                        }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        }) {
+                            @Override
+                            protected Map<String, String> getParams() {
+                                Map<String, String> params = new HashMap<>();
+                                params.put("email", txtEmail.getText().toString());
+                                params.put("fcm", FirebaseInstanceId.getInstance().getToken());
+                                return params;
+                            }
+                        };
+
+                        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email");
+            request.setParameters(parameters);
+            request.executeAsync();
+        }
     }
 }
