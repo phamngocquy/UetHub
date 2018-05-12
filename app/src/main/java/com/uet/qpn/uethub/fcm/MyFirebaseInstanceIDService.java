@@ -54,6 +54,7 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // manage this apps subscriptions on the server side, send the
         // Instance ID token to your app server.
         sendRegistrationToServer(refreshedToken);
+        createUserByFcm();
     }
     // [END refresh_token]
 
@@ -126,7 +127,29 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         };
 
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
 
+    public void createUserByFcm() {
+        String url = Configuration.HOST + Configuration.API_PATH_GET_CREATE_USER;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("fcm", FirebaseInstanceId.getInstance().getToken());
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
     public void updateSW(final String email, final String fcmToken, final String msv, final String uet, final String fit,

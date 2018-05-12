@@ -17,10 +17,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -47,6 +49,9 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class Fragment_setting extends Fragment {
@@ -55,11 +60,9 @@ public class Fragment_setting extends Fragment {
     private TextView txtUserName, txtEmail;
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private Switch fepnSwitch, fetSwitch, uetSwitch, resultSwitch, examSwitch, fitSwitch;
-    private ButtonFloat buttonFloat;
 
 
     public Fragment_setting() {
-        AccessToken accessToken = AccessToken.getCurrentAccessToken();
         ProfileTracker profileTracker = new ProfileTracker() {
             @Override
             protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
@@ -84,11 +87,23 @@ public class Fragment_setting extends Fragment {
         AppEventsLogger.activateApp(getContext());
         initSwitch(view);
         initBtnMsv(view);
-        buttonFloat = view.findViewById(R.id.btnLogout);
-        buttonFloat.setOnClickListener(new View.OnClickListener() {
+        //loadConfig();
+
+
+        ButtonFloat btnLogout = view.findViewById(R.id.btnLogout);
+        ButtonFloat btnUpdate = view.findViewById(R.id.btnUpdate);
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 logoutAcc();
+            }
+        });
+
+        btnUpdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateNewRegister();
             }
         });
         callbackManager = CallbackManager.Factory.create();
@@ -110,7 +125,6 @@ public class Fragment_setting extends Fragment {
                         GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-
                                 try {
                                     txtUserName.setText(object.getString("name"));
                                     String email = object.getString("email");
@@ -139,6 +153,7 @@ public class Fragment_setting extends Fragment {
                         // App code
                     }
                 });
+
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
         boolean isLoggedIn = accessToken == null;
         if (!isLoggedIn) {
@@ -219,6 +234,31 @@ public class Fragment_setting extends Fragment {
 
     }
 
+    private void loadConfig() {
+        String url = Configuration.HOST + Configuration.API_PATH_GET_CONFIG;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("1123", response);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("email", txtEmail.getText().toString());
+                params.put("fcm", FirebaseInstanceId.getInstance().getToken());
+                return params;
+            }
+        };
+
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
     private void initSwitch(View view) {
         uetSwitch = view.findViewById(R.id.uetSwitch);
         fitSwitch = view.findViewById(R.id.fitSwitch);
@@ -240,12 +280,6 @@ public class Fragment_setting extends Fragment {
         return sharedPref.getString("msv", null);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        updateNewRegister();
-
-    }
 
     private void updateNewRegister() {
         try {
@@ -262,7 +296,6 @@ public class Fragment_setting extends Fragment {
             rootObject.put("fcm", FirebaseInstanceId.getInstance().getToken());
             rootObject.put("msv", getMsvFromSharedPreference());
             rootObject.put("property", property);
-
 
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.HOST + Configuration.APT_PATH_UPDATE_NEW_REGISTER, rootObject, new Response.Listener<JSONObject>() {
                 @Override

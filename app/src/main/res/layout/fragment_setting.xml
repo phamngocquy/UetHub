@@ -13,9 +13,25 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_margin="16dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="#1E88E5"
         materialdesign:iconDrawable="@drawable/logout2" />
+
+
+    <com.gc.materialdesign.views.ButtonFloat
+        android:id="@+id/btnUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/btnLogout"
+        android:layout_toStartOf="@+id/btnLogout"
+        android:background="#579de4"
+        materialdesign:iconDrawable="@drawable/exchange" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
