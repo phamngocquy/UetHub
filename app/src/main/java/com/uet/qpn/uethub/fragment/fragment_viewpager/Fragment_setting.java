@@ -40,6 +40,7 @@ import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.Switch;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.squareup.picasso.Picasso;
+import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.LoginActivity;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
@@ -50,6 +51,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -168,6 +170,7 @@ public class Fragment_setting extends Fragment {
                         try {
                             txtUserName.setText(object.getString("name"));
                             txtEmail.setText(object.getString("email"));
+                            loadConfig();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (NullPointerException e) {
@@ -234,30 +237,7 @@ public class Fragment_setting extends Fragment {
 
     }
 
-    private void loadConfig() {
-        String url = Configuration.HOST + Configuration.API_PATH_GET_CONFIG;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                Log.d("1123", response);
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
-            }
-        }) {
-            @Override
-            protected Map<String, String> getParams() {
-                Map<String, String> params = new HashMap<>();
-                params.put("email", txtEmail.getText().toString());
-                params.put("fcm", FirebaseInstanceId.getInstance().getToken());
-                return params;
-            }
-        };
-
-        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-    }
 
     private void initSwitch(View view) {
         uetSwitch = view.findViewById(R.id.uetSwitch);
@@ -403,6 +383,51 @@ public class Fragment_setting extends Fragment {
             parameters.putString("fields", "id,name,email");
             request.setParameters(parameters);
             request.executeAsync();
+        }
+    }
+
+    private void loadConfig(){
+        String url = Configuration.HOST + Configuration.API_PATH_GET_NEW_SW;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                List<String> listOfReg = Helper.getReg(response);
+                updateSW(listOfReg);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error_Frag_Ex_Result", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                final Map<String, String> params = new HashMap<>();
+                String email = txtEmail.getText().toString();
+                params.put("email", email);
+                String fcm =  FirebaseInstanceId.getInstance().getToken();
+                params.put("fcm", fcm);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+
+    }
+    private void updateSW(List<String> stringList){
+        for (int i = 0; i < stringList.size(); i++){
+            if (stringList.get(i).equals("UET")){
+                uetSwitch.setChecked(true);
+            } else if (stringList.get(i).equals("FIT")){
+                fitSwitch.setChecked(true);
+            } else if (stringList.get(i).equals("FET")){
+                fetSwitch.setChecked(true);
+            } else if (stringList.get(i).equals("FEPN")){
+                fepnSwitch.setChecked(true);
+            } else if (stringList.get(i).equals("EXAM")){
+                examSwitch.setChecked(true);
+            } else if (stringList.get(i).equals("GRADE")){
+                resultSwitch.setChecked(true);
+            }
         }
     }
 }
