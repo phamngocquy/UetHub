@@ -8,6 +8,7 @@ public class Configuration {
     public static String APT_PATH_UPDATE_NEW_REGISTER = "api/v1/user/updateNewsRegister";
     public static String API_PATH_UPDATE_MSV = "api/v1/user/updateMSV";
     public static String API_PATH_UPDATE_NEW_SW = "/api/v1/user/updateNewsRegister";
+    public static String API_PATH_GET_NEW_SW = "api/v1/news/getNewsRegByUser";
     public static String HOST = "http://192.168.0.104:8080/";
     public static String STORE_FOLDER = "UHDownload";
     public static String MSV = "15021473";
