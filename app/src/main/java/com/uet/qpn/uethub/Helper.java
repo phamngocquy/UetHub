@@ -201,4 +201,25 @@ public class Helper {
         return subjectGroups;
 
     }
+
+    public static List<String> getReg(String response) {
+        List<String> stringList = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                String reg = "";
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                reg = jsonObject.getString("name");
+
+                stringList.add(reg);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.w("length", String.valueOf(stringList.size()));
+
+        return stringList;
+
+    }
 }

@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.AccessToken;
 import com.facebook.GraphRequest;
@@ -23,6 +25,7 @@ import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -129,6 +132,69 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     }
 
+    public void updateSW(final String email, final String fcmToken, final String msv, final String uet, final String fit,
+                         final String fet, final String fepn, final String exam, final String grade) {
+        Log.d("updateSW", "cap nhat SW");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("email", email);
+            jsonObject.put("fcm", fcmToken);
+            jsonObject.put("msv", msv);
+
+            JSONObject property = new JSONObject();
+            property.put("uet", uet);
+            property.put("fit", fit);
+            property.put("fet", fet);
+            property.put("fepn", fepn);
+            property.put("exam", exam);
+            property.put("grade", grade);
+
+            jsonObject.put("property", property);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        final String requestBody = jsonObject.toString();
+        String url = Configuration.HOST + Configuration.API_PATH_UPDATE_NEW_SW;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Result: ", response);
+                if (response.equals("true")) {
+                    Log.d("updateSW", "oke");
+                }else {
+//                    Toast.makeText(getBaseContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error_Frag_Ex_Result", error.toString());
+//                Toast.makeText(getBaseContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public String getBodyContentType() {
+                return String.format("application/json; charset=utf-8");
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                try {
+                    return requestBody == null ? null : requestBody.getBytes("utf-8");
+                } catch (UnsupportedEncodingException uee) {
+                    VolleyLog.wtf("Unsupported Encoding while trying to get the bytes of %s using %s",
+                            requestBody, "utf-8");
+                    return null;
+                }
+            }
+        };
+
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+
+    }
+
+    // fcm ak u
     public String getInstanceID() {
         return FirebaseInstanceId.getInstance().getToken();
     }
