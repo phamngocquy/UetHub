@@ -70,9 +70,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
 
         Log.d(TAG, "token: " + token);
-        //    Toast.makeText(this, token, Toast.LENGTH_SHORT).show();
-
-        // dDbHzm9GeMA:APA91bFWABpS8tDwoTVEw8OHA025W3tmP7cMY0XQ9_7Lfwyv1xtZjLGK3mhqJzKrEmn9BqsQe63bejZ_chzuAQAutItCVbO3wzEZC3jBg5pKvImc6qJ65DOLAv6b-h4Dzb18plxss4sb
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
         Profile profile = Profile.getCurrentProfile();
@@ -161,16 +158,12 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 Log.d("Result: ", response);
                 if (response.equals("true")) {
                     Log.d("updateSW", "oke");
-                }else {
-//                    Toast.makeText(getBaseContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
                 }
-
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.d("Error_Frag_Ex_Result", error.toString());
-//                Toast.makeText(getBaseContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override
@@ -194,7 +187,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
 
     }
 
-    // fcm ak u
     public String getInstanceID() {
         return FirebaseInstanceId.getInstance().getToken();
     }

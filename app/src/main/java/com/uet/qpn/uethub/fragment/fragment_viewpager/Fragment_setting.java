@@ -347,34 +347,10 @@ public class Fragment_setting extends Fragment {
         return sharedPref.getString("msv", null);
     }
 
-//    private void initDataMSV(String msv) {
-//
-//        String url = Configuration.HOST + Configuration.API_PATH_UPDATE_MSV + "msv=" + Configuration.MSV;
-//        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
-//            @Override
-//            public void onResponse(String response) {
-//                Log.d("Json_Result: exam", response);
-//                adapter.upDateData(Helper.getSubjectGroup(response));
-//                ArrayList<SubjectGroup> subjectGroups = (ArrayList<SubjectGroup>) adapter.getSubjectGroups();
-//                SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
-//                Log.d("size", String.valueOf(subjectGroups.size()));
-//                for (int i = 0; i < subjectGroups.size(); i++) {
-//                    saveSubjectGroup.saveSubjectGroup(subjectGroups.get(i));
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//                Log.d("Error_Frag_Ex_Result", error.toString());
-//            }
-//        }) ;
-//        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
-//    }
 
     private void initDataSwitch() {
 
         String url = Configuration.HOST + Configuration.API_PATH_UPDATE_NEW_SW ;
-        Log.w("You are in init data", "really");
         if (AccessToken.getCurrentAccessToken() != null){
             // da dang nhap
             GraphRequest request = GraphRequest.newMeRequest(AccessToken.getCurrentAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
@@ -382,7 +358,6 @@ public class Fragment_setting extends Fragment {
                 public void onCompleted(JSONObject object, GraphResponse response) {
 
                     try {
-                        Log.w("testttt", "sa");
                         String email = object.getString("email");
                         Log.d("email_", email);
                         String fcm =  myFirebaseInstanceIDService.getInstanceID();
@@ -426,9 +401,7 @@ public class Fragment_setting extends Fragment {
                     String exam = String.valueOf(examSwitch.isCheck());
                     String grade = String.valueOf(resultSwitch.isCheck());
                     myFirebaseInstanceIDService.updateSW(email, fcm, msv, uet,fit, fet, fepn,exam, grade);
-                    // gui du lieu len serrver o day
 
-            // gui du lieu len serrver o day
         }
 
     }
@@ -441,7 +414,6 @@ public class Fragment_setting extends Fragment {
             public void onResponse(String response) {
                 Log.d("Json_Result", response);
                 List<String> listOfReg = Helper.getReg(response);
-                Log.d("Json_Result: exam", listOfReg.toString());
                 updateSW(listOfReg);
             }
         }, new Response.ErrorListener() {
@@ -454,22 +426,16 @@ public class Fragment_setting extends Fragment {
             protected Map<String, String> getParams() {
                 final Map<String, String> params = new HashMap<>();
                 String email = "";
-                Log.w("login", "???");
                 if (AccessToken.getCurrentAccessToken() != null){
                     // da dang nhap
                     email = txtEmail.getText().toString();
-                    Log.w("login", "yes");
                 }else {
                     // chua dang nhap
                     email = "";
-                    Log.w("login", "no");
                 }
                 params.put("email", email);
                 String fcm =  myFirebaseInstanceIDService.getInstanceID();
-                    // gui du lieu len serrver o day=
                 params.put("fcm", fcm);
-                Log.w("login", email);
-                Log.w("em00", "sssss");
                 return params;
             }
         };
