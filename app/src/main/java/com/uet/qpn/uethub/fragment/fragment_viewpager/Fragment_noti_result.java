@@ -68,7 +68,7 @@ public class Fragment_noti_result extends Fragment {
     private void initData() {
 
         String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
-        StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: ", response);
@@ -85,13 +85,6 @@ public class Fragment_noti_result extends Fragment {
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
         }) {
-            /*@Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("msv", "15021169");
-                return headers;
-            }*/
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();

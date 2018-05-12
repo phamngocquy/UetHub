@@ -20,14 +20,14 @@ public class ConfigLoader extends Application {
         Realm.init(this);
         RealmConfiguration config = new RealmConfiguration.Builder().name("myrealm.realm").build();
         Realm.setDefaultConfiguration(config);
-        RealmDemo realmDemo = new RealmDemo();
-//        realmDemo.saveSubjects(new Subject(UUID.randomUUID().toString(),"", "", "", "phuong", "", "", ""));
-//        realmDemo.getAllSubjects();
+        /*RealmDemo realmDemo = new RealmDemo();
+        realmDemo.saveSubjects(new Subject(UUID.randomUUID().toString(),"", "", "", "phuong", "", "", ""));
+        realmDemo.getAllSubjects();
         SaveNew saveNew = new SaveNew();
         saveNew.getAllNew();
         SaveSubject saveSubject = new SaveSubject();
         saveSubject.getAllNew();
         SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
-        saveSubjectGroup.getAllSubjectGroup();
+        saveSubjectGroup.getAllSubjectGroup();*/
     }
 }

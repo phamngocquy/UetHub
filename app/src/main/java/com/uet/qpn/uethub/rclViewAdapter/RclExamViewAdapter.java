@@ -22,7 +22,7 @@ import com.uet.qpn.uethub.entity.SubjectGroup;
 
 import java.util.List;
 
-public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.ViewHolder>  {
+public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.ViewHolder> {
     private List<SubjectGroup> subjectGroups;
     private Context context;
 
@@ -68,7 +68,7 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
         TextView room_exam;
         TextView type_exam;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             txt_name_exam = itemView.findViewById(R.id.txt_name_exam);
             txt_code_subject = itemView.findViewById(R.id.txt_code_subject);
@@ -83,7 +83,6 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
 
     public void upDateData(List<SubjectGroup> subjectGroups_in) {
 
-        Log.w("sssaaaa", String.valueOf(subjectGroups.size()));
         for (SubjectGroup entity : subjectGroups_in) {
             if (!subjectGroups.contains(entity)) {
                 subjectGroups.add(entity);
@@ -93,37 +92,6 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
 
         notifyDataSetChanged();
     }
-//
-//    private class DownloadReceiver extends ResultReceiver {
-//
-//        /**
-//         * Create a new ResultReceive to receive results.  Your
-//         * {@link #onReceiveResult} method will be called from the thread running
-//         * <var>handler</var> if given, or from an arbitrary thread if null.
-//         *
-//         * @param handler
-//         */
-//        private NumberProgressBar numberProgressBar;
-//
-//        public DownloadReceiver(Handler handler, NumberProgressBar numberProgressBar) {
-//            super(handler);
-//            this.numberProgressBar = numberProgressBar;
-//        }
-//
-//        @Override
-//        protected void onReceiveResult(int resultCode, Bundle resultData) {
-//            super.onReceiveResult(resultCode, resultData);
-//            if (resultCode == DownloadService.UPDATE_PROGRESS) {
-//                int progress = resultData.getInt("progress");
-//                numberProgressBar.setProgress(progress);
-//                if (progress == 100) {
-//                    numberProgressBar.setVisibility(View.GONE);
-//                }
-//
-//            }
-//        }
-//    }
-
 
     public List<SubjectGroup> getSubjectGroups() {
         return subjectGroups;

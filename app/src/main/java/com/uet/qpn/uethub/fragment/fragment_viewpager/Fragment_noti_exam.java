@@ -38,7 +38,8 @@ import java.util.Map;
 public class Fragment_noti_exam extends Fragment {
 
     private RclExamViewAdapter adapter;
-//    List<Exam>
+
+    //    List<Exam>
     public Fragment_noti_exam() {
     }
 
@@ -70,8 +71,8 @@ public class Fragment_noti_exam extends Fragment {
 
     private void initData() {
 
-        String url = Configuration.HOST + Configuration.API_PATH_EXAM + "msv=" + Configuration.MSV;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+        String url = Configuration.HOST + Configuration.API_PATH_EXAM;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: exam", response);
@@ -89,19 +90,12 @@ public class Fragment_noti_exam extends Fragment {
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
         }) {
-            /*@Override
-            public Map<String, String> getHeaders() {
-                Map<String, String> headers = new HashMap<>();
-                headers.put("Content-Type", "application/json; charset=utf-8");
-                headers.put("msv", "15021169");
-                return headers;
-            }*/
-//            @Override
-//            protected Map<String, String> getParams() {
-//                Map<String, String> params = new HashMap<>();
-//                params.put("msv", getMsvFromSharedPreference());
-//                return params;
-//            }
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("msv", getMsvFromSharedPreference());
+                return params;
+            }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
