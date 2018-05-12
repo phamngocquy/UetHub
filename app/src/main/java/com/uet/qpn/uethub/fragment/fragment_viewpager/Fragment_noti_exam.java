@@ -102,7 +102,7 @@ public class Fragment_noti_exam extends Fragment {
 
     private String getMsvFromSharedPreference() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", null);
+        return sharedPref.getString("msv", "");
     }
 
 
