@@ -3,6 +3,7 @@ package com.uet.qpn.uethub.fragment.frament_tabhost;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -26,16 +27,7 @@ import java.util.ArrayList;
 public class Fragment_news_fepn extends Fragment {
 
     private RclNewsViewAdapter adapter;
-
-    public static Fragment_news_fepn newsFepn = null;
-
-   /* public static Fragment_news_fepn getInstance() {
-        if (newsFepn == null) {
-            Log.d("init fragment_new_fepn", "run in");
-            newsFepn = new Fragment_news_fepn();
-        }
-        return newsFepn;
-    }*/
+    private SwipeRefreshLayout swipeRefreshLayout;
 
     @Nullable
     @Override
@@ -53,6 +45,9 @@ public class Fragment_news_fepn extends Fragment {
     }
 
     void init(View view) {
+        swipeRefreshLayout = view.findViewById(R.id.refresh_fepn_news);
+        swipeRefreshLayout.setOnRefreshListener(swipe_refresh_fepn_news);
+
         ArrayList<NewsEntity> mData = new ArrayList<>();
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFepn);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
@@ -79,6 +74,7 @@ public class Fragment_news_fepn extends Fragment {
                 for (int i = 0; i < newsEntities.size(); i++) {
                     saveNew.saveNew(newsEntities.get(i));
                 }
+                swipeRefreshLayout.setRefreshing(false);
             }
         }, new Response.ErrorListener() {
             @Override
@@ -88,4 +84,12 @@ public class Fragment_news_fepn extends Fragment {
         });
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
+
+    SwipeRefreshLayout.OnRefreshListener swipe_refresh_fepn_news = new SwipeRefreshLayout.OnRefreshListener() {
+        @Override
+        public void onRefresh() {
+            initData();
+        }
+    };
 }

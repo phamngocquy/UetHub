@@ -162,13 +162,11 @@ public class Helper {
     public static int getPageNumber(int sizeData) {
         int result = 0;
         int currentPage = sizeData / 10;
-
         if (currentPage == 0) return 0;
 
-        if (sizeData % 10 > 0) {
-            result = currentPage + 2;
-        } else result = currentPage + 1;
-
+        if (sizeData % 10 >= 0) {
+            result = currentPage;
+        }
         return result;
     }
 
