@@ -26,6 +26,7 @@ import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.rclViewAdapter.RclExamResultViewAdapter;
 import com.uet.qpn.uethub.saveRealm.SaveNew;
 import com.uet.qpn.uethub.saveRealm.SaveSubject;
+import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
@@ -38,6 +39,7 @@ import is.arontibo.library.ElasticDownloadView;
 public class Fragment_noti_result extends Fragment {
 
     private RclExamResultViewAdapter adapter;
+    private SaveUser saveUser = new SaveUser();
 
     @Nullable
     @Override
@@ -68,7 +70,7 @@ public class Fragment_noti_result extends Fragment {
     private void initData() {
 
         String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,url, new Response.Listener<String>() {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: ", response);
@@ -88,16 +90,12 @@ public class Fragment_noti_result extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("msv", getMsvFromSharedPreference());
+                params.put("msv", saveUser.getMSV());
                 return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    private String getMsvFromSharedPreference() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", "15021169");
-    }
 
 }
