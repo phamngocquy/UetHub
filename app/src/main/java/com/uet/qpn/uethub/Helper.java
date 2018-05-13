@@ -1,9 +1,11 @@
 package com.uet.qpn.uethub;
 
+import android.annotation.SuppressLint;
 import android.os.Environment;
 import android.util.Log;
 
 import com.uet.qpn.uethub.config.Configuration;
+import com.uet.qpn.uethub.entity.Form;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.entity.SubjectGroup;
@@ -24,6 +26,40 @@ import java.util.List;
 
 public class Helper {
 
+    public static ArrayList<Form> getForm(String response) {
+        ArrayList<Form> listForms = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Form form = new Form();
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                form.setName(jsonObject.getString("name"));
+                form.setUrl(jsonObject.getString("url"));
+                form.setLocal_url(jsonObject.getString("localUrl"));
+
+                Long createdTime = Long.valueOf(jsonObject.getString("createdTime"));
+                Long updatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
+
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+
+                Date date = new Date(createdTime);
+                form.setCreateTime(simpleDateFormat.format(date));
+
+                Date date_ = new Date(updatedTime);
+                form.setUpdatedTime(simpleDateFormat.format(date_));
+
+                listForms.add(form);
+
+
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return listForms;
+    }
+
     public static ArrayList<NewsEntity> getNewsEntity(String response, String newsName) {
         ArrayList<NewsEntity> entities = new ArrayList<>();
         try {
@@ -39,7 +75,7 @@ public class Helper {
                 entity.setNewsName(newsName);
 
                 Long dataNum = Long.valueOf(jsonObject.getString("date"));
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
 
 
                 Date date = new Date(dataNum);

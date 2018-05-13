@@ -86,7 +86,6 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
         for (SubjectGroup entity : subjectGroups_in) {
             if (!subjectGroups.contains(entity)) {
                 subjectGroups.add(entity);
-                Log.w("sa", "ss");
             }
         }
 

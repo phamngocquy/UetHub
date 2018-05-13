@@ -53,11 +53,12 @@ public class Fragment_noti_exam extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        Log.d("onCreateView frag__exam", "run in");
         init(view);
     }
 
     public void init(View view) {
-        List<SubjectGroup> subjectGroups = new ArrayList<>();
+        List<SubjectGroup> subjectGroups;
         SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
         subjectGroups = saveSubjectGroup.getAllSubjectGroup();
 
@@ -80,6 +81,7 @@ public class Fragment_noti_exam extends Fragment {
                 Log.d("Json_Result: exam", response);
                 adapter.upDateData(Helper.getSubjectGroup(response));
                 ArrayList<SubjectGroup> subjectGroups = (ArrayList<SubjectGroup>) adapter.getSubjectGroups();
+
                 SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
                 Log.d("size", String.valueOf(subjectGroups.size()));
                 for (int i = 0; i < subjectGroups.size(); i++) {

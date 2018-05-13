@@ -11,7 +11,9 @@ public class Configuration {
     public static String API_PATH_GET_CREATE_USER = "api/v1/user/createUser";
     public static String API_PATH_REMOVE_FCM = "/api/v1/user/deletefcmToken";
 
-    public static String HOST = "http://192.168.0.101:8080/";
+    public static String API_PATH_FORM = "api/v1/form/getAll";
+
+    public static String HOST = "http://192.168.0.104:8080/";
     public static String STORE_FOLDER = "UHDownload";
 
 }

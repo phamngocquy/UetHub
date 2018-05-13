@@ -21,11 +21,6 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
     private ArrayList<NewsEntity> newsEntities;
     private Context context;
 
-
-    public RclNewsViewAdapter() {
-
-    }
-
     public RclNewsViewAdapter(ArrayList<NewsEntity> newsEntities, Context context) {
         this.newsEntities = newsEntities;
         this.context = context;
