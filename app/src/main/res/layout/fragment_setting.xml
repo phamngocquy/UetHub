@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.gc.materialdesign.views.ButtonFloat
-        android:id="@+id/btnLogout"
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnSetting"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -16,11 +16,23 @@
         android:layout_marginBottom="16dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:src="@android:drawable/ic_menu_add" />
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/btnLogout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_toLeftOf="@+id/btnSetting"
+        android:layout_toStartOf="@+id/btnSetting"
         android:background="#1E88E5"
-        materialdesign:iconDrawable="@drawable/logout2" />
+        android:src="@drawable/logout" />
 
 
-    <com.gc.materialdesign.views.ButtonFloat
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnUpdate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -30,8 +42,10 @@
         android:layout_marginRight="16dp"
         android:layout_toLeftOf="@+id/btnLogout"
         android:layout_toStartOf="@+id/btnLogout"
-        android:background="#579de4"
-        materialdesign:iconDrawable="@drawable/exchange" />
+        android:background="#1E88E5"
+        android:scaleType="center"
+        android:src="@android:drawable/ic_menu_upload" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout"

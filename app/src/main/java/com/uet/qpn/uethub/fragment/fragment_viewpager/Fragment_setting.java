@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -101,8 +102,20 @@ public class Fragment_setting extends Fragment {
         //loadConfig();
         loadLocalNewsConfig();
 
-        ButtonFloat btnLogout = view.findViewById(R.id.btnLogout);
-        ButtonFloat btnUpdate = view.findViewById(R.id.btnUpdate);
+        final FloatingActionButton btnLogout = view.findViewById(R.id.btnLogout);
+        final FloatingActionButton btnUpdate = view.findViewById(R.id.btnUpdate);
+        FloatingActionButton btnSetting = view.findViewById(R.id.btnSetting);
+
+        btnSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnLogout.isShown()) btnLogout.hide();
+                else btnLogout.show();
+
+                if (btnUpdate.isShown()) btnUpdate.hide();
+                else btnUpdate.show();
+            }
+        });
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -552,7 +565,6 @@ public class Fragment_setting extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
     }
-
 
 
     private void updateSW(List<String> stringList) {
