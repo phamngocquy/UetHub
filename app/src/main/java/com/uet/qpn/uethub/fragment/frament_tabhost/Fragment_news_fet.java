@@ -17,6 +17,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.Helper;
+import com.uet.qpn.uethub.MainActivity;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsEntity;
@@ -54,8 +55,8 @@ public class Fragment_news_fet extends Fragment {
     void init(View view) {
         swipeRefreshLayout = view.findViewById(R.id.refresh_fet_news);
         swipeRefreshLayout.setOnRefreshListener(swipe_refresh_fet_news);
-
-        ArrayList<NewsEntity> mData = new ArrayList<>();
+        SaveNew saveNew = new SaveNew();
+        ArrayList<NewsEntity> mData = (ArrayList<NewsEntity>) saveNew.getNewsByNewsName("FET");
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFet);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);

@@ -3,6 +3,7 @@ package com.uet.qpn.uethub.saveRealm;
 import android.util.Log;
 
 import com.uet.qpn.uethub.entity.NewsEntity;
+import com.uet.qpn.uethub.entity.NewsEntity_tmp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,7 +19,6 @@ public class SaveNew {
     public void saveNew(NewsEntity newsEntity) {
         Realm realm = Realm.getDefaultInstance();
         NewsEntity entity = realm.where(NewsEntity.class).equalTo("url", newsEntity.getUrl()).findFirst();
-        Log.w("why", "w");
         if (entity == null) {
             try {
                     realm.beginTransaction();
@@ -43,23 +43,62 @@ public class SaveNew {
             Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
             Iterator<NewsEntity> iterator = entities.iterator();
             while (iterator.hasNext()) {
-                NewsEntity newsEntity = iterator.next();
-                newsEntities.add(newsEntity);
+                NewsEntity entity = iterator.next();
+                    NewsEntity newsEntity = new NewsEntity();
+                    newsEntity.setTitle(entity.getTitle());
+                    newsEntity.setDescription(entity.getDescription());
+                    newsEntity.setCategories(entity.getCategories());
+                    newsEntity.setPublictime(entity.getPublictime());
+                    newsEntity.setAuthor(entity.getAuthor());
+                    newsEntity.setUrl(entity.getUrl());
+                    newsEntity.setNewsName(entity.getNewsName());
+                    newsEntities.add(newsEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
+            Collections.sort( newsEntities);
             realm.close();
         }
-        Collections.sort( newsEntities);
-        Log.w("size", String.valueOf(newsEntities.size()));
+        return newsEntities;
+    }
+    public List<NewsEntity> getNewsByNewsName(String newsName) {
+        Realm realm = Realm.getDefaultInstance();
+        List<NewsEntity> newsEntities = new ArrayList<>();
+        try {
+            Log.w("nghia","get news by newsName");
+            RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();
+            Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
+            Iterator<NewsEntity> iterator = entities.iterator();
+            while (iterator.hasNext()) {
+                NewsEntity entity = iterator.next();
+                Log.w("name", entity.getNewsName());
+                if(entity.getNewsName().equals(newsName)) {
+                    NewsEntity newsEntity = new NewsEntity();
+                    newsEntity.setTitle(entity.getTitle());
+                    newsEntity.setDescription(entity.getDescription());
+                    newsEntity.setCategories(entity.getCategories());
+                    newsEntity.setPublictime(entity.getPublictime());
+                    newsEntity.setAuthor(entity.getAuthor());
+                    newsEntity.setUrl(entity.getUrl());
+                    newsEntity.setNewsName(entity.getNewsName());
+                    newsEntities.add(newsEntity);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            Collections.sort( newsEntities);
+            Log.w("size", String.valueOf(newsEntities.size()));
+            if (realm != null && !realm.isClosed()) {
+                realm.close();
+            }
+        }
         for (int i = 0; i < newsEntities.size(); i ++){
-            Log.w("enti", newsEntities.get(i).getPublictime());
+            Log.w("enti", newsEntities.get(i).getNewsName());
         }
         return newsEntities;
     }
 
-//    public int getMaxID(){
-//        Realm realm = Realm.getDefaultInstance();
-//    }
+
 }
