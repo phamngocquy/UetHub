@@ -33,7 +33,6 @@ public class SaveNewsReg {
         else {
             try {
                 realm.beginTransaction();
-                reg.setNewsName(newsReg.getNewsName());
                 reg.setChecked(newsReg.getChecked());
                 realm.commitTransaction();
             } catch (Exception e) {

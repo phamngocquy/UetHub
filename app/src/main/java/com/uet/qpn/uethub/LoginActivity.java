@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -25,17 +26,23 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.uet.qpn.uethub.config.Configuration;
+import com.uet.qpn.uethub.entity.NewsReg;
+import com.uet.qpn.uethub.saveRealm.SaveNewsReg;
+import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
     private LoginButton loginButton;
+    private SaveUser saveUser = new SaveUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +72,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
+
+
                 nextScreen(loginResult.getAccessToken());
             }
 
@@ -111,26 +120,112 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void nextScreen(AccessToken accessToken) {
-        GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-            @Override
-            public void onCompleted(JSONObject object, GraphResponse response) {
-                try {
-                    Log.d("fuck", object.getString("email"));
-                    updateTokenAndEmailOfUser(object.getString("email"));
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (NullPointerException e) {
-                    e.printStackTrace();
+
+        try {
+            GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
+                @Override
+                public void onCompleted(JSONObject object, GraphResponse response) {
+                    try {
+                        String email = object.getString("email");
+
+                        if (email != null) {
+                            try {
+                                getAndStoreMSV(email);
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                            try {
+                                getAndStoreNewsReg(email);
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+
+                        }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    } catch (NullPointerException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        });
-        Bundle parameters = new Bundle();
-        parameters.putString("fields", "id,name,email,picture");
-        request.setParameters(parameters);
-        request.executeAsync();
+
+
+            });
+            Bundle parameters = new Bundle();
+            parameters.putString("fields", "id,name,email");
+            request.setParameters(parameters);
+            request.executeAsync();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         startActivity(new Intent(this, MainActivity.class));
     }
 
+    private void getAndStoreNewsReg(final String email) {
+        // doc tu serrver roi luu vao local
+        // dung api nao day
+        // t nho m code r
+        // copy sang, go lai lam chi
+        String url = Configuration.HOST + Configuration.API_PATH_GET_NEW_SW;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                List<String> stringList = Helper.getReg(response);
+                // m code luu o day
+                // oke
+                // that oke
+                // de t test nha
+                // cho mot ty
+                // dung co tat teamview
+                SaveNewsReg saveNewsReg = new SaveNewsReg();
+                List<NewsReg> newsRegList = saveNewsReg.getAllNewsReg();
+                for (int i = 0; i < newsRegList.size(); i++) {
+                    newsRegList.get(i).setChecked(false);
+                    saveNewsReg.saveNewsReg(newsRegList.get(i));
+                }
+                for (int i = 0; i < stringList.size(); i++) {
+                    NewsReg newsReg = new NewsReg();
+                    if (stringList.get(i).equals("UET")) {
+                        newsReg.setNewsName("UET");
+                        newsReg.setChecked(true);
+                    } else if (stringList.get(i).equals("FIT")) {
+                        newsReg.setNewsName("FIT");
+                        newsReg.setChecked(true);
+                    } else if (stringList.get(i).equals("FET")) {
+                        newsReg.setNewsName("FET");
+                        newsReg.setChecked(true);
+                    } else if (stringList.get(i).equals("FEPN")) {
+                        newsReg.setNewsName("FEPN");
+                        newsReg.setChecked(true);
+                    } else if (stringList.get(i).equals("EXAM")) {
+                        newsReg.setNewsName("EXAM");
+                        newsReg.setChecked(true);
+                    } else if (stringList.get(i).equals("GRADE")) {
+                        newsReg.setNewsName("GRADE");
+                        newsReg.setChecked(true);
+                    }
+                    saveNewsReg.saveNewsReg(newsReg);
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                final Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                String fcm = FirebaseInstanceId.getInstance().getToken();
+                params.put("fcm", fcm);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
+    }
 
     public void updateTokenAndEmailOfUser(final String email) {
         Log.d("updateToken", "cap nhat token");
@@ -152,12 +247,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                Log.d("1234", email);
-                Log.d("1234", FirebaseInstanceId.getInstance().getToken());
-                Log.d("1234", getMsvFromSharedPreference());
+
+                String firebaseID = FirebaseInstanceId.getInstance().getToken();
+                if (firebaseID == null) {
+                    firebaseID = "";
+                }
                 params.put("email", email);
-                params.put("fcm", FirebaseInstanceId.getInstance().getToken());
-                params.put("msv", getMsvFromSharedPreference());
+                params.put("fcm", firebaseID);
+                params.put("msv", saveUser.getMSV());
                 return params;
             }
         };
@@ -165,8 +262,40 @@ public class LoginActivity extends AppCompatActivity {
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
-    private String getMsvFromSharedPreference() {
-        SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", "15021169");
+    public void getAndStoreMSV(final String email) {
+        String url = Configuration.HOST + Configuration.API_PATH_GET_CONFIG;
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String msv = jsonObject.getString("msv");
+                    if (msv != null && !msv.equals("")) {
+                        // thoa dk
+                        if (!msv.equals(saveUser.getMSV())) {
+                            saveUser.saveMSV(msv);
+                        }
+                    }
+                    updateTokenAndEmailOfUser(email);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getBaseContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
+                Log.d("Error_Frag_Ex_Result", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                final Map<String, String> params = new HashMap<>();
+                params.put("email", email);
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 }

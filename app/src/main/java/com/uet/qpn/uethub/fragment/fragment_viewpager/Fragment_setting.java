@@ -49,6 +49,7 @@ import com.uet.qpn.uethub.entity.NewsReg;
 import com.uet.qpn.uethub.fcm.MyFirebaseInstanceIDService;
 import com.uet.qpn.uethub.saveRealm.SaveNew;
 import com.uet.qpn.uethub.saveRealm.SaveNewsReg;
+import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import org.json.JSONException;
@@ -67,7 +68,10 @@ public class Fragment_setting extends Fragment {
     private TextView txtUserName, txtEmail;
     private MyFirebaseInstanceIDService myFirebaseInstanceIDService = new MyFirebaseInstanceIDService();
     private Switch fepnSwitch, fetSwitch, uetSwitch, resultSwitch, examSwitch, fitSwitch;
-
+    private ButtonFlat btnMsv;
+    private TextView txtMsv;
+    private SaveUser saveUser = new SaveUser();
+    private String oldMSV = "";
 
     public Fragment_setting() {
         ProfileTracker profileTracker = new ProfileTracker() {
@@ -95,7 +99,7 @@ public class Fragment_setting extends Fragment {
         initSwitch(view);
         initBtnMsv(view);
         //loadConfig();
-
+        loadLocalNewsConfig();
 
         ButtonFloat btnLogout = view.findViewById(R.id.btnLogout);
         ButtonFloat btnUpdate = view.findViewById(R.id.btnUpdate);
@@ -173,9 +177,17 @@ public class Fragment_setting extends Fragment {
                     public void onCompleted(JSONObject object, GraphResponse response) {
 
                         try {
-                            txtUserName.setText(object.getString("name"));
-                            txtEmail.setText(object.getString("email"));
-                            loadConfig();
+                            String email = object.getString("email");
+                            String name = object.getString("name");
+                            if (email != null) {
+                                txtEmail.setText(object.getString("email"));
+                            }
+                            if (name != null) {
+                                txtUserName.setText(object.getString("name"));
+                            }
+                            // sai o day,
+                            // sao m dam cho vao onCompleted
+
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (NullPointerException e) {
@@ -193,6 +205,26 @@ public class Fragment_setting extends Fragment {
 
     }
 
+    private void loadLocalNewsConfig() {
+        // t them nhu nay
+
+        // rồi t chỉ chỗ lưu là oke ,
+        SaveNewsReg saveNewsReg = new SaveNewsReg();
+        List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
+        List<String> stringList = new ArrayList<>();
+        for (int i = 0; i < newsRegs.size(); i++) {
+            if (newsRegs.get(i).getChecked()) {
+                stringList.add(newsRegs.get(i).getNewsName());
+            }
+        }
+        updateSW(stringList);
+        // đây
+        // the thoi a?
+        // uk ha, updat
+
+
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -200,9 +232,9 @@ public class Fragment_setting extends Fragment {
     }
 
     private void initBtnMsv(View view) {
-        ButtonFlat btnMsv = view.findViewById(R.id.btnEditMsv);
-        final TextView txtMsv = view.findViewById(R.id.txtMsv);
-        txtMsv.setText(getMsvFromSharedPreference());
+        btnMsv = view.findViewById(R.id.btnEditMsv);
+        txtMsv = view.findViewById(R.id.txtMsv);
+        txtMsv.setText(saveUser.getMSV());
 
         btnMsv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -218,11 +250,10 @@ public class Fragment_setting extends Fragment {
                 builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
+                        oldMSV = txtMsv.getText().toString();
                         // store to shared_preference
-                        putMsvToSharedPreference(edit_msv);
                         txtMsv.setText(edit_msv.getText().toString());
                         dialog.dismiss();
-
                     }
                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                     @Override
@@ -234,14 +265,13 @@ public class Fragment_setting extends Fragment {
 
                 AlertDialog dialogEditMsv = builder.create();
                 dialogEditMsv.getWindow().setBackgroundDrawableResource(R.drawable.dialog_setting);
-                edit_msv.setText(getMsvFromSharedPreference());
+                edit_msv.setText(saveUser.getMSV());
 
                 dialogEditMsv.show();
             }
         });
 
     }
-
 
 
     private void initSwitch(View view) {
@@ -253,18 +283,6 @@ public class Fragment_setting extends Fragment {
         resultSwitch = view.findViewById(R.id.resultSwitch);
     }
 
-    private void putMsvToSharedPreference(EditText edit_msv) {
-        SharedPreferences sharedPreferences = getActivity().getPreferences(Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putString("msv", edit_msv.getText().toString());
-        editor.apply();
-    }
-
-    private String getMsvFromSharedPreference() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", "");
-    }
-
 
     private void updateNewRegister() {
 
@@ -272,18 +290,26 @@ public class Fragment_setting extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("true"));
+                if (response.equals("true")) {
+
+                    Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
+
+                }
+                getAndStoreMSV();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                txtMsv.setText(saveUser.getMSV());
             }
         }) {
             @Override
             protected Map<String, String> getParams() {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("msv", getMsvFromSharedPreference());
+                params.put("msv", txtMsv.getText().toString());
                 params.put("email", txtEmail.getText().toString());
                 return params;
             }
@@ -304,7 +330,7 @@ public class Fragment_setting extends Fragment {
             property.put("grade", resultSwitch.isCheck());
             rootObject.put("email", txtEmail.getText().toString());
             rootObject.put("fcm", FirebaseInstanceId.getInstance().getToken());
-            rootObject.put("msv", getMsvFromSharedPreference());
+            rootObject.put("msv", saveUser.getMSV());
             rootObject.put("property", property);
 
 
@@ -313,7 +339,7 @@ public class Fragment_setting extends Fragment {
                 public void onResponse(JSONObject response) {
                     try {
                         Boolean result = (Boolean) response.get("result");
-                        if (result == true){
+                        if (result != null && result) {
                             SaveNewsReg saveNewsReg = new SaveNewsReg();
                             saveNewsReg.saveNewsReg(new NewsReg("UET", uetSwitch.isCheck()));
                             saveNewsReg.saveNewsReg(new NewsReg("FIT", fitSwitch.isCheck()));
@@ -321,7 +347,30 @@ public class Fragment_setting extends Fragment {
                             saveNewsReg.saveNewsReg(new NewsReg("FEPN", fepnSwitch.isCheck()));
                             saveNewsReg.saveNewsReg(new NewsReg("EXAM", examSwitch.isCheck()));
                             saveNewsReg.saveNewsReg(new NewsReg("RESULT", resultSwitch.isCheck()));
-                            Toast.makeText(getContext(),"Cập nhật thành công!", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Cập nhật thành công!", Toast.LENGTH_LONG).show();
+
+
+                            //
+                            // m luu du lieu tu serrver vao realm o day
+                            // de code vao di
+                            // lưu bên trên r đấy
+
+                        } else {
+                            Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
+                            //
+                            // cho nay m cho tai lai
+                            // doc to local di
+                            // de code vao
+                            SaveNewsReg saveNewsReg = new SaveNewsReg();
+                            List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
+                            List<String> stringList = new ArrayList<>();
+                            for (int i = 0; i < newsRegs.size(); i++) {
+                                if (newsRegs.get(i).getChecked()) {
+                                    stringList.add(newsRegs.get(i).getNewsName());
+                                }
+                            }
+                            updateSW(stringList);
+                            //roi day
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -330,7 +379,17 @@ public class Fragment_setting extends Fragment {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getContext(),"Cập nhật thất bại!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getContext(), "Cập nhật thất bại!", Toast.LENGTH_LONG).show();
+                    // doc tu local
+                    SaveNewsReg saveNewsReg = new SaveNewsReg();
+                    List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
+                    List<String> stringList = new ArrayList<>();
+                    for (int i = 0; i < newsRegs.size(); i++) {
+                        if (newsRegs.get(i).getChecked()) {
+                            stringList.add(newsRegs.get(i).getNewsName());
+                        }
+                    }
+                    updateSW(stringList);
                 }
             });
             VolleySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
@@ -338,7 +397,7 @@ public class Fragment_setting extends Fragment {
             e.printStackTrace();
         }
 
-        loadConfig();
+        //loadConfig();
     }
 
     private void prelogoutAcc() {
@@ -408,7 +467,49 @@ public class Fragment_setting extends Fragment {
         }
     }
 
-    private void loadConfig(){
+    public void getAndStoreMSV() {
+        String url = Configuration.HOST + Configuration.API_PATH_GET_CONFIG;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String msv = jsonObject.getString("msv");
+                    if (msv != null && !msv.equals("")) {
+                        // thoa dk
+                        txtMsv.setText(msv);
+                        saveUser.saveMSV(msv);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                txtMsv.setText(saveUser.getMSV());
+                Toast.makeText(getContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
+                Log.d("Error_Frag_Ex_Result", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                final Map<String, String> params = new HashMap<>();
+                String email = txtEmail.getText().toString();
+                params.put("email", email);
+                /*String fcm = FirebaseInstanceId.getInstance().getToken();
+                params.put("fcm", fcm);*/
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void loadConfig() {
+        // day la cai m code day
+        // api nay tra ve cac news da dang ky
+
         String url = Configuration.HOST + Configuration.API_PATH_GET_NEW_SW;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -420,17 +521,21 @@ public class Fragment_setting extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                // Neu khong load dc thi oad tu local day..
+                // khong biet, may t dang chay, no khong doc
+                // m goi khong dung cho hay sao do
+                // no bi delay 1 luc doi timeout ms dc
                 SaveNewsReg saveNewsReg = new SaveNewsReg();
                 List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
                 List<String> stringList = new ArrayList<>();
-                for (int i = 0; i <  newsRegs.size(); i++){
-                    if(newsRegs.get(i).getChecked()){
+                for (int i = 0; i < newsRegs.size(); i++) {
+                    if (newsRegs.get(i).getChecked()) {
                         stringList.add(newsRegs.get(i).getNewsName());
                     }
                 }
                 updateSW(stringList);
                 allowChangeSW(false);
-                Toast.makeText(getContext(),"Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
         }) {
@@ -439,7 +544,7 @@ public class Fragment_setting extends Fragment {
                 final Map<String, String> params = new HashMap<>();
                 String email = txtEmail.getText().toString();
                 params.put("email", email);
-                String fcm =  FirebaseInstanceId.getInstance().getToken();
+                String fcm = FirebaseInstanceId.getInstance().getToken();
                 params.put("fcm", fcm);
                 return params;
             }
@@ -447,30 +552,55 @@ public class Fragment_setting extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
 
     }
-    private void updateSW(List<String> stringList){
-        for (int i = 0; i < stringList.size(); i++){
-            if (stringList.get(i).equals("UET")){
+
+
+
+    private void updateSW(List<String> stringList) {
+        uetSwitch.setChecked(false);
+        fitSwitch.setChecked(false);
+        fetSwitch.setChecked(false);
+        fepnSwitch.setChecked(false);
+        examSwitch.setChecked(false);
+        resultSwitch.setChecked(false);
+        /////
+        // bug giao dien , m nhin log in ra kia
+        // cai exxam no lay tu local dung la false r
+        // nhung cai nut no k sw
+        // exam hay result
+        // giao dien de ten la "lich thi"
+        // cái sw nó bật à
+        // o
+        // no khong tu dua ve tat
+
+        for (int i = 0; i < stringList.size(); i++) {
+            if (stringList.get(i).equals("UET")) {
                 uetSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("FIT")){
+            } else if (stringList.get(i).equals("FIT")) {
                 fitSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("FET")){
+            } else if (stringList.get(i).equals("FET")) {
                 fetSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("FEPN")){
+            } else if (stringList.get(i).equals("FEPN")) {
                 fepnSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("EXAM")){
+            } else if (stringList.get(i).equals("EXAM")) {
                 examSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("GRADE") || stringList.get(i).equals("RESULT")){
+            } else if (stringList.get(i).equals("GRADE") || stringList.get(i).equals("RESULT")) {
                 resultSwitch.setChecked(true);
             }
         }
     }
 
-    private void allowChangeSW(Boolean connect){
+    // phai nhu ham nay ne
+    // thi moi duoc ca 2 chieu chu
+    private void allowChangeSW(Boolean connect) {
         uetSwitch.setEnabled(connect);
         fitSwitch.setEnabled(connect);
         fetSwitch.setEnabled(connect);
         fepnSwitch.setEnabled(connect);
         examSwitch.setEnabled(connect);
         resultSwitch.setEnabled(connect);
+    }
+
+    private void allowChangeMSV(String msv) {
+        btnMsv.setText(msv);
     }
 }
