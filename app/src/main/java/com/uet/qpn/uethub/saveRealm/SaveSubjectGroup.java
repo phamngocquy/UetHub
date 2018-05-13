@@ -19,6 +19,7 @@ public class SaveSubjectGroup {
         if(subjectGroup_tmp == null) {
             try {
                 realm.beginTransaction();
+                Log.w("SG", "Start save SG" );
                 Long count = realm.where(SubjectGroup.class).count();
                 subjectGroup.setId(String.valueOf(count));
                 realm.copyToRealm(subjectGroup);
@@ -36,9 +37,18 @@ public class SaveSubjectGroup {
         try {
             RealmResults<SubjectGroup> subjectGroups = realm.where(SubjectGroup.class).findAll();
             Iterator<SubjectGroup> iterator = subjectGroups.iterator();
+            Log.w("SG", "Get all Subject Group" + realm.where(SubjectGroup.class).count());
             while (iterator.hasNext()) {
                 SubjectGroup subjectGroup = iterator.next();
-                subjectGroupList.add(subjectGroup);
+                SubjectGroup subjectGroup_tmp = new SubjectGroup();
+                subjectGroup_tmp.setSbdUser(subjectGroup.getSbdUser());
+                subjectGroup_tmp.setExamRoom(subjectGroup.getExamRoom());
+                subjectGroup_tmp.setTypeExam(subjectGroup.getTypeExam());
+                subjectGroup_tmp.setSubjectName(subjectGroup.getSubjectName());
+                subjectGroup_tmp.setSubjectCode(subjectGroup.getSubjectCode());
+                subjectGroup_tmp.setTerm(subjectGroup.getTerm());
+                subjectGroup_tmp.setUpdate_on(subjectGroup.getUpdate_on());
+                subjectGroupList.add(subjectGroup_tmp);
             }
         } catch (Exception e) {
             e.printStackTrace();

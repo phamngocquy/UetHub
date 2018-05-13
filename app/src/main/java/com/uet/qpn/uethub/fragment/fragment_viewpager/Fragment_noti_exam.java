@@ -58,6 +58,8 @@ public class Fragment_noti_exam extends Fragment {
 
     public void init(View view) {
         List<SubjectGroup> subjectGroups = new ArrayList<>();
+        SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
+        subjectGroups = saveSubjectGroup.getAllSubjectGroup();
 
         RecyclerView recyclerView = view.findViewById(R.id.rclViewExam);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());

@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -44,12 +45,16 @@ import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.LoginActivity;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
+import com.uet.qpn.uethub.entity.NewsReg;
 import com.uet.qpn.uethub.fcm.MyFirebaseInstanceIDService;
+import com.uet.qpn.uethub.saveRealm.SaveNew;
+import com.uet.qpn.uethub.saveRealm.SaveNewsReg;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -267,7 +272,6 @@ public class Fragment_setting extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-
             }
         }, new Response.ErrorListener() {
             @Override
@@ -302,13 +306,30 @@ public class Fragment_setting extends Fragment {
             rootObject.put("msv", getMsvFromSharedPreference());
             rootObject.put("property", property);
 
+
             JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, Configuration.HOST + Configuration.APT_PATH_UPDATE_NEW_REGISTER, rootObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
+                    try {
+                        Boolean result = (Boolean) response.get("result");
+                        if (result == true){
+                            SaveNewsReg saveNewsReg = new SaveNewsReg();
+                            saveNewsReg.saveNewsReg(new NewsReg("UET", uetSwitch.isCheck()));
+                            saveNewsReg.saveNewsReg(new NewsReg("FIT", fitSwitch.isCheck()));
+                            saveNewsReg.saveNewsReg(new NewsReg("FET", fetSwitch.isCheck()));
+                            saveNewsReg.saveNewsReg(new NewsReg("FEPN", fepnSwitch.isCheck()));
+                            saveNewsReg.saveNewsReg(new NewsReg("EXAM", examSwitch.isCheck()));
+                            saveNewsReg.saveNewsReg(new NewsReg("RESULT", resultSwitch.isCheck()));
+                            Toast.makeText(getContext(),"Cập nhật thành công!", Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    Toast.makeText(getContext(),"Cập nhật thất bại!", Toast.LENGTH_LONG).show();
                 }
             });
             VolleySingleton.getInstance(getContext()).addToRequestQueue(jsonObjectRequest);
@@ -393,10 +414,22 @@ public class Fragment_setting extends Fragment {
             public void onResponse(String response) {
                 List<String> listOfReg = Helper.getReg(response);
                 updateSW(listOfReg);
+                allowChangeSW(true);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                SaveNewsReg saveNewsReg = new SaveNewsReg();
+                List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
+                List<String> stringList = new ArrayList<>();
+                for (int i = 0; i <  newsRegs.size(); i++){
+                    if(newsRegs.get(i).getChecked()){
+                        stringList.add(newsRegs.get(i).getNewsName());
+                    }
+                }
+                updateSW(stringList);
+                allowChangeSW(false);
+                Toast.makeText(getContext(),"Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
         }) {
@@ -425,9 +458,18 @@ public class Fragment_setting extends Fragment {
                 fepnSwitch.setChecked(true);
             } else if (stringList.get(i).equals("EXAM")){
                 examSwitch.setChecked(true);
-            } else if (stringList.get(i).equals("GRADE")){
+            } else if (stringList.get(i).equals("GRADE") || stringList.get(i).equals("RESULT")){
                 resultSwitch.setChecked(true);
             }
         }
+    }
+
+    private void allowChangeSW(Boolean connect){
+        uetSwitch.setEnabled(connect);
+        fitSwitch.setEnabled(connect);
+        fetSwitch.setEnabled(connect);
+        fepnSwitch.setEnabled(connect);
+        examSwitch.setEnabled(connect);
+        resultSwitch.setEnabled(connect);
     }
 }
