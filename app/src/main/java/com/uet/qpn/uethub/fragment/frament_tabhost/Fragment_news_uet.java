@@ -52,8 +52,9 @@ public class Fragment_news_uet extends Fragment {
 
         swipeRefreshLayout = view.findViewById(R.id.refresh_uet_news);
         swipeRefreshLayout.setOnRefreshListener(swipe_refresh_uet_news);
+
         SaveNew saveNew = new SaveNew();
-        ArrayList<NewsEntity> mData = (ArrayList<NewsEntity>) saveNew.getNewsByNewsName("UET");
+        ArrayList<NewsEntity> mData = saveNew.getNewsByNewsName("UET");
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsUet);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -69,14 +70,14 @@ public class Fragment_news_uet extends Fragment {
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response, "UET"));
 
 
-                ArrayList<NewsEntity> newsEntities = adapter.getNewsEntities();
+                ArrayList<NewsEntity> newsEntities = Helper.getNewsEntity(response, "UET");
                 SaveNew saveNew = new SaveNew();
                 for (int i = 0; i < newsEntities.size(); i++) {
                     saveNew.saveNew(newsEntities.get(i));
                 }
+                adapter.upDateData(saveNew.getNewsByNewsName("UET"));
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, new Response.ErrorListener() {

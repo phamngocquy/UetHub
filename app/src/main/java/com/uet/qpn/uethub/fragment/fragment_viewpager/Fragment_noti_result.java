@@ -72,7 +72,7 @@ public class Fragment_noti_result extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: ", response);
-                adapter.upDateData(Helper.getSubjectEntity(response));
+                adapter.upDateData(Helper.getSubjectEntity_Result(response));
                 ArrayList<Subject> subjects = (ArrayList<Subject>) adapter.getSubjects();
                 SaveSubject saveSubject = new SaveSubject();
                 for (int i = 0; i < subjects.size(); i++) {
@@ -97,7 +97,7 @@ public class Fragment_noti_result extends Fragment {
 
     private String getMsvFromSharedPreference() {
         SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", null);
+        return sharedPref.getString("msv", "15021169");
     }
 
 }

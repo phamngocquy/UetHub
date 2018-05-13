@@ -167,6 +167,6 @@ public class LoginActivity extends AppCompatActivity {
 
     private String getMsvFromSharedPreference() {
         SharedPreferences sharedPref = this.getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", "0");
+        return sharedPref.getString("msv", "15021169");
     }
 }

@@ -20,6 +20,7 @@ import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.Form;
 import com.uet.qpn.uethub.rclViewAdapter.RclFormViewAdapter;
+import com.uet.qpn.uethub.saveRealm.SaveForm;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.util.ArrayList;
@@ -52,7 +53,9 @@ public class Fragment_form extends Fragment {
     }
 
     private void init(View view) {
-        ArrayList<Form> forms = new ArrayList<>();
+        SaveForm saveForm = new SaveForm();
+        ArrayList<Form> forms;
+        forms = saveForm.getAllForm();
         RecyclerView rclViewForm = view.findViewById(R.id.rclViewForm);
         rclFormViewAdapter = new RclFormViewAdapter(getContext(), forms);
 
@@ -69,7 +72,9 @@ public class Fragment_form extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("form_data: ", response);
-                rclFormViewAdapter.updateData(Helper.getForm(response));
+                SaveForm saveForm = new SaveForm();
+                saveForm.saveAll(Helper.getForm(response));
+                rclFormViewAdapter.updateData(saveForm.getAllForm());
             }
         }, new Response.ErrorListener() {
             @Override

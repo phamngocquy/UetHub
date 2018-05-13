@@ -79,14 +79,14 @@ public class Fragment_noti_exam extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("Json_Result: exam", response);
-                adapter.upDateData(Helper.getSubjectGroup(response));
-                ArrayList<SubjectGroup> subjectGroups = (ArrayList<SubjectGroup>) adapter.getSubjectGroups();
 
                 SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
-                Log.d("size", String.valueOf(subjectGroups.size()));
-                for (int i = 0; i < subjectGroups.size(); i++) {
-                    saveSubjectGroup.saveSubjectGroup(subjectGroups.get(i));
+
+                for (SubjectGroup subjectGroup : Helper.getSubjectGroup(response)) {
+                    saveSubjectGroup.saveSubjectGroup(subjectGroup);
                 }
+
+                adapter.upDateData(saveSubjectGroup.getAllSubjectGroup());
             }
         }, new Response.ErrorListener() {
             @Override
@@ -97,7 +97,7 @@ public class Fragment_noti_exam extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("msv", getMsvFromSharedPreference());
+                params.put("msv", "15021169");
                 return params;
             }
         };

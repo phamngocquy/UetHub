@@ -61,9 +61,9 @@ public class SaveNew {
         }
         return newsEntities;
     }
-    public List<NewsEntity> getNewsByNewsName(String newsName) {
+    public ArrayList<NewsEntity> getNewsByNewsName(String newsName) {
         Realm realm = Realm.getDefaultInstance();
-        List<NewsEntity> newsEntities = new ArrayList<>();
+        ArrayList<NewsEntity> newsEntities = new ArrayList<>();
         try {
             Log.w("nghia","get news by newsName");
             RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();

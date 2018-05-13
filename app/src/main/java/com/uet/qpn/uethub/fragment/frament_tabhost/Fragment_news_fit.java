@@ -48,8 +48,9 @@ public class Fragment_news_fit extends Fragment {
     void init(View view) {
         swipeRefreshLayout = view.findViewById(R.id.refresh_fit_news);
         swipeRefreshLayout.setOnRefreshListener(swipe_refresh_fit_news);
+
         SaveNew saveNew = new SaveNew();
-        ArrayList<NewsEntity> mData = (ArrayList<NewsEntity>) saveNew.getNewsByNewsName("FIT");
+        ArrayList<NewsEntity> mData = saveNew.getNewsByNewsName("FIT");
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFit);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -73,12 +74,12 @@ public class Fragment_news_fit extends Fragment {
             @Override
             public void onResponse(String response) {
                 Log.d("json", response);
-                adapter.upDateData(Helper.getNewsEntity(response, "FIT"));
-                ArrayList<NewsEntity> newsEntities = adapter.getNewsEntities();
+                ArrayList<NewsEntity> newsEntities = Helper.getNewsEntity(response,"FIT");
                 SaveNew saveNew = new SaveNew();
                 for (int i = 0; i < newsEntities.size(); i++) {
                     saveNew.saveNew(newsEntities.get(i));
                 }
+                adapter.upDateData(saveNew.getNewsByNewsName("FIT"));
                 swipeRefreshLayout.setRefreshing(false);
 
             }

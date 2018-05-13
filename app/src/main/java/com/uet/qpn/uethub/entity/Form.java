@@ -1,8 +1,9 @@
 package com.uet.qpn.uethub.entity;
 
+import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Form {
+public class Form extends RealmObject {
     @PrimaryKey
     private String id;
 

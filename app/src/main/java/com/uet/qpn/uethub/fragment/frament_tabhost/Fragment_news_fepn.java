@@ -49,7 +49,7 @@ public class Fragment_news_fepn extends Fragment {
         swipeRefreshLayout = view.findViewById(R.id.refresh_fepn_news);
         swipeRefreshLayout.setOnRefreshListener(swipe_refresh_fepn_news);
         SaveNew saveNew = new SaveNew();
-        ArrayList<NewsEntity> mData = (ArrayList<NewsEntity>) saveNew.getNewsByNewsName("FEPN");
+        ArrayList<NewsEntity> mData = saveNew.getNewsByNewsName("FEPN");
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFepn);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -69,12 +69,12 @@ public class Fragment_news_fepn extends Fragment {
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response, "FEPN"));
-                ArrayList<NewsEntity> newsEntities = adapter.getNewsEntities();
+                ArrayList<NewsEntity> newsEntities = Helper.getNewsEntity(response, "FEPN");
                 SaveNew saveNew = new SaveNew();
                 for (int i = 0; i < newsEntities.size(); i++) {
                     saveNew.saveNew(newsEntities.get(i));
                 }
+                adapter.upDateData(saveNew.getNewsByNewsName("FEPN"));
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, new Response.ErrorListener() {
@@ -85,7 +85,6 @@ public class Fragment_news_fepn extends Fragment {
         });
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
 
     SwipeRefreshLayout.OnRefreshListener swipe_refresh_fepn_news = new SwipeRefreshLayout.OnRefreshListener() {
         @Override

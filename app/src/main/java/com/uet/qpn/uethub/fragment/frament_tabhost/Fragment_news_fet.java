@@ -55,8 +55,9 @@ public class Fragment_news_fet extends Fragment {
     void init(View view) {
         swipeRefreshLayout = view.findViewById(R.id.refresh_fet_news);
         swipeRefreshLayout.setOnRefreshListener(swipe_refresh_fet_news);
+
         SaveNew saveNew = new SaveNew();
-        ArrayList<NewsEntity> mData = (ArrayList<NewsEntity>) saveNew.getNewsByNewsName("FET");
+        ArrayList<NewsEntity> mData = saveNew.getNewsByNewsName("FET");
         RecyclerView recyclerView = view.findViewById(R.id.rclViewNewsFet);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -73,12 +74,12 @@ public class Fragment_news_fet extends Fragment {
         StringRequest stringRequest = new StringRequest(url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                adapter.upDateData(Helper.getNewsEntity(response, "FET"));
-                ArrayList<NewsEntity> newsEntities = adapter.getNewsEntities();
+                ArrayList<NewsEntity> newsEntities = Helper.getNewsEntity(response,"FET");
                 SaveNew saveNew = new SaveNew();
                 for (int i = 0; i < newsEntities.size(); i++) {
                     saveNew.saveNew(newsEntities.get(i));
                 }
+                adapter.upDateData(saveNew.getNewsByNewsName("FET"));
                 swipeRefreshLayout.setRefreshing(false);
             }
         }, new Response.ErrorListener() {

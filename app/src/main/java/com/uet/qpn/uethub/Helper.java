@@ -146,6 +146,42 @@ public class Helper {
 
     }
 
+    public static List<Subject> getSubjectEntity_Result(String response) {
+        List<Subject> subjects = new ArrayList<>();
+
+        try {
+            JSONArray jsonArray = new JSONArray(response);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                Subject subject = new Subject();
+                JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                subject.setCode(jsonObject.getString("code"));
+                subject.setName(jsonObject.getString("name"));
+                subject.setUrl(jsonObject.getString("url"));
+                subject.setLocal_url(jsonObject.getString("localUrl"));
+
+                Long dataNumCreatedTime = Long.valueOf(jsonObject.getString("createdTime"));
+                Long dataNumUpdatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
+
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                Date dateCreated = new Date(dataNumCreatedTime);
+                Date dateUpdated = new Date(dataNumUpdatedTime);
+
+                subject.setPublic_time(simpleDateFormat.format(dateCreated));
+                subject.setUpdate_on(simpleDateFormat.format(dateUpdated));
+
+                if (!subject.getUrl().equalsIgnoreCase("null") &&
+                        !subject.getLocal_url().equalsIgnoreCase("null")) {
+                    subjects.add(subject);
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return subjects;
+
+    }
+
     public static String getNewsPage(String content) {
         return "<!DOCTYPE html><html><head></head><body>" + content + "</body></html>";
 
@@ -207,8 +243,8 @@ public class Helper {
     }
 
 
-    public static List<SubjectGroup> getSubjectGroup(String response) {
-        List<SubjectGroup> subjectGroups = new ArrayList<>();
+    public static ArrayList<SubjectGroup> getSubjectGroup(String response) {
+        ArrayList<SubjectGroup> subjectGroups = new ArrayList<>();
 
         try {
             JSONArray jsonArray = new JSONArray(response);
