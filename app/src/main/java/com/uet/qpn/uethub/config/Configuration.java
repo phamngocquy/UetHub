@@ -14,7 +14,7 @@ public class Configuration {
     public static String API_PATH_GET_CONFIG = "/api/v1/user/getConfig";
     public static String API_PATH_FORM = "api/v1/form/getAll";
 
-    public static String HOST = "http://192.168.1.104:8080/";
+    public static String HOST = "http://192.168.0.104:8080/";
     public static String STORE_FOLDER = "UHDownload";
     public static String USER_KEY = "MYUSER";
 }

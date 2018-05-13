@@ -4,6 +4,7 @@
     package="com.uet.qpn.uethub">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -72,7 +73,9 @@
 
         <activity android:name=".ReadNewsActivity" />
         <activity android:name=".Activity_pdf_viewer" />
-        <activity android:name=".LoginActivity" android:theme="@style/SplashTheme">
+        <activity
+            android:name=".LoginActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

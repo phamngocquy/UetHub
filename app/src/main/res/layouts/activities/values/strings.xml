@@ -3,12 +3,12 @@
     <string name="username_demo">user name</string>
     <string name="fit">FIT</string>
     <string name="fet">FET</string>
-    <string name="uet">UET</string>
     <string name="fepn">FEPN</string>
     <string name="l_ch_thi">Lịch thi</string>
     <string name="result">Kết quả</string>
     <string name="nhantinmoi">Nhận tin mới</string>
     <string name="msv">Mã sinh viên</string>
+    <string name="msv2">Mã sinh viên: </string>
     <string name="edit_msv">Sửa</string>
     <string name="_15021169">15021169</string>
     <string name="msv_hint">Mã sinh viên</string>
@@ -17,4 +17,12 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shit">Chào mừng bạn đến với UETHUB</string>
+    <string name="uet">UET</string>
+    <string name="sdb">Số báo danh:</string>
+    <string name="date_exam">Ngày thi:</string>
+    <string name="roomExam">Phòng thi:</string>
+    <string name="typeExam">Hình thức thi:</string>
+    <string name="time_update_form">Cập nhật lúc: </string>
+    <string name="menu_outer_open">Tới thư mục</string>
 </resources>

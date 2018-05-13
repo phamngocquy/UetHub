@@ -63,9 +63,10 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
                 //if file exist
                 if (Helper.checkFileExist(fileName)) {
                     // show paf
-                   // Log.d("check", "true");
+                    // Log.d("check", "true");
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
+                    intent.putExtra("filename", subject.getName());
                     context.startActivity(intent);
                 } else {
                     // if file not exist

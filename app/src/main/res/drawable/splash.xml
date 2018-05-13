@@ -4,12 +4,11 @@
     android:layout_height="match_parent"
     android:opacity="opaque">
 
-    <item android:drawable="@color/colorPrimary" />
+    <item android:drawable="@color/status_bar_color" />
 
     <item>
-
         <bitmap
             android:gravity="center"
-            android:src="@drawable/uet" />
+            android:src="@drawable/uet2" />
     </item>
 </layer-list>

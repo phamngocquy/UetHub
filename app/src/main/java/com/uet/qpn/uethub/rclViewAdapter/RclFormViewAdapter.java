@@ -55,6 +55,7 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
                     // Log.d("check", "true");
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
+                    intent.putExtra("filename", form.getName());
                     context.startActivity(intent);
                 } else {
                     // if file not exist

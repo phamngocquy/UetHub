@@ -280,7 +280,7 @@ public class Helper {
         try {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
-                String reg = "";
+                String reg;
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 reg = jsonObject.getString("name");
 
