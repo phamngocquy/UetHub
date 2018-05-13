@@ -3,7 +3,6 @@ package com.uet.qpn.uethub.saveRealm;
 import android.util.Log;
 
 import com.uet.qpn.uethub.entity.NewsEntity;
-import com.uet.qpn.uethub.entity.NewsEntity_tmp;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,12 +20,12 @@ public class SaveNew {
         NewsEntity entity = realm.where(NewsEntity.class).equalTo("url", newsEntity.getUrl()).findFirst();
         if (entity == null) {
             try {
-                    realm.beginTransaction();
-                    Long count = realm.where(NewsEntity.class).count();
-                    Log.w("nghia", "start save new " + count);
-                    newsEntity.setId(String.valueOf(count));
-                    realm.copyToRealm(newsEntity);
-                    realm.commitTransaction();
+                realm.beginTransaction();
+                Long count = realm.where(NewsEntity.class).count();
+                Log.w("nghia", "start save new " + count);
+                newsEntity.setId(String.valueOf(count));
+                realm.copyToRealm(newsEntity);
+                realm.commitTransaction();
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -44,15 +43,15 @@ public class SaveNew {
             Iterator<NewsEntity> iterator = entities.iterator();
             while (iterator.hasNext()) {
                 NewsEntity entity = iterator.next();
-                    NewsEntity newsEntity = new NewsEntity();
-                    newsEntity.setTitle(entity.getTitle());
-                    newsEntity.setDescription(entity.getDescription());
-                    newsEntity.setCategories(entity.getCategories());
-                    newsEntity.setPublictime(entity.getPublictime());
-                    newsEntity.setAuthor(entity.getAuthor());
-                    newsEntity.setUrl(entity.getUrl());
-                    newsEntity.setNewsName(entity.getNewsName());
-                    newsEntities.add(newsEntity);
+                NewsEntity newsEntity = new NewsEntity();
+                newsEntity.setTitle(entity.getTitle());
+                newsEntity.setDescription(entity.getDescription());
+                newsEntity.setCategories(entity.getCategories());
+                newsEntity.setPublictime(entity.getPublictime());
+                newsEntity.setAuthor(entity.getAuthor());
+                newsEntity.setUrl(entity.getUrl());
+                newsEntity.setNewsName(entity.getNewsName());
+                newsEntities.add(newsEntity);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -72,7 +71,6 @@ public class SaveNew {
             Iterator<NewsEntity> iterator = entities.iterator();
             while (iterator.hasNext()) {
                 NewsEntity entity = iterator.next();
-                Log.w("name", entity.getNewsName());
                 if(entity.getNewsName().equals(newsName)) {
                     NewsEntity newsEntity = new NewsEntity();
                     newsEntity.setTitle(entity.getTitle());
@@ -93,9 +91,6 @@ public class SaveNew {
             if (realm != null && !realm.isClosed()) {
                 realm.close();
             }
-        }
-        for (int i = 0; i < newsEntities.size(); i ++){
-            Log.w("enti", newsEntities.get(i).getNewsName());
         }
         return newsEntities;
     }
