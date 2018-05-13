@@ -56,7 +56,8 @@ public class Fragment_noti_result extends Fragment {
 
     public void init(View view) {
         List<Subject> subjects = new ArrayList<>();
-
+        SaveSubject saveSubject = new SaveSubject();
+        subjects = saveSubject.getAllSubjects();
         RecyclerView recyclerView = view.findViewById(R.id.rclViewResult);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
 
@@ -76,8 +77,10 @@ public class Fragment_noti_result extends Fragment {
                 Log.d("Json_Result: ", response);
                 adapter.upDateData(Helper.getSubjectEntity_Result(response));
                 ArrayList<Subject> subjects = (ArrayList<Subject>) adapter.getSubjects();
+                Log.w("abc", String.valueOf(subjects.size()));
                 SaveSubject saveSubject = new SaveSubject();
                 for (int i = 0; i < subjects.size(); i++) {
+                    Log.w("abc", subjects.get(i).getName());
                     saveSubject.saveSubject(subjects.get(i));
                 }
             }
