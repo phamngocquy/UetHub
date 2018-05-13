@@ -42,8 +42,15 @@ public class SaveSubject {
             Iterator<Subject> iterator = subjects.iterator();
             while (iterator.hasNext()) {
                 Subject subject = iterator.next();
-                subjectList.add(subject);
-                Log.w("nameOfsubject", subject.getName());
+                Subject subject_tmp = new Subject();
+                subject_tmp.setCode(subject.getCode());
+                subject_tmp.setPublic_time(subject.getPublic_time());
+                subject_tmp.setLocal_url(subject.getLocal_url());
+                subject_tmp.setName(subject.getName());
+                subject_tmp.setTerm(subject.getTerm());
+                subject_tmp.setUrl(subject.getUrl());
+                subject_tmp.setUpdate_on(subject.getUpdate_on());
+                subjectList.add(subject_tmp);
             }
         } catch (Exception e) {
             e.printStackTrace();

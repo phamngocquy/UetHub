@@ -272,6 +272,7 @@ public class Fragment_setting extends Fragment {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                if (response.equals("true"));
             }
         }, new Response.ErrorListener() {
             @Override
@@ -337,7 +338,7 @@ public class Fragment_setting extends Fragment {
             e.printStackTrace();
         }
 
-
+        loadConfig();
     }
 
     private void prelogoutAcc() {
