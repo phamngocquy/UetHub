@@ -27,6 +27,7 @@ import com.uet.qpn.uethub.rclViewAdapter.RclExamResultViewAdapter;
 import com.uet.qpn.uethub.rclViewAdapter.RclExamViewAdapter;
 import com.uet.qpn.uethub.saveRealm.SaveSubject;
 import com.uet.qpn.uethub.saveRealm.SaveSubjectGroup;
+import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
 import java.lang.invoke.MethodType;
@@ -38,6 +39,7 @@ import java.util.Map;
 public class Fragment_noti_exam extends Fragment {
 
     private RclExamViewAdapter adapter;
+    private SaveUser saveUser = new SaveUser();
 
     //    List<Exam>
     public Fragment_noti_exam() {
@@ -97,17 +99,13 @@ public class Fragment_noti_exam extends Fragment {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-                params.put("msv", "15021169");
+                params.put("msv", saveUser.getMSV());
                 return params;
             }
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    private String getMsvFromSharedPreference() {
-        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
-        return sharedPref.getString("msv", "");
-    }
 
 
 }
