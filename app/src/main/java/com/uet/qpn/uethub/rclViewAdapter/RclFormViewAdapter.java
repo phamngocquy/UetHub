@@ -51,8 +51,6 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
                 String fileName = form.getUrl().substring(form.getUrl().lastIndexOf("/") + 1, form.getUrl().length());
 
                 if (Helper.checkFileExist(fileName)) {
-                    // show paf
-                    // Log.d("check", "true");
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
                     intent.putExtra("filename", form.getName());
@@ -61,7 +59,6 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
                     // if file not exist
                     holder.number_progress_bar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(context, DownloadService.class);
-                    //Log.d("url_pdf", subject.getUrl());
                     intent.putExtra("url", form.getUrl());
                     intent.putExtra("receiver", new RclFormViewAdapter.DownloadReceiver(new Handler(), holder.number_progress_bar));
                     intent.putExtra("fileName", fileName);

@@ -16,12 +16,11 @@ public class SaveSubject {
     public void saveSubject(Subject subject) {
         Realm realm = Realm.getDefaultInstance();
         Subject subject_tmp = realm.where(Subject.class).equalTo("code", subject.getCode()).findFirst();
-        Log.w("why", "w");
         if(subject_tmp == null) {
             try {
                 realm.beginTransaction();
                 Long count = realm.where(Subject.class).count();
-                Log.w("nghia", "start save subject " + count);
+                Log.w("SaveSubject", "start save subject " + count);
                 subject.setId(String.valueOf(count));
                 realm.copyToRealm(subject);
                 realm.commitTransaction();
@@ -36,7 +35,7 @@ public class SaveSubject {
         Realm realm = Realm.getDefaultInstance();
         List<Subject> subjectList = new ArrayList<>();
         try {
-            Log.w("nghia","get all of subjects");
+            Log.w("getAllSubjects","get all of subjects");
             RealmResults<Subject> subjects = realm.where(Subject.class).findAll();
             Log.w("count", String.valueOf(realm.where(Subject.class).count()));
             Iterator<Subject> iterator = subjects.iterator();
@@ -56,9 +55,6 @@ public class SaveSubject {
             e.printStackTrace();
         } finally {
             realm.close();
-        }
-        for (int i = 0; i < subjectList.size(); i++){
-            Log.w("en", subjectList.get(i).getName());
         }
         return subjectList;
     }

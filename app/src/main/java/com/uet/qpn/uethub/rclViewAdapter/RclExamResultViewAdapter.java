@@ -62,8 +62,6 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
 
                 //if file exist
                 if (Helper.checkFileExist(fileName)) {
-                    // show paf
-                    // Log.d("check", "true");
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
                     intent.putExtra("filename", subject.getName());
@@ -72,7 +70,6 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
                     // if file not exist
                     holder.numberProgressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(context, DownloadService.class);
-                    //Log.d("url_pdf", subject.getUrl());
 
                     intent.putExtra("url", subject.getUrl());
                     intent.putExtra("receiver", new DownloadReceiver(new Handler(), holder.numberProgressBar));

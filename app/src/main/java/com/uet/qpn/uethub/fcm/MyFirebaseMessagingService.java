@@ -63,8 +63,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
             Map<String, String> data = remoteMessage.getData();
             url = data.get("url");
             type = data.get("type");
-            Log.w("url", url);
-            Log.w("type", type);
 
 
 
@@ -158,9 +156,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(Intent intent, String title, String body) {
-        Log.w("title", title);
-        Log.w("body", body);
-
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);

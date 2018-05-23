@@ -29,7 +29,6 @@ public class GetContentNews extends AsyncTask<String, Void, WebView> {
             result.append(element.toString());
 
 
-            //Log.d("xxx", result.toString());
 
         } catch (IOException e) {
             e.printStackTrace();

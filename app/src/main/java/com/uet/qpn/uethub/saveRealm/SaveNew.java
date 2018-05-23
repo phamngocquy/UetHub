@@ -22,7 +22,7 @@ public class SaveNew {
             try {
                 realm.beginTransaction();
                 Long count = realm.where(NewsEntity.class).count();
-                Log.w("nghia", "start save new " + count);
+                Log.w("SaveNew", "start save new " + count);
                 newsEntity.setId(String.valueOf(count));
                 realm.copyToRealm(newsEntity);
                 realm.commitTransaction();
@@ -37,7 +37,7 @@ public class SaveNew {
         Realm realm = Realm.getDefaultInstance();
         List<NewsEntity> newsEntities = new ArrayList<>();
         try {
-            Log.w("nghia","get all of new");
+            Log.w("getAllNews","get all of new");
             RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();
             Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
             Iterator<NewsEntity> iterator = entities.iterator();
@@ -65,7 +65,7 @@ public class SaveNew {
         Realm realm = Realm.getDefaultInstance();
         ArrayList<NewsEntity> newsEntities = new ArrayList<>();
         try {
-            Log.w("nghia","get news by newsName");
+            Log.w("getNewsByNewsName","get news by newsName");
             RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();
             Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
             Iterator<NewsEntity> iterator = entities.iterator();

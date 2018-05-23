@@ -70,13 +70,11 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         // TODO: Implement this method to send token to your app server.
 
 
-        Log.d(TAG, "token: " + token);
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
 
         Profile profile = Profile.getCurrentProfile();
 
         if (profile != null) {
-            Log.d("fb___aa", "da dang nhap fb");
             final Uri uri = profile.getProfilePictureUri(150, 150);
 
             GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
@@ -104,9 +102,8 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Result: ", response);
                 if (response.equals("true")) {
-                    Log.d("updatefcm", "oke");
+                    Log.d("updatefcm", "true");
                 }
 
             }

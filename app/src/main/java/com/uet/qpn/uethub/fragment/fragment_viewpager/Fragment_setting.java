@@ -153,7 +153,6 @@ public class Fragment_setting extends Fragment {
                                     txtUserName.setText(object.getString("name"));
                                     String email = object.getString("email");
                                     txtEmail.setText(email);
-                                    Log.d("email_", email);
                                     myFirebaseInstanceIDService.updateDeviceToken(email, myFirebaseInstanceIDService.getInstanceID());
                                 } catch (JSONException e) {
                                     e.printStackTrace();

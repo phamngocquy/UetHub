@@ -2,7 +2,6 @@ package com.uet.qpn.uethub;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
-import android.util.Log;
 
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.Form;
@@ -82,8 +81,6 @@ public class Helper {
                 Date date = new Date(dataNum);
                 entity.setPublictime(simpleDateFormat.format(date));
 
-
-                //Log.d("xxx", entity.toString());
                 entities.add(entity);
             }
         } catch (JSONException e) {
@@ -267,14 +264,11 @@ public class Helper {
                 String dateEx = simpleDateFormat.format(new Date(examDay)).toString();
                 subjectGroup.setExamDay(dateEx);
                 subjectGroup.setUpdate_on(simpleDateFormat.format(new Date().getTime()).toString());
-                Log.w("avc", dateEx);
-                Log.w("cccccccc", subjectGroup.getExamDay());
                 subjectGroups.add(subjectGroup);
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.w("length", String.valueOf(subjectGroups.size()));
 
         return subjectGroups;
 
@@ -295,7 +289,6 @@ public class Helper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.w("length", String.valueOf(stringList.size()));
 
         return stringList;
 

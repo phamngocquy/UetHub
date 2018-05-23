@@ -16,7 +16,7 @@ public class RealmDemo {
         Realm realm = Realm.getDefaultInstance();
         try {
             realm.beginTransaction();
-            Log.w("phuongpv","bat dau transaction");
+            Log.w("saveSubjects","bat dau transaction");
             realm.copyToRealm(subject);
             realm.commitTransaction();
         } catch (Exception e) {
@@ -30,16 +30,13 @@ public class RealmDemo {
     public void getAllSubjects() {
         Realm realm = Realm.getDefaultInstance();
         try {
-            Log.w("phuongpv","lay du lieu");
+            Log.w("getAllSubjects","lay du lieu");
             RealmResults<Subject> abc = realm.where(Subject.class).findAll();
             List<Subject> subjects = new ArrayList<>();
             Iterator<Subject> def = abc.iterator();
-            Log.w("a","vck");
             while (def.hasNext()) {
                 Subject subject = def.next();
-                Log.w("name", subject.getName());
             }
-            Log.w("name","vck");
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

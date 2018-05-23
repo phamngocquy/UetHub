@@ -20,7 +20,7 @@ public class SaveForm {
                 if (form_tmp == null) {
                     realm.beginTransaction();
                     Long count = realm.where(Form.class).count();
-                    Log.d("PNQ", "start save subject: " + count);
+                    Log.d("saveAllForm", "start save subject: " + count);
                     form.setId(String.valueOf(count));
                     realm.copyToRealm(form);
                     realm.commitTransaction();
@@ -39,7 +39,6 @@ public class SaveForm {
         RealmResults<Form> forms = realm.where(Form.class).findAll();
         formlist.addAll(forms);
         Collections.sort( formlist);
-        Log.d("xxx",String.valueOf(formlist.size()));
         return formlist;
     }
 }

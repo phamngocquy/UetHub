@@ -46,7 +46,6 @@ public class DownloadService extends IntentService {
             int fileLength = urlConnection.getContentLength();
 
             //download file
-            //Log.d("file: ", path);
             InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());
             OutputStream outputStream = new FileOutputStream(path + File.separator + Configuration.STORE_FOLDER + File.separator + fileName);
 

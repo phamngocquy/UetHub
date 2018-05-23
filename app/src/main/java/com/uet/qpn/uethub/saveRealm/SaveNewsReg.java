@@ -18,7 +18,7 @@ public class SaveNewsReg {
     public void saveNewsReg(NewsReg newsReg) {
         Realm realm = Realm.getDefaultInstance();
         NewsReg reg = realm.where(NewsReg.class).equalTo("newsName", newsReg.getNewsName()).findFirst();
-        Log.w("nghia", "start save reg " + newsReg.getNewsName() );
+        Log.w("SaveNewsReg", "start save reg " + newsReg.getNewsName() );
         if (reg == null) {
             try {
                 realm.beginTransaction();
@@ -46,7 +46,7 @@ public class SaveNewsReg {
         Realm realm = Realm.getDefaultInstance();
         List<NewsReg> newsRegs = new ArrayList<>();
         try {
-            Log.w("nghia","get all of new reg");
+            Log.w("getAllNewsReg","get all of new reg");
             RealmResults<NewsReg> regs = realm.where(NewsReg.class).findAll();
             Iterator<NewsReg> iterator = regs.iterator();
             while (iterator.hasNext()) {
@@ -60,9 +60,6 @@ public class SaveNewsReg {
             e.printStackTrace();
         } finally {
             realm.close();
-        }
-        for (int i = 0; i < newsRegs.size(); i++){
-            Log.w(newsRegs.get(i).getNewsName(), newsRegs.get(i).getChecked().toString());
         }
         return newsRegs;
     }
