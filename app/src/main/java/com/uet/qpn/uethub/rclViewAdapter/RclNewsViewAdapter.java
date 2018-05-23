@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,9 +89,22 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
     }
 
     public void upDateData(ArrayList<NewsEntity> list) {
-
-        for (NewsEntity entity : list) {
-            if (newsEntities.contains(entity)) list.remove(entity);
+        for (int k = 0; k < list.size(); k++) {
+            int i = 0;
+            NewsEntity entity = list.get(k);
+            for (int j = 0; j < newsEntities.size(); j++){
+                NewsEntity entity_tmp = newsEntities.get(j);
+                if(entity.getUrl() != null && entity_tmp.getUrl() != null) {
+                    if (entity.getUrl().equals(entity_tmp.getUrl())) {
+                        i++;
+                        break;
+                    }
+                }
+            }
+            if (i != 0) {
+                list.remove(k);
+                k--;
+            }
         }
         list.addAll(newsEntities);
         newsEntities = list;

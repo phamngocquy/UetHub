@@ -1,9 +1,11 @@
 package com.uet.qpn.uethub.entity;
 
+import android.support.annotation.NonNull;
+
 import io.realm.RealmObject;
 import io.realm.annotations.PrimaryKey;
 
-public class Form extends RealmObject {
+public class Form extends RealmObject implements Comparable<Form>{
     @PrimaryKey
     private String id;
 
@@ -81,4 +83,10 @@ public class Form extends RealmObject {
     public void setUpdatedTime(String updatedTime) {
         this.updatedTime = updatedTime;
     }
+
+    @Override
+    public int compareTo(@NonNull Form o) {
+        return name.compareTo(o.getName());
+    }
+
 }

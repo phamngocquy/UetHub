@@ -5,6 +5,7 @@ import android.util.Log;
 import com.uet.qpn.uethub.entity.Form;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
@@ -37,6 +38,7 @@ public class SaveForm {
         ArrayList<Form> formlist = new ArrayList<>();
         RealmResults<Form> forms = realm.where(Form.class).findAll();
         formlist.addAll(forms);
+        Collections.sort( formlist);
         Log.d("xxx",String.valueOf(formlist.size()));
         return formlist;
     }

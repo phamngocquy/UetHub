@@ -62,4 +62,16 @@ public class SaveSubject {
         }
         return subjectList;
     }
+
+    public void deleteRealm(){
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<Subject> rows = realm.where(Subject.class).findAll();
+                rows.deleteAllFromRealm();
+            }
+        });
+        realm.close();
+    }
 }

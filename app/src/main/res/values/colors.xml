@@ -5,8 +5,11 @@
     <color name="colorAccent">#1e9bc9</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    <color name="blue">#0C79E8</color>
+    <color name="green">#78B251</color>
     <color name="gray">#efefef</color>
-    <color name="black_gray">#737070</color>
+    <color name="gray2">#9A9E9D</color>
+    <color name="black_gray">#605e5e</color>
     <color name="black_gray_">#cacaca</color>
     <color name="tab_layoutColor">#1c3475</color>
     <color name="status_bar_color">#1c3475</color>

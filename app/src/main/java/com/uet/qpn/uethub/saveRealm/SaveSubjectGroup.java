@@ -41,7 +41,9 @@ public class SaveSubjectGroup {
             while (iterator.hasNext()) {
                 SubjectGroup subjectGroup = iterator.next();
                 SubjectGroup subjectGroup_tmp = new SubjectGroup();
+                subjectGroup_tmp.setMsv(subjectGroup.getMsv());
                 subjectGroup_tmp.setSbdUser(subjectGroup.getSbdUser());
+                subjectGroup_tmp.setExamDay(subjectGroup.getExamDay());
                 subjectGroup_tmp.setExamRoom(subjectGroup.getExamRoom());
                 subjectGroup_tmp.setTypeExam(subjectGroup.getTypeExam());
                 subjectGroup_tmp.setSubjectName(subjectGroup.getSubjectName());
@@ -57,7 +59,20 @@ public class SaveSubjectGroup {
         }
         for (int i = 0; i < subjectGroupList.size(); i++){
             Log.w("en", subjectGroupList.get(i).getSubjectName());
+            Log.w("msv", subjectGroupList.get(i).getMsv());
         }
         return subjectGroupList;
+    }
+
+    public void deleteRealm(){
+        Realm realm = Realm.getDefaultInstance();
+        realm.executeTransaction(new Realm.Transaction() {
+            @Override
+            public void execute(Realm realm) {
+                RealmResults<SubjectGroup> rows = realm.where(SubjectGroup.class).findAll();
+                rows.deleteAllFromRealm();
+            }
+        });
+        realm.close();
     }
 }

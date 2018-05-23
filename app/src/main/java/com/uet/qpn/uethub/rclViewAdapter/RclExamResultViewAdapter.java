@@ -110,7 +110,16 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
 
     public void upDateData(List<Subject> subjects_) {
         for (Subject entity : subjects_) {
-            if (!subjects.contains(entity)) subjects.add(entity);
+            int i = 0;
+            for (Subject entityOfMain : subjects){
+                if(entity.getCode().equals(entityOfMain.getCode())){
+                    i++;
+                    break;
+                }
+            }
+            if(i == 0){
+                subjects.add(entity);
+            }
         }
 
         notifyDataSetChanged();

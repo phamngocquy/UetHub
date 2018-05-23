@@ -9,6 +9,7 @@ import com.uet.qpn.uethub.entity.Form;
 import com.uet.qpn.uethub.entity.NewsEntity;
 import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.entity.SubjectGroup;
+import com.uet.qpn.uethub.saveRealm.SaveUser;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -249,20 +250,25 @@ public class Helper {
         try {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
+                SaveUser saveUser = new SaveUser();
                 SubjectGroup subjectGroup = new SubjectGroup();
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                subjectGroup.setMsv(jsonObject.getString("msv"));
+                subjectGroup.setMsv(saveUser.getMSV());
                 subjectGroup.setSbdUser(jsonObject.getString("sbdUser"));
-                subjectGroup.setExamDay(jsonObject.getString("examDay"));
+//
                 subjectGroup.setExamRoom(jsonObject.getString("examRoom"));
                 subjectGroup.setTypeExam(jsonObject.getString("typeExam"));
                 subjectGroup.setSubjectName(jsonObject.getString("subjectName"));
                 subjectGroup.setSubjectCode(jsonObject.getString("subjectCode"));
 
                 SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
-                Date dateUpdated = Calendar.getInstance().getTime();
-                subjectGroup.setUpdate_on(simpleDateFormat.format(dateUpdated));
-
+//                Date dateUpdated = Calendar.getInstance().getTime();
+                Long examDay = Long.valueOf(jsonObject.getString("examDay"));
+                String dateEx = simpleDateFormat.format(new Date(examDay)).toString();
+                subjectGroup.setExamDay(dateEx);
+                subjectGroup.setUpdate_on(simpleDateFormat.format(new Date().getTime()).toString());
+                Log.w("avc", dateEx);
+                Log.w("cccccccc", subjectGroup.getExamDay());
                 subjectGroups.add(subjectGroup);
             }
         } catch (JSONException e) {

@@ -84,7 +84,14 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
     public void upDateData(List<SubjectGroup> subjectGroups_in) {
 
         for (SubjectGroup entity : subjectGroups_in) {
-            if (!subjectGroups.contains(entity)) {
+            int i = 0;
+            for (SubjectGroup entitySG : subjectGroups){
+                if (entity.getSubjectCode().equals(entitySG.getSubjectCode())){
+                    i++;
+                    break;
+                }
+            }
+            if(i == 0){
                 subjectGroups.add(entity);
             }
         }

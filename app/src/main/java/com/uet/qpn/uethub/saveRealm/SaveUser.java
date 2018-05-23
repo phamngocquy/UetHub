@@ -44,12 +44,14 @@ public class SaveUser {
 
     public String getMSV() {
         Realm realm = Realm.getDefaultInstance();
+        String msv = "";
         try {
             User user = realm.where(User.class).equalTo("id", Configuration.USER_KEY).findFirst();
             if (user == null || user.getMsv() == null) {
                 return "";
             }
-            return user.getMsv();
+            msv =user.getMsv();
+            return msv;
         } catch (Exception e) {
             e.printStackTrace();
             return "";

@@ -80,7 +80,16 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
 
     public void updateData(ArrayList<Form> formList_) {
         for (Form form : formList_) {
-            if (!formList.contains(form)) formList.add(form);
+            int i = 0;
+            for (Form form_tmp : formList){
+                if (form.getLocal_url().equals(form_tmp.getLocal_url())){
+                    i++;
+                    break;
+                }
+            }
+            if(i == 0){
+                formList.add(form);
+            }
         }
         notifyDataSetChanged();
     }

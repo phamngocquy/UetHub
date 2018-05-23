@@ -247,7 +247,11 @@ public class Fragment_setting extends Fragment {
     private void initBtnMsv(View view) {
         btnMsv = view.findViewById(R.id.btnEditMsv);
         txtMsv = view.findViewById(R.id.txtMsv);
-        txtMsv.setText(saveUser.getMSV());
+        if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+            txtMsv.setText(saveUser.getMSV());
+        }else {
+            txtMsv.setText("1502xxxx");
+        }
 
         btnMsv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -278,7 +282,11 @@ public class Fragment_setting extends Fragment {
 
                 AlertDialog dialogEditMsv = builder.create();
                 dialogEditMsv.getWindow().setBackgroundDrawableResource(R.drawable.dialog_setting);
-                edit_msv.setText(saveUser.getMSV());
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                    edit_msv.setText(saveUser.getMSV());
+                }else {
+                    edit_msv.setText("1502xxxx");
+                }
 
                 dialogEditMsv.show();
             }
@@ -316,7 +324,11 @@ public class Fragment_setting extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txtMsv.setText(saveUser.getMSV());
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                    txtMsv.setText(saveUser.getMSV());
+                }else {
+                    txtMsv.setText("1502xxxx");
+                }
             }
         }) {
             @Override
@@ -501,7 +513,11 @@ public class Fragment_setting extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                txtMsv.setText(saveUser.getMSV());
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                    txtMsv.setText(saveUser.getMSV());
+                }else {
+                    txtMsv.setText("1502xxxxx");
+                }
                 Toast.makeText(getContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
                 Log.d("Error_Frag_Ex_Result", error.toString());
             }
