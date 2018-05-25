@@ -2,6 +2,7 @@ package com.uet.qpn.uethub;
 
 import android.annotation.SuppressLint;
 import android.os.Environment;
+import android.util.Log;
 
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.Form;
@@ -55,6 +56,10 @@ public class Helper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
+        }catch (NullPointerException e)
+        {
+            System.out.println("NullPointerEx..");
+            e.printStackTrace();
         }
 
         return listForms;
@@ -84,6 +89,10 @@ public class Helper {
                 entities.add(entity);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e)
+        {
+            System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
 
@@ -127,7 +136,7 @@ public class Helper {
                 Long dataNumCreatedTime = Long.valueOf(jsonObject.getString("createdTime"));
                 Long dataNumUpdatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
                 Date dateCreated = new Date(dataNumCreatedTime);
                 Date dateUpdated = new Date(dataNumUpdatedTime);
 
@@ -137,6 +146,10 @@ public class Helper {
                 subjects.add(subject);
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e)
+        {
+            System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
 
@@ -160,7 +173,7 @@ public class Helper {
                 Long dataNumCreatedTime = Long.valueOf(jsonObject.getString("createdTime"));
                 Long dataNumUpdatedTime = Long.valueOf(jsonObject.getString("updatedTime"));
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
                 Date dateCreated = new Date(dataNumCreatedTime);
                 Date dateUpdated = new Date(dataNumUpdatedTime);
 
@@ -173,6 +186,10 @@ public class Helper {
                 }
             }
         } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (NullPointerException e)
+        {
+            System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
 
@@ -242,6 +259,7 @@ public class Helper {
 
 
     public static ArrayList<SubjectGroup> getSubjectGroup(String response) {
+        Log.d("json_", response);
         ArrayList<SubjectGroup> subjectGroups = new ArrayList<>();
 
         try {
@@ -252,18 +270,20 @@ public class Helper {
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
                 subjectGroup.setMsv(saveUser.getMSV());
                 subjectGroup.setSbdUser(jsonObject.getString("sbdUser"));
-//
+
                 subjectGroup.setExamRoom(jsonObject.getString("examRoom"));
                 subjectGroup.setTypeExam(jsonObject.getString("typeExam"));
                 subjectGroup.setSubjectName(jsonObject.getString("subjectName"));
                 subjectGroup.setSubjectCode(jsonObject.getString("subjectCode"));
 
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
-//                Date dateUpdated = Calendar.getInstance().getTime();
-                Long examDay = Long.valueOf(jsonObject.getString("examDay"));
-                String dateEx = simpleDateFormat.format(new Date(examDay)).toString();
-                subjectGroup.setExamDay(dateEx);
-                subjectGroup.setUpdate_on(simpleDateFormat.format(new Date().getTime()).toString());
+                @SuppressLint("SimpleDateFormat") SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH'h'mm dd-MM-yyy");
+                String tmp = jsonObject.getString("examDay");
+                if (!tmp.equals("null")) {
+                    Long examDay = Long.valueOf(tmp);
+                    Log.d("date_",simpleDateFormat.format(new Date(examDay)));
+                    subjectGroup.setExamDay(simpleDateFormat.format(new Date(examDay)));
+                }
+                subjectGroup.setUpdate_on(simpleDateFormat.format(new Date().getTime()));
                 subjectGroups.add(subjectGroup);
             }
         } catch (JSONException e) {

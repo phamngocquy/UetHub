@@ -95,8 +95,6 @@ public class Fragment_setting extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         AppEventsLogger.activateApp(getContext());
-        FacebookSdk.sdkInitialize(getContext().getApplicationContext());
-        AppEventsLogger.activateApp(getContext());
         initSwitch(view);
         initBtnMsv(view);
         //loadConfig();
@@ -105,7 +103,8 @@ public class Fragment_setting extends Fragment {
         final FloatingActionButton btnLogout = view.findViewById(R.id.btnLogout);
         final FloatingActionButton btnUpdate = view.findViewById(R.id.btnUpdate);
         FloatingActionButton btnSetting = view.findViewById(R.id.btnSetting);
-
+        btnLogout.hide();
+        btnUpdate.hide();
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -246,9 +245,9 @@ public class Fragment_setting extends Fragment {
     private void initBtnMsv(View view) {
         btnMsv = view.findViewById(R.id.btnEditMsv);
         txtMsv = view.findViewById(R.id.txtMsv);
-        if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+        if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
             txtMsv.setText(saveUser.getMSV());
-        }else {
+        } else {
             txtMsv.setText("1502xxxx");
         }
 
@@ -281,9 +280,9 @@ public class Fragment_setting extends Fragment {
 
                 AlertDialog dialogEditMsv = builder.create();
                 dialogEditMsv.getWindow().setBackgroundDrawableResource(R.drawable.dialog_setting);
-                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
                     edit_msv.setText(saveUser.getMSV());
-                }else {
+                } else {
                     edit_msv.setText("1502xxxx");
                 }
 
@@ -323,9 +322,9 @@ public class Fragment_setting extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
                     txtMsv.setText(saveUser.getMSV());
-                }else {
+                } else {
                     txtMsv.setText("1502xxxx");
                 }
             }
@@ -512,9 +511,9 @@ public class Fragment_setting extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")){
+                if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
                     txtMsv.setText(saveUser.getMSV());
-                }else {
+                } else {
                     txtMsv.setText("1502xxxxx");
                 }
                 Toast.makeText(getContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();

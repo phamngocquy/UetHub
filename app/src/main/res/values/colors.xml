@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#1c3475</color>
+    <color name="colorPrimaryDark">#046b62</color>
     <color name="colorAccent">#1e9bc9</color>
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -11,8 +11,9 @@
     <color name="gray2">#9A9E9D</color>
     <color name="black_gray">#605e5e</color>
     <color name="black_gray_">#cacaca</color>
-    <color name="tab_layoutColor">#1c3475</color>
-    <color name="status_bar_color">#1c3475</color>
-    <color name="tabTextColor">#9ab6b5</color>
+    <!--<color name="tab_layoutColor">#1c3475</color>-->
+    <color name="tab_layoutColor">#05998d</color>
+    <color name="status_bar_color">#05998d</color>
+    <color name="tabTextColor">#c8c9c7</color>
     <color name="switchColor">#1e9bc9</color>
 </resources>

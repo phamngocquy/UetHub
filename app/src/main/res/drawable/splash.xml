@@ -9,6 +9,6 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/uet2" />
+            android:src="@drawable/intro" />
     </item>
 </layer-list>
