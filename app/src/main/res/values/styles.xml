@@ -41,9 +41,10 @@
     </style>
 
     <style name="textsNameExamResult">
+        <item name="android:textStyle">bold</item>
         <item name="android:text">@string/trash_1</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">22sp</item>
+        <item name="android:textSize">20sp</item>
     </style>
 
     <style name="textCodeSubject">
