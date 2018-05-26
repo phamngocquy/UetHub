@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.ReadNewsActivity;
 import com.uet.qpn.uethub.entity.NewsEntity;
@@ -45,18 +47,21 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                NewsEntity newsEntity = new NewsEntity();
-                newsEntity.setTitle(entity.getTitle());
-                newsEntity.setDescription(entity.getDescription());
-                newsEntity.setCategories(entity.getCategories());
-                newsEntity.setPublictime(entity.getPublictime());
-                newsEntity.setAuthor(entity.getAuthor());
-                newsEntity.setUrl(entity.getUrl());
-                newsEntity.setNewsName(entity.getNewsName());
-                Intent intent = new Intent(context, ReadNewsActivity.class);
-                intent.putExtra("news", newsEntity);
-                context.startActivity(intent);
-
+                if (Helper.isOnlineABoolean(context)) {
+                    NewsEntity newsEntity = new NewsEntity();
+                    newsEntity.setTitle(entity.getTitle());
+                    newsEntity.setDescription(entity.getDescription());
+                    newsEntity.setCategories(entity.getCategories());
+                    newsEntity.setPublictime(entity.getPublictime());
+                    newsEntity.setAuthor(entity.getAuthor());
+                    newsEntity.setUrl(entity.getUrl());
+                    newsEntity.setNewsName(entity.getNewsName());
+                    Intent intent = new Intent(context, ReadNewsActivity.class);
+                    intent.putExtra("news", newsEntity);
+                    context.startActivity(intent);
+                } else {
+                    Toast.makeText(context, "No internet connecting", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }
@@ -92,9 +97,9 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
         for (int k = 0; k < list.size(); k++) {
             int i = 0;
             NewsEntity entity = list.get(k);
-            for (int j = 0; j < newsEntities.size(); j++){
+            for (int j = 0; j < newsEntities.size(); j++) {
                 NewsEntity entity_tmp = newsEntities.get(j);
-                if(entity.getUrl() != null && entity_tmp.getUrl() != null) {
+                if (entity.getUrl() != null && entity_tmp.getUrl() != null) {
                     if (entity.getUrl().equals(entity_tmp.getUrl())) {
                         i++;
                         break;

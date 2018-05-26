@@ -1,6 +1,9 @@
 package com.uet.qpn.uethub;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 
@@ -56,8 +59,7 @@ public class Helper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
@@ -90,8 +92,7 @@ public class Helper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
@@ -147,8 +148,7 @@ public class Helper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        }catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
@@ -187,8 +187,7 @@ public class Helper {
             }
         } catch (JSONException e) {
             e.printStackTrace();
-        } catch (NullPointerException e)
-        {
+        } catch (NullPointerException e) {
             System.out.println("NullPointerEx..");
             e.printStackTrace();
         }
@@ -280,7 +279,7 @@ public class Helper {
                 String tmp = jsonObject.getString("examDay");
                 if (!tmp.equals("null")) {
                     Long examDay = Long.valueOf(tmp);
-                    Log.d("date_",simpleDateFormat.format(new Date(examDay)));
+                    Log.d("date_", simpleDateFormat.format(new Date(examDay)));
                     subjectGroup.setExamDay(simpleDateFormat.format(new Date(examDay)));
                 }
                 subjectGroup.setUpdate_on(simpleDateFormat.format(new Date().getTime()));
@@ -296,7 +295,6 @@ public class Helper {
 
     public static List<String> getReg(String response) {
         List<String> stringList = new ArrayList<>();
-
         try {
             JSONArray jsonArray = new JSONArray(response);
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -309,8 +307,15 @@ public class Helper {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return stringList;
+    }
 
+    public static boolean isOnlineABoolean(Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = null;
+        if (connectivityManager != null) {
+            networkInfo = connectivityManager.getActiveNetworkInfo();
+        }
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 }

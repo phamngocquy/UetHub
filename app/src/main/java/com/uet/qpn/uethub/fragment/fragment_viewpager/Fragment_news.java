@@ -45,7 +45,6 @@ public class Fragment_news extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-
         tabLayout = view.findViewById(R.id.tab_layout);
         viewPager = view.findViewById(R.id.view_pager);
 

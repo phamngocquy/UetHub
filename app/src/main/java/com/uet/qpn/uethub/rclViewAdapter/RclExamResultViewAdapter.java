@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.uet.qpn.uethub.Activity_pdf_viewer;
@@ -59,14 +60,13 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
             public void onClick(View v) {
                 String fileName = subject.getUrl().substring(subject.getUrl().lastIndexOf("/") + 1, subject.getUrl().length());
 
-
                 //if file exist
                 if (Helper.checkFileExist(fileName)) {
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
                     intent.putExtra("filename", subject.getName());
                     context.startActivity(intent);
-                } else {
+                } else if (Helper.isOnlineABoolean(context)) {
                     // if file not exist
                     holder.numberProgressBar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(context, DownloadService.class);
@@ -75,9 +75,9 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
                     intent.putExtra("receiver", new DownloadReceiver(new Handler(), holder.numberProgressBar));
                     intent.putExtra("fileName", fileName);
                     context.startService(intent);
+                } else {
+                    Toast.makeText(context, "No internet connecting", Toast.LENGTH_SHORT).show();
                 }
-
-
             }
         });
 
@@ -95,7 +95,7 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
         TextView txt_code_subject;
         NumberProgressBar numberProgressBar;
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
             txt_name_exam_result = itemView.findViewById(R.id.txt_name_exam_result);
             txt_time_public = itemView.findViewById(R.id.txt_time_public);
@@ -108,13 +108,13 @@ public class RclExamResultViewAdapter extends RecyclerView.Adapter<RclExamResult
     public void upDateData(List<Subject> subjects_) {
         for (Subject entity : subjects_) {
             int i = 0;
-            for (Subject entityOfMain : subjects){
-                if(entity.getCode().equals(entityOfMain.getCode())){
+            for (Subject entityOfMain : subjects) {
+                if (entity.getCode().equals(entityOfMain.getCode())) {
                     i++;
                     break;
                 }
             }
-            if(i == 0){
+            if (i == 0) {
                 subjects.add(entity);
             }
         }

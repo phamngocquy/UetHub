@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.uet.qpn.uethub.Activity_pdf_viewer;
@@ -48,14 +49,14 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String fileName = form.getUrl().substring(form.getUrl().lastIndexOf("/") + 1, form.getUrl().length());
 
+                String fileName = form.getUrl().substring(form.getUrl().lastIndexOf("/") + 1, form.getUrl().length());
                 if (Helper.checkFileExist(fileName)) {
                     Intent intent = new Intent(context, Activity_pdf_viewer.class);
                     intent.putExtra("filepath", fileName);
                     intent.putExtra("filename", form.getName());
                     context.startActivity(intent);
-                } else {
+                } else if (Helper.isOnlineABoolean(context)) {
                     // if file not exist
                     holder.number_progress_bar.setVisibility(View.VISIBLE);
                     Intent intent = new Intent(context, DownloadService.class);
@@ -63,7 +64,10 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
                     intent.putExtra("receiver", new RclFormViewAdapter.DownloadReceiver(new Handler(), holder.number_progress_bar));
                     intent.putExtra("fileName", fileName);
                     context.startService(intent);
+                } else {
+                    Toast.makeText(context, "No internet connecting", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
 
@@ -78,13 +82,13 @@ public class RclFormViewAdapter extends RecyclerView.Adapter<RclFormViewAdapter.
     public void updateData(ArrayList<Form> formList_) {
         for (Form form : formList_) {
             int i = 0;
-            for (Form form_tmp : formList){
-                if (form.getLocal_url().equals(form_tmp.getLocal_url())){
+            for (Form form_tmp : formList) {
+                if (form.getLocal_url().equals(form_tmp.getLocal_url())) {
                     i++;
                     break;
                 }
             }
-            if(i == 0){
+            if (i == 0) {
                 formList.add(form);
             }
         }

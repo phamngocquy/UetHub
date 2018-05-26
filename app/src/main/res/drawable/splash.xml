@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:opacity="opaque">
 
-    <item android:drawable="@color/status_bar_color" />
+    <item android:drawable="@color/white" />
 
     <item>
         <bitmap
