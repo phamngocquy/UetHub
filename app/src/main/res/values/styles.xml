@@ -43,7 +43,7 @@
     <style name="textsNameExamResult">
         <item name="android:text">@string/trash_1</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">22sp</item>
     </style>
 
     <style name="textCodeSubject">
@@ -64,7 +64,7 @@
 
     <style name="txtSubjectExam">
         <item name="android:textSize">15sp</item>
-        <item name="android:textColor">@color/black_gray</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="SplashTheme" parent="CustomTheme">

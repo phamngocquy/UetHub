@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:background="@color/gray"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
@@ -10,80 +11,34 @@
         android:layout_margin="7dp"
         app:cardCornerRadius="10dp">
 
+        <TextView
+            android:id="@+id/txt_name_exam"
+            style="@style/textsNameExamResult"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginStart="8dp" />
+
         <LinearLayout
+            android:layout_marginLeft="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="4dp">
-
-            <TextView
-                android:id="@+id/txt_name_exam"
-                style="@style/textsNameExamResult"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20px"
-                android:layout_marginLeft="5dp"/>
-
+            android:layout_marginTop="25dp"
+            android:padding="4dp"
+            android:layout_marginStart="4dp">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="horizontal">
-                <ImageView
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_centerInParent="true"
-                    android:background="@drawable/exam"
-                    />
+
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtMmh"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/mmh" />
-
-                        <TextView
-                            android:id="@+id/txt_code_subject"
-                            style="@style/textCodeSubject"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:layout_toEndOf="@+id/txtMmh"
-                            android:layout_toRightOf="@+id/txtMmh"/>
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtMsv"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="100dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/msv2" />
-
-                        <TextView
-                            android:id="@+id/txt_msv"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtMsv"
-                            android:layout_toRightOf="@+id/txtMsv" />
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -92,7 +47,7 @@
                         <TextView
                             android:id="@+id/txtSbd"
                             style="@style/txtSubjectExam"
-                            android:layout_width="100dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/sdb" />
 
@@ -112,7 +67,7 @@
                         <TextView
                             android:id="@+id/txtDateExam"
                             style="@style/txtSubjectExam"
-                            android:layout_width="80dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/date_exam" />
 
@@ -125,25 +80,6 @@
                             android:layout_toRightOf="@+id/txtDateExam" />
                     </RelativeLayout>
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtRoomExam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="80dp"
-                            android:layout_height="wrap_content"
-                            android:text="@string/roomExam" />
-
-                        <TextView
-                            android:id="@+id/room_exam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtRoomExam"
-                            android:layout_toRightOf="@+id/txtRoomExam" />
-                    </RelativeLayout>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -152,7 +88,7 @@
                         <TextView
                             android:id="@+id/txtTypeExam"
                             style="@style/txtSubjectExam"
-                            android:layout_width="100dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/typeExam" />
 
@@ -166,6 +102,75 @@
 
                     </RelativeLayout>
                 </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtMsv"
+                        style="@style/txtSubjectExam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/msv2" />
+
+                    <TextView
+                        android:id="@+id/txt_msv"
+                        style="@style/txtSubjectExam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/txtMsv"
+                        android:layout_toRightOf="@+id/txtMsv" />
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtMmh"
+                        style="@style/txtSubjectExam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/mmh" />
+
+                    <TextView
+                        android:id="@+id/txt_code_subject"
+                        style="@style/textCodeSubject"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_toEndOf="@+id/txtMmh"
+                        android:layout_toRightOf="@+id/txtMmh" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/txtRoomExam"
+                        style="@style/txtSubjectExam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/roomExam" />
+
+                    <TextView
+                        android:id="@+id/room_exam"
+                        style="@style/txtSubjectExam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toEndOf="@+id/txtRoomExam"
+                        android:layout_toRightOf="@+id/txtRoomExam" />
+                </RelativeLayout>
             </LinearLayout>
 
         </LinearLayout>
