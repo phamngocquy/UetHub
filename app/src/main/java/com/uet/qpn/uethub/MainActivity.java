@@ -1,6 +1,8 @@
 package com.uet.qpn.uethub;
 
 import android.Manifest;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +10,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
 import android.os.Environment;
+import android.os.SystemClock;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentTabHost;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
+import com.uet.qpn.uethub.MyAlarm.AlarmNotificationReceiver;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_form;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_news;
@@ -27,6 +31,7 @@ import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_noti_result;
 import com.uet.qpn.uethub.fragment.fragment_viewpager.Fragment_setting;
 
 import java.io.File;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,7 +69,8 @@ public class MainActivity extends AppCompatActivity {
         img_news.setImageResource(R.drawable.ic_24_hours);
         tabHost.setOnTabChangedListener(onTab_Change);
 
-
+       //Helper.startAlarm(getApplicationContext(),1,10);
+        //Helper.startAlarm(getApplicationContext(),2,11);
     }
 
     private TabHost.OnTabChangeListener onTab_Change = new TabHost.OnTabChangeListener() {
@@ -159,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-    /*Ngu lol function*/
+    /*Ngu dog function*/
 
     @Override
     public void onBackPressed() {
@@ -169,9 +175,24 @@ public class MainActivity extends AppCompatActivity {
         startActivity(a);
     }
 
-    public boolean isOnlineABoolean() {
-        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        return networkInfo != null && networkInfo.isConnectedOrConnecting();
+  /*  private void startAlarm() {
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        Intent intent;
+        PendingIntent pendingIntent;
+        intent = new Intent(MainActivity.this, AlarmNotificationReceiver.class);
+        pendingIntent = PendingIntent.getBroadcast(this, 0, intent, 0);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, 1);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        } else {
+            assert alarmManager != null;
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+
     }
+*/
+
 }

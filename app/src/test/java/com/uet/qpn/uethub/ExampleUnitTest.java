@@ -2,6 +2,7 @@ package com.uet.qpn.uethub;
 
 import android.content.Context;
 import android.net.Uri;
+import android.util.Log;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -17,6 +18,10 @@ import org.jsoup.select.Elements;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import static org.junit.Assert.*;
@@ -92,5 +97,18 @@ public class ExampleUnitTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Test
+    public void testSubDate() throws ParseException {
+        DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+        Date date = Calendar.getInstance().getTime();
+        Date date_ = df.parse("00:00:00 04-06-2018");
+        Long diff = date_.getTime() - 2 * 24 * 60 * 60 * 1000;
+        Date date1 = new Date(diff);
+        System.out.println(df.format(date_));
+        System.out.println(df.format(date1));
+
+
     }
 }

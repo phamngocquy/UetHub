@@ -1,12 +1,17 @@
 package com.uet.qpn.uethub;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
+import com.uet.qpn.uethub.MyAlarm.AlarmNotificationReceiver;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.Form;
 import com.uet.qpn.uethub.entity.NewsEntity;
@@ -22,6 +27,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -279,6 +285,7 @@ public class Helper {
                 String tmp = jsonObject.getString("examDay");
                 if (!tmp.equals("null")) {
                     Long examDay = Long.valueOf(tmp);
+                    subjectGroup.setRawExamDay(examDay);
                     Log.d("date_", simpleDateFormat.format(new Date(examDay)));
                     subjectGroup.setExamDay(simpleDateFormat.format(new Date(examDay)));
                 }
@@ -317,5 +324,37 @@ public class Helper {
             networkInfo = connectivityManager.getActiveNetworkInfo();
         }
         return networkInfo != null && networkInfo.isConnectedOrConnecting();
+    }
+
+    public static Long subtractionDate(Long examDate) {
+        @SuppressLint("SimpleDateFormat") DateFormat df = new SimpleDateFormat("HH:mm:ss dd-MM-yyyy");
+        Date currentDate = Calendar.getInstance().getTime();
+        Long diff = new Date(examDate).getTime() - currentDate.getTime();
+        diff = diff / 1000 / 60 / 60;
+//        Date tmp = new Date(examDate);
+//        Log.d("diffDate", String.valueOf(diff / 1000 / 60 / 60) + "/" + df.format(tmp));
+        return diff;
+    }
+
+    public static void startAlarm(Context context, int timeNumber, SubjectGroup subjectGroup) {
+        AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent;
+        PendingIntent pendingIntent;
+        intent = new Intent(context, AlarmNotificationReceiver.class);
+        intent.putExtra("idNotification", Integer.valueOf(subjectGroup.getId()));
+        intent.putExtra("subjectName", subjectGroup.getSubjectName());
+        intent.putExtra("subjectCode", subjectGroup.getSubjectCode());
+        pendingIntent = PendingIntent.getBroadcast(context, Integer.valueOf(subjectGroup.getId()), intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Calendar calendar = Calendar.getInstance();
+        calendar.add(Calendar.MINUTE, timeNumber);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (alarmManager != null) {
+                alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            }
+        } else {
+            assert alarmManager != null;
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+        }
+
     }
 }

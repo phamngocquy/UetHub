@@ -61,7 +61,7 @@ public class Fragment_noti_exam extends Fragment {
 
     public void init(View view) {
         List<SubjectGroup> subjectGroups;
-        SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
+        SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup(getContext());
         subjectGroups = saveSubjectGroup.getAllSubjectGroup();
 
         RecyclerView recyclerView = view.findViewById(R.id.rclViewExam);
@@ -82,7 +82,7 @@ public class Fragment_noti_exam extends Fragment {
             public void onResponse(String response) {
                 Log.d("Json_Result: exam", response);
 
-                SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup();
+                SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup(getContext());
 
                 for (SubjectGroup subjectGroup : Helper.getSubjectGroup(response)) {
                     saveSubjectGroup.saveSubjectGroup(subjectGroup);

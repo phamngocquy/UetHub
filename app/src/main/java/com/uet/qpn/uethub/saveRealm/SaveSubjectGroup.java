@@ -1,11 +1,14 @@
 package com.uet.qpn.uethub.saveRealm;
 
+import android.content.Context;
 import android.util.Log;
 
-import com.uet.qpn.uethub.entity.Subject;
+import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.entity.SubjectGroup;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
@@ -13,17 +16,30 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 
 public class SaveSubjectGroup {
+    private Context context;
+
+    public SaveSubjectGroup() {
+
+    }
+
+    public SaveSubjectGroup(Context context) {
+        this.context = context;
+    }
+
     public void saveSubjectGroup(SubjectGroup subjectGroup) {
         Realm realm = Realm.getDefaultInstance();
-        SubjectGroup subjectGroup_tmp = realm.where(SubjectGroup.class).equalTo("msv", subjectGroup.getMsv()).equalTo("subjectCode", subjectGroup.getSubjectCode()).findFirst();
-        if(subjectGroup_tmp == null) {
+        SubjectGroup subjectGroup_tmp = realm.where(SubjectGroup.class).
+                equalTo("msv", subjectGroup.getMsv()).
+                equalTo("subjectCode", subjectGroup.getSubjectCode()).findFirst();
+        if (subjectGroup_tmp == null) {
             try {
                 realm.beginTransaction();
-                Log.w("SaveSubjectGroup", "Start save SG" );
+                Log.w("SaveSubjectGroup", "Start save SG");
                 Long count = realm.where(SubjectGroup.class).count();
                 subjectGroup.setId(String.valueOf(count));
                 realm.copyToRealm(subjectGroup);
                 realm.commitTransaction();
+                addAlarm(subjectGroup.getRawExamDay(), subjectGroup);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
@@ -31,6 +47,7 @@ public class SaveSubjectGroup {
             }
         }
     }
+
     public List<SubjectGroup> getAllSubjectGroup() {
         Realm realm = Realm.getDefaultInstance();
         List<SubjectGroup> subjectGroupList = new ArrayList<>();
@@ -60,7 +77,7 @@ public class SaveSubjectGroup {
         return subjectGroupList;
     }
 
-    public void deleteRealm(){
+    public void deleteRealm() {
         Realm realm = Realm.getDefaultInstance();
         realm.executeTransaction(new Realm.Transaction() {
             @Override
@@ -70,5 +87,15 @@ public class SaveSubjectGroup {
             }
         });
         realm.close();
+    }
+
+    private void addAlarm(Long rawExamDay, SubjectGroup subjectGroup) {
+        Long diff = Helper.subtractionDate(rawExamDay);
+        Helper.startAlarm(context, 1, subjectGroup);
+        if (diff <= 48 && diff > 0) {
+            Helper.startAlarm(context, 1, subjectGroup);
+        } else if (diff > 48) {
+            Helper.startAlarm(context, (int) (diff - 48), subjectGroup);
+        }
     }
 }

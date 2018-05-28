@@ -20,7 +20,7 @@ public class SubjectGroup extends RealmObject implements Serializable {
     // phong thi
     private String examRoom;
 
-    // kieu thi viet hay thuc hanh ..
+    /* kieu thi viet hay thuc hanh .. */
     private String typeExam;
 
     private String subjectName;
@@ -31,10 +31,13 @@ public class SubjectGroup extends RealmObject implements Serializable {
 
     private String update_on;
 
+    private Long rawExamDay;
+
     public SubjectGroup() {
     }
 
-    public SubjectGroup(String id, String msv, String sbdUser, String examDay, String examRoom, String typeExam, String subjectName, String subjectCode, String term, String update_on) {
+    public SubjectGroup(String id, String msv, String sbdUser,
+                        String examDay, String examRoom, String typeExam, String subjectName, String subjectCode, String term, String update_on,Long rawExamDay) {
         this.id = id;
         this.msv = msv;
         this.sbdUser = sbdUser;
@@ -45,9 +48,10 @@ public class SubjectGroup extends RealmObject implements Serializable {
         this.subjectCode = subjectCode;
         this.term = term;
         this.update_on = update_on;
+        this.rawExamDay = rawExamDay;
     }
 
-    public SubjectGroup(String id, String msv, String sbdUser, String examDay, String examRoom, String typeExam, String subjectName, String subjectCode) {
+    public SubjectGroup(String id, String msv, String sbdUser, String examDay, String examRoom, String typeExam, String subjectName, String subjectCode, Long rawExamDay) {
         this.id = id;
         this.msv = msv;
         this.sbdUser = sbdUser;
@@ -56,6 +60,15 @@ public class SubjectGroup extends RealmObject implements Serializable {
         this.typeExam = typeExam;
         this.subjectName = subjectName;
         this.subjectCode = subjectCode;
+        this.rawExamDay = rawExamDay;
+    }
+
+    public Long getRawExamDay() {
+        return rawExamDay;
+    }
+
+    public void setRawExamDay(Long rawExamDay) {
+        this.rawExamDay = rawExamDay;
     }
 
     public String getId() {

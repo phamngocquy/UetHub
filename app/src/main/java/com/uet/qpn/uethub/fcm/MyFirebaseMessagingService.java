@@ -200,7 +200,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
 
             } else {
                 // thong bao tin tuc
-
                 intent = new Intent(this, ReadNewsActivity.class);
                 NewsEntity newsEntity = new NewsEntity(url, type);
                 intent.putExtra("news", newsEntity);
