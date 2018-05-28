@@ -1,5 +1,6 @@
 package com.uet.qpn.uethub.fcm;
 
+import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -16,7 +17,9 @@ import com.firebase.jobdispatcher.GooglePlayDriver;
 import com.firebase.jobdispatcher.Job;
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.uet.qpn.uethub.Activity_pdf_viewer;
 import com.uet.qpn.uethub.MainActivity;
+import com.uet.qpn.uethub.OnlinePDFViewerActivity;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.ReadNewsActivity;
 import com.uet.qpn.uethub.entity.NewsEntity;
@@ -156,19 +159,20 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     }
 
     private void sendNotification(Intent intent, String title, String body) {
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-                PendingIntent.FLAG_ONE_SHOT);
+
+        PendingIntent pendingIntent = PendingIntent.getActivity(getBaseContext(), 0 /* Request code */, intent,
+                PendingIntent.FLAG_CANCEL_CURRENT);
 
 
         String channelId = getResources().getString(R.string.default_notification_channel_name);
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder =
-                new NotificationCompat.Builder(this, channelId)
+                new NotificationCompat.Builder(getBaseContext(), channelId)
                         .setSmallIcon(R.drawable.ic_stat_ic_notification)
                         .setContentTitle(title)
                         .setContentText(body)
                         .setAutoCancel(true)
+                        .setDefaults(Notification.DEFAULT_ALL)
                         .setSound(defaultSoundUri)
                         .setContentIntent(pendingIntent);
 
@@ -191,23 +195,29 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         Intent intent;
         try {
             if (url == null || type == null || url.equals("") || type.equals("")) {
-                intent = new Intent(this, MainActivity.class);
+                intent = new Intent(getBaseContext(), MainActivity.class);
             }
             if (type.equals("GRADE")) {
 
                 // thong bao diem
-                intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                intent = new Intent(getBaseContext(), OnlinePDFViewerActivity.class);
+                intent.setAction(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_LAUNCHER);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent.putExtra("urlGrade", url.replaceAll(" ", "%20"));
+
 
             } else {
                 // thong bao tin tuc
-                intent = new Intent(this, ReadNewsActivity.class);
+                intent = new Intent(getBaseContext(), ReadNewsActivity.class);
                 NewsEntity newsEntity = new NewsEntity(url, type);
                 intent.putExtra("news", newsEntity);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
-            return new Intent(this, MainActivity.class);
+            return new Intent(getBaseContext(), MainActivity.class);
         }
         return intent;
     }

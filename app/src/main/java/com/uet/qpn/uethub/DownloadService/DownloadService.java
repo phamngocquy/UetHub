@@ -9,6 +9,7 @@ import android.os.ResultReceiver;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.config.Configuration;
 
 import java.io.BufferedInputStream;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
 
@@ -39,7 +42,7 @@ public class DownloadService extends IntentService {
 
         try {
 
-            URL url = new URL(url_pdf);
+            URL url = new URL(url_pdf.replaceAll(" ", "%20"));
             URLConnection urlConnection = url.openConnection();
             urlConnection.connect();
 
@@ -79,4 +82,5 @@ public class DownloadService extends IntentService {
         receiver.send(UPDATE_PROGRESS, resultData);
 
     }
+
 }

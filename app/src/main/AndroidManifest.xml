@@ -55,9 +55,7 @@
                 <data android:scheme="@string/fb_login_protocol_scheme" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".MainActivity"></activity>
 
         <service android:name=".fcm.MyFirebaseMessagingService">
             <intent-filter>
@@ -82,7 +80,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MyAlarm.AlarmNotificationReceiver"/>
+
+        <receiver android:name=".MyAlarm.AlarmNotificationReceiver" />
+
+        <activity android:name="com.uet.qpn.uethub.OnlinePDFViewerActivity"
+            android:launchMode="singleTask"
+            android:taskAffinity=""
+            android:excludeFromRecents="true">
+            <intent-filter>
+                <action android:name="com.uet.qpn.uethub.OnlinePDFViewerActivity" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+
+        </activity>
     </application>
 
 </manifest>
