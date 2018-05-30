@@ -39,7 +39,7 @@ public class DownloadService extends IntentService {
 
         try {
 
-            URL url = new URL(url_pdf);
+            URL url = new URL(url_pdf.replaceAll(" ","%20"));
             URLConnection urlConnection = url.openConnection();
             urlConnection.connect();
 
