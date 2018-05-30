@@ -346,7 +346,7 @@ public class Helper {
         intent.putExtra("subjectCode", subjectGroup.getSubjectCode());
         pendingIntent = PendingIntent.getBroadcast(context, Integer.valueOf(subjectGroup.getId()), intent, PendingIntent.FLAG_UPDATE_CURRENT);
         Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.MINUTE, timeNumber);
+        calendar.add(Calendar.HOUR, timeNumber);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             if (alarmManager != null) {
                 alarmManager.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
