@@ -29,6 +29,23 @@ public class SaveSubject {
             } finally {
                 realm.close();
             }
+        }else {
+            try {
+                realm.beginTransaction();
+                Long count = realm.where(Subject.class).count();
+                Log.w("EditSubject", "start edit subject " + count);
+                subject_tmp.setPublic_time(subject.getPublic_time());
+                subject_tmp.setLocal_url(subject.getLocal_url());
+                subject_tmp.setName(subject.getName());
+                subject_tmp.setTerm(subject.getTerm());
+                subject_tmp.setUrl(subject.getUrl());
+                subject_tmp.setUpdate_on(subject.getUpdate_on());
+                realm.commitTransaction();
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
         }
     }
     public List<Subject> getAllSubjects() {

@@ -47,9 +47,13 @@ import com.uet.qpn.uethub.LoginActivity;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
 import com.uet.qpn.uethub.entity.NewsReg;
+import com.uet.qpn.uethub.entity.Subject;
+import com.uet.qpn.uethub.entity.SubjectGroup;
 import com.uet.qpn.uethub.fcm.MyFirebaseInstanceIDService;
 import com.uet.qpn.uethub.saveRealm.SaveNew;
 import com.uet.qpn.uethub.saveRealm.SaveNewsReg;
+import com.uet.qpn.uethub.saveRealm.SaveSubject;
+import com.uet.qpn.uethub.saveRealm.SaveSubjectGroup;
 import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
@@ -313,6 +317,8 @@ public class Fragment_setting extends Fragment {
 
                     Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
 
+                    initDataExam();
+                    initDataResult();
                 } else {
                     Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
 
@@ -628,5 +634,67 @@ public class Fragment_setting extends Fragment {
 
     private void allowChangeMSV(String msv) {
         btnMsv.setText(msv);
+    }
+
+    private void initDataExam() {
+        String url = Configuration.HOST + Configuration.API_PATH_EXAM;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Json_Result: exam", response);
+
+                SaveSubjectGroup saveSubjectGroup = new SaveSubjectGroup(getContext());
+                saveSubjectGroup.deleteRealm();
+                Log.w("11111222222", saveUser.getMSV());
+                Log.w("1111ssssss", response);
+                for (SubjectGroup subjectGroup : Helper.getSubjectGroup(response)) {
+                    saveSubjectGroup.saveSubjectGroup(subjectGroup);
+                }
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error_Frag_Ex_Result", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("msv", saveUser.getMSV());
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
+    }
+
+    private void initDataResult() {
+        Log.w("sasá","saaaaaa");
+        String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("Json_Result: ", response);
+                ArrayList<Subject> subjects = (ArrayList<Subject>) Helper.getSubjectEntity_Result(response);
+                SaveSubject saveSubject = new SaveSubject();
+                saveSubject.deleteRealm();
+                for (int i = 0; i < subjects.size(); i++) {
+                    saveSubject.saveSubject(subjects.get(i));
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.d("Error_Frag_Ex_Result", error.toString());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("msv", saveUser.getMSV());
+                return params;
+            }
+        };
+        VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 }

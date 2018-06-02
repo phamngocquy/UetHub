@@ -39,12 +39,32 @@ public class SaveSubjectGroup {
                 subjectGroup.setId(String.valueOf(count));
                 realm.copyToRealm(subjectGroup);
                 realm.commitTransaction();
+//                addAlarm(subjectGroup.getRawExamDay(), subjectGroup);
+            } catch (Exception e) {
+                e.printStackTrace();
+            } finally {
+                realm.close();
+            }
+        }else {
+            try {
+                realm.beginTransaction();
+                Log.w("EditSubjectGroup", "Edit save SG");
+                subjectGroup_tmp.setSbdUser(subjectGroup.getSbdUser());
+                subjectGroup_tmp.setExamDay(subjectGroup.getExamDay());
+                subjectGroup_tmp.setExamRoom(subjectGroup.getExamRoom());
+                subjectGroup_tmp.setTypeExam(subjectGroup.getTypeExam());
+                subjectGroup_tmp.setSubjectName(subjectGroup.getSubjectName());
+                subjectGroup_tmp.setTerm(subjectGroup.getTerm());
+                subjectGroup_tmp.setUpdate_on(subjectGroup.getUpdate_on());
+                subjectGroup_tmp.setRawExamDay(subjectGroup.getRawExamDay());
+                realm.commitTransaction();
                 addAlarm(subjectGroup.getRawExamDay(), subjectGroup);
             } catch (Exception e) {
                 e.printStackTrace();
             } finally {
                 realm.close();
             }
+
         }
     }
 
@@ -84,6 +104,7 @@ public class SaveSubjectGroup {
             public void execute(Realm realm) {
                 RealmResults<SubjectGroup> rows = realm.where(SubjectGroup.class).findAll();
                 rows.deleteAllFromRealm();
+                Log.w("delete", "SG");
             }
         });
         realm.close();
