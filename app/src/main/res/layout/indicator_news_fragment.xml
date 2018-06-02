@@ -17,7 +17,7 @@
         android:textSize="@dimen/text_size"
         android:textColor="@color/black_gray"
         android:gravity="center"
-        android:text="News"
+        android:text="Tin tức"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>
