@@ -75,6 +75,12 @@
         <activity android:name=".Activity_pdf_viewer" />
         <activity
             android:name=".LoginActivity"
+           >
+
+        </activity>
+        <receiver android:name=".MyAlarm.AlarmNotificationReceiver"/>
+        <activity
+            android:name=".IntroActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -82,7 +88,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <receiver android:name=".MyAlarm.AlarmNotificationReceiver"/>
     </application>
 
 </manifest>
