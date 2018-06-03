@@ -112,7 +112,6 @@ public class SaveSubjectGroup {
 
     private void addAlarm(Long rawExamDay, SubjectGroup subjectGroup) {
         Long diff = Helper.subtractionDate(rawExamDay);
-        Helper.startAlarm(context, 1, subjectGroup);
         if (diff <= 48 && diff > 0) {
             Helper.startAlarm(context, (int) (diff - 0), subjectGroup);
         } else if (diff > 48) {
