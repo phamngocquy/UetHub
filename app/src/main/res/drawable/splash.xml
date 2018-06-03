@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:opacity="opaque">
 
-    <item android:drawable="@color/white" />
+    <item android:drawable="@color/background_intro" />
 
     <item>
         <bitmap

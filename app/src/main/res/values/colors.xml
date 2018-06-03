@@ -16,4 +16,5 @@
     <color name="status_bar_color">#05998d</color>
     <color name="tabTextColor">#c8c9c7</color>
     <color name="switchColor">#1e9bc9</color>
+    <color name="background_intro">#394F71</color>
 </resources>

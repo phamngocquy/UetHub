@@ -41,11 +41,9 @@ public class IntroActivity extends MaterialIntroActivity {
                 });
 
         addSlide(new SlideFragmentBuilder()
-                        .backgroundColor(R.color.switchColor)
+                        .backgroundColor(R.color.background_intro)
                         .buttonsColor(R.color.thumbColor)
-                        .image(R.drawable.intro)
-                        .title("Welcome to UETHUB")
-                        .description("Theo dõi fanpage của chúng mình để cập nhật những thông tin mới nhất nhé")
+                        .image(R.drawable.intro_2)
                         .build(),
                 new MessageButtonBehaviour(new View.OnClickListener() {
                     @Override
