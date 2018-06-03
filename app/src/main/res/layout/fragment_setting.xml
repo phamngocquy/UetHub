@@ -6,48 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/btnSetting"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:scaleType="fitCenter"
-        android:src="@drawable/ic_float_setting"
-        app:fabSize="mini" />
 
-    <android.support.design.widget.FloatingActionButton
+
+
+    <Button
         android:id="@+id/btnLogout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="176dp"
+        android:layout_height="28dp"
+        android:layout_marginLeft="170dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/btnSetting"
-        android:layout_toStartOf="@+id/btnSetting"
-        android:background="#1E88E5"
-        android:src="@drawable/ic_float_logout"
-        app:fabSize="mini" />
-
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/logout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnUpdate"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:layout_toLeftOf="@+id/btnLogout"
-        android:layout_toStartOf="@+id/btnLogout"
+        android:layout_marginBottom="15dp"
         android:background="#1E88E5"
-        android:src="@drawable/ic_float_upgrade"
-        app:fabSize="mini" />
+        android:src="@drawable/save"
+        android:text="Lưu"
+        android:textColor="#fff"
+        app:fabSize="mini"
+        android:visibility="gone"/>
+
+
 
 
     <LinearLayout

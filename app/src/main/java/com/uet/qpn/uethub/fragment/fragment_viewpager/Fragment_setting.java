@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -37,6 +39,7 @@ import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
 import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.gc.materialdesign.views.ButtonFlat;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.views.Switch;
@@ -77,7 +80,7 @@ public class Fragment_setting extends Fragment {
     private TextView txtMsv;
     private SaveUser saveUser = new SaveUser();
     private String oldMSV = "";
-
+    FloatingActionButton btnUpdate;
     public Fragment_setting() {
         ProfileTracker profileTracker = new ProfileTracker() {
             @Override
@@ -104,28 +107,17 @@ public class Fragment_setting extends Fragment {
         //loadConfig();
         loadLocalNewsConfig();
 
-        final FloatingActionButton btnLogout = view.findViewById(R.id.btnLogout);
-        final FloatingActionButton btnUpdate = view.findViewById(R.id.btnUpdate);
-        FloatingActionButton btnSetting = view.findViewById(R.id.btnSetting);
-        btnLogout.hide();
+        final Button btnLogout = view.findViewById(R.id.btnLogout);
+        btnUpdate = view.findViewById(R.id.btnUpdate);
+//        FloatingActionButton btnSetting = view.findViewById(R.id.btnSetting);
         btnUpdate.hide();
-        btnSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (btnLogout.isShown()) btnLogout.hide();
-                else btnLogout.show();
-
-                if (btnUpdate.isShown()) btnUpdate.hide();
-                else btnUpdate.show();
-            }
-        });
-
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 prelogoutAcc();
             }
         });
+
 
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -217,7 +209,19 @@ public class Fragment_setting extends Fragment {
             }
 
         }
+        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
+            @Override
+            protected void onCurrentAccessTokenChanged(
+                    AccessToken oldAccessToken,
+                    AccessToken currentAccessToken) {
 
+                if (currentAccessToken == null){
+                    //User logged out
+                    prelogoutAcc();
+                    Log.w("ssssssss111", "noooooooo");
+                }
+            }
+        };
     }
 
     private void loadLocalNewsConfig() {
@@ -272,6 +276,7 @@ public class Fragment_setting extends Fragment {
                         oldMSV = txtMsv.getText().toString();
                         // store to shared_preference
                         txtMsv.setText(edit_msv.getText().toString());
+                        visiSave();
                         dialog.dismiss();
                     }
                 }).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -304,7 +309,49 @@ public class Fragment_setting extends Fragment {
         fetSwitch = view.findViewById(R.id.fetSwitch);
         examSwitch = view.findViewById(R.id.uetExamSwitch);
         resultSwitch = view.findViewById(R.id.resultSwitch);
+        uetSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
+
+        fitSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
+
+        fepnSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
+
+        fetSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
+
+        examSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
+
+        resultSwitch.setOncheckListener(new Switch.OnCheckListener() {
+            @Override
+            public void onCheck(Switch view, boolean check) {
+                visiSave();
+            }
+        });
     }
+
 
 
     private void updateNewRegister() {
@@ -319,6 +366,8 @@ public class Fragment_setting extends Fragment {
 
                     initDataExam();
                     initDataResult();
+
+                    btnUpdate.setVisibility(View.GONE);
                 } else {
                     Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_SHORT).show();
 
@@ -697,4 +746,10 @@ public class Fragment_setting extends Fragment {
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
+
+    void visiSave(){
+        btnUpdate.setVisibility(View.VISIBLE);
+    }
+
+
 }

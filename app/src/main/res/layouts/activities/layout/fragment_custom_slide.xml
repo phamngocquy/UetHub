@@ -29,7 +29,7 @@
             android:scaleType="fitCenter"
             android:layout_below="@id/followText"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/intro" />
+            android:src="@drawable/intro_setting" />
     </RelativeLayout>
 
 
