@@ -7,32 +7,31 @@
     android:layout_height="match_parent">
 
 
-
-
     <Button
         android:id="@+id/btnLogout"
         android:layout_width="176dp"
         android:layout_height="28dp"
-        android:layout_marginLeft="170dp"
         android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_marginBottom="15dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
         android:background="@drawable/logout" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnUpdate"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="15dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         android:background="#1E88E5"
-        android:src="@drawable/save"
-        android:text="Lưu"
+        android:src="@drawable/ic_float_upgrade"
         android:textColor="#fff"
-        app:fabSize="mini"
-        android:visibility="gone"/>
-
-
+        android:visibility="visible"
+        app:fabSize="mini" />
 
 
     <LinearLayout
