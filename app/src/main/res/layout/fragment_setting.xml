@@ -30,7 +30,7 @@
         android:background="#1E88E5"
         android:src="@drawable/ic_float_upgrade"
         android:textColor="#fff"
-        android:visibility="visible"
+        android:visibility="gone"
         app:fabSize="mini" />
 
 
