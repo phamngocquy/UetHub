@@ -17,7 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    sourceSets {
+   /* sourceSets {
         main {
             res.srcDirs =
                     [
@@ -28,7 +28,7 @@ android {
                             'src/main/res'
                     ]
         }
-    }
+    }*/
     testOptions {
         unitTests.returnDefaultValues = true
     }
