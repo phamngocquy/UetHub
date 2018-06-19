@@ -18,4 +18,33 @@
     <string name="facebook_app_id">817344528473651</string>
     <string name="fb_login_protocol_scheme">fb817344528473651</string>
 
+    <string name="avatar">Avatar</string>
+    <string name="username_demo">user name</string>
+    <string name="fit">FIT</string>
+    <string name="fet">FET</string>
+    <string name="fepn">FEPN</string>
+    <string name="l_ch_thi">Lịch thi</string>
+    <string name="result">Kết quả</string>
+    <string name="nhantinmoi">Nhận tin mới</string>
+    <string name="msv">Mã sinh viên</string>
+    <string name="msv2">Mã sinh viên:\u0020</string>
+    <string name="mmh">Mã môn học:</string>
+    <string name="edit_msv">Sửa</string>
+    <string name="_15021169">15021169</string>
+    <string name="msv_hint">Mã sinh viên</string>
+    <string name="ok">Save</string>
+    <string name="cancel">Cancel</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="shit">Chào mừng bạn đến với UETHUB</string>
+    <string name="uet">UET</string>
+    <string name="sdb">Số báo danh:\u0020</string>
+    <string name="date_exam">Ngày thi:\u0020</string>
+    <string name="roomExam">Phòng thi:\u0020</string>
+    <string name="typeExam">Hình thức thi:\u0020</string>
+    <string name="time_update_form">Cập nhật lúc:\u0020</string>
+    <string name="menu_outer_open">Tới thư mục</string>
+    <string name="trash_v1">Cập nhật mã sinh viên để nhận thông báo điểm thi nhé</string>
+
 </resources>
