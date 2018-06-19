@@ -718,7 +718,6 @@ public class Fragment_setting extends Fragment {
     }
 
     private void initDataResult() {
-        Log.w("sasá","saaaaaa");
         String url = Configuration.HOST + Configuration.API_PATH_EXAM_RESULT;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
