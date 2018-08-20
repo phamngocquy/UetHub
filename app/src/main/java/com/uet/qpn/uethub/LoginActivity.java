@@ -132,12 +132,12 @@ public class LoginActivity extends AppCompatActivity {
                             try {
                                 getAndStoreMSV(email);
 
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                             try {
                                 getAndStoreNewsReg(email);
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
 
@@ -270,9 +270,10 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
+                    System.out.println("object: " + jsonObject.toString());
                     String msv = jsonObject.getString("msv");
-                    if (msv != null && !msv.equals("")) {
-                        // thoa dk
+                    if (msv != null && !msv.equals("") && !msv.equals("null")) {
+
                         if (!msv.equals(saveUser.getMSV())) {
                             saveUser.saveMSV(msv);
                         }
@@ -293,6 +294,8 @@ public class LoginActivity extends AppCompatActivity {
             protected Map<String, String> getParams() {
                 final Map<String, String> params = new HashMap<>();
                 params.put("email", email);
+                String fcm = FirebaseInstanceId.getInstance().getToken();
+                params.put("fcm", fcm);
                 return params;
             }
         };

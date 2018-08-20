@@ -18,39 +18,44 @@ public class SaveUser {
         Realm realm = Realm.getDefaultInstance();
         User user = realm.where(User.class).equalTo("id", Configuration.USER_KEY).findFirst();
 
-        if (user == null) {
-            try {
-                realm.beginTransaction();
-                realm.copyToRealm(new User(msv));
-                realm.commitTransaction();
+        if (msv != null) {
+            if (user == null) {
+                try {
+                    realm.beginTransaction();
+                    realm.copyToRealm(new User(msv));
+                    realm.commitTransaction();
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                realm.close();
-            }
-        } else {
-            try {
-                realm.beginTransaction();
-                user.setMsv(msv);
-                realm.commitTransaction();
-            } catch (Exception e) {
-                e.printStackTrace();
-            } finally {
-                realm.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    Log.d("savemsv: ", msv);
+                    realm.close();
+                }
+            } else {
+                try {
+                    realm.beginTransaction();
+                    user.setMsv(msv);
+                    realm.commitTransaction();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                } finally {
+                    Log.d("savemsv: ", msv);
+                    realm.close();
+                }
             }
         }
     }
 
     public String getMSV() {
         Realm realm = Realm.getDefaultInstance();
-        String msv = "";
+        String msv;
         try {
             User user = realm.where(User.class).equalTo("id", Configuration.USER_KEY).findFirst();
-            if (user == null || user.getMsv() == null) {
+            Log.d("quy", user.getMsv());
+            if (user.getMsv() == null) {
                 return "";
             }
-            msv =user.getMsv();
+            msv = user.getMsv();
             return msv;
         } catch (Exception e) {
             e.printStackTrace();

@@ -10,12 +10,12 @@ public class Configuration {
     public static String API_PATH_UPDATE_MSV = "api/v1/user/updateMSV";
     public static String API_PATH_GET_NEW_SW = "api/v1/news/getNewsRegByUser";
     public static String API_PATH_GET_CREATE_USER = "api/v1/user/createUser";
-    public static String API_PATH_REMOVE_FCM = "/api/v1/user/deletefcmToken";
-    public static String API_PATH_GET_CONFIG = "/api/v1/user/getConfig";
+    public static String API_PATH_REMOVE_FCM = "api/v1/user/deletefcmToken";
+    public static String API_PATH_GET_CONFIG = "api/v1/user/getConfig";
     public static String API_PATH_FORM = "api/v1/form/getAll";
 
-    public static String HOST = "http://p2team.tk:8888/uethub-1.0/";
-//    public static String HOST = "http://206.189.196.237:8080/uethub-1.0/";
+        public static String HOST = "http://35.197.136.195:8080/";
+//    public static String HOST = "http://192.168.0.104:8080/";
     public static String STORE_FOLDER = "UHDownload";
     public static String USER_KEY = "MYUSER";
 }

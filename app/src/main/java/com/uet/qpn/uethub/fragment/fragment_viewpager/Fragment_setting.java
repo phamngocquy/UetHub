@@ -81,6 +81,7 @@ public class Fragment_setting extends Fragment {
     private SaveUser saveUser = new SaveUser();
     private String oldMSV = "";
     FloatingActionButton btnUpdate;
+
     public Fragment_setting() {
         ProfileTracker profileTracker = new ProfileTracker() {
             @Override
@@ -215,7 +216,7 @@ public class Fragment_setting extends Fragment {
                     AccessToken oldAccessToken,
                     AccessToken currentAccessToken) {
 
-                if (currentAccessToken == null){
+                if (currentAccessToken == null) {
                     //User logged out
                     prelogoutAcc();
                     Log.w("ssssssss111", "noooooooo");
@@ -353,7 +354,6 @@ public class Fragment_setting extends Fragment {
     }
 
 
-
     private void updateNewRegister() {
 
         String url = Configuration.HOST + Configuration.API_PATH_UPDATE_MSV;
@@ -361,9 +361,7 @@ public class Fragment_setting extends Fragment {
             @Override
             public void onResponse(String response) {
                 if (response.equals("true")) {
-
                     Toast.makeText(getContext(), "Cập nhật thành công", Toast.LENGTH_SHORT).show();
-
                     initDataExam();
                     initDataResult();
 
@@ -379,8 +377,9 @@ public class Fragment_setting extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
                     txtMsv.setText(saveUser.getMSV());
+
                 } else {
-                    txtMsv.setText("1502xxxx");
+                    txtMsv.setText(R.string.nullMsv);
                 }
             }
         }) {
@@ -551,10 +550,10 @@ public class Fragment_setting extends Fragment {
             @Override
             public void onResponse(String response) {
                 try {
+                    Log.d("Msv Update", response);
                     JSONObject jsonObject = new JSONObject(response);
                     String msv = jsonObject.getString("msv");
-                    if (msv != null && !msv.equals("")) {
-                        // thoa dk
+                    if (msv != null && !msv.equals("") && !msv.equals("null")) {
                         txtMsv.setText(msv);
                         saveUser.saveMSV(msv);
 
@@ -569,7 +568,7 @@ public class Fragment_setting extends Fragment {
                 if (saveUser.getMSV() != null && !saveUser.getMSV().equals("null")) {
                     txtMsv.setText(saveUser.getMSV());
                 } else {
-                    txtMsv.setText("1502xxxxx");
+                    txtMsv.setText(R.string.nullMsv);
                 }
                 Toast.makeText(getContext(), "Vui lòng kiểm tra lại đường truyền!", Toast.LENGTH_LONG).show();
                 Log.d("Error_Frag_Ex_Result", error.toString());
@@ -580,8 +579,8 @@ public class Fragment_setting extends Fragment {
                 final Map<String, String> params = new HashMap<>();
                 String email = txtEmail.getText().toString();
                 params.put("email", email);
-                /*String fcm = FirebaseInstanceId.getInstance().getToken();
-                params.put("fcm", fcm);*/
+                String fcm = FirebaseInstanceId.getInstance().getToken();
+                params.put("fcm", fcm);
                 return params;
             }
         };
@@ -746,7 +745,7 @@ public class Fragment_setting extends Fragment {
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
 
-    void visiSave(){
+    void visiSave() {
         btnUpdate.setVisibility(View.VISIBLE);
     }
 
