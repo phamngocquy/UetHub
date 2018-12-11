@@ -42,7 +42,15 @@ public class RclNewsViewAdapter extends RecyclerView.Adapter<RclNewsViewAdapter.
         holder.txtPublicTime.setText(entity.getPublictime());
         holder.txtAuthor.setText(entity.getAuthor());
         holder.txtTitle.setText(entity.getTitle());
-        holder.txtCategory.setText(entity.getCategories());
+
+        String category = entity.getCategories();
+        category = category.trim();
+        char lastElement = category.charAt(category.length() - 1);
+        if (lastElement == ',') {
+            category = category.substring(0, category.length() - 1);
+        }
+
+        holder.txtCategory.setText(category);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

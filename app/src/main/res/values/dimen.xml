@@ -2,4 +2,6 @@
 <resources>
     <dimen name="text_size">12sp</dimen>
     <dimen name="img_indicator_margin_top">3dp</dimen>
+    <dimen name="size_icon_new">48px</dimen>
+    <dimen name="size_icon_category">50px</dimen>
 </resources>

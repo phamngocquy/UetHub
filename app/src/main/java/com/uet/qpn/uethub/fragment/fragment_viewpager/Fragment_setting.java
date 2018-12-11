@@ -34,6 +34,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.HttpMethod;
 import com.facebook.Profile;
 import com.facebook.ProfileTracker;
 import com.facebook.appevents.AppEventsLogger;
@@ -178,13 +179,14 @@ public class Fragment_setting extends Fragment {
         if (!isLoggedIn) {
             Profile profile = Profile.getCurrentProfile();
             if (profile != null) {
-                final Uri uri = profile.getProfilePictureUri(150, 150);
+                final Uri uri = profile.getProfilePictureUri(300, 300);
                 Picasso.get().load(uri).into(imgAvt);
                 GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
 
                         try {
+
                             String email = object.getString("email");
                             String name = object.getString("name");
                             if (email != null) {
@@ -193,9 +195,6 @@ public class Fragment_setting extends Fragment {
                             if (name != null) {
                                 txtUserName.setText(object.getString("name"));
                             }
-                            // sai o day,
-                            // sao m dam cho vao onCompleted
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } catch (NullPointerException e) {
@@ -204,25 +203,12 @@ public class Fragment_setting extends Fragment {
                     }
                 });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id,name,email,picture");
+                parameters.putString("fields", "id,name,email");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
 
         }
-        AccessTokenTracker accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(
-                    AccessToken oldAccessToken,
-                    AccessToken currentAccessToken) {
-
-                if (currentAccessToken == null) {
-                    //User logged out
-                    prelogoutAcc();
-                    Log.w("ssssssss111", "noooooooo");
-                }
-            }
-        };
     }
 
     private void loadLocalNewsConfig() {
@@ -425,19 +411,8 @@ public class Fragment_setting extends Fragment {
                             saveNewsReg.saveNewsReg(new NewsReg("EXAM", examSwitch.isCheck()));
                             saveNewsReg.saveNewsReg(new NewsReg("RESULT", resultSwitch.isCheck()));
                             Toast.makeText(getContext(), "Cập nhật thành công!", Toast.LENGTH_LONG).show();
-
-
-                            //
-                            // m luu du lieu tu serrver vao realm o day
-                            // de code vao di
-                            // lưu bên trên r đấy
-
                         } else {
                             Toast.makeText(getContext(), "Cập nhật thất bại", Toast.LENGTH_LONG).show();
-                            //
-                            // cho nay m cho tai lai
-                            // doc to local di
-                            // de code vao
                             SaveNewsReg saveNewsReg = new SaveNewsReg();
                             List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
                             List<String> stringList = new ArrayList<>();
@@ -447,7 +422,6 @@ public class Fragment_setting extends Fragment {
                                 }
                             }
                             updateSW(stringList);
-                            //roi day
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -457,7 +431,6 @@ public class Fragment_setting extends Fragment {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     Toast.makeText(getContext(), "Cập nhật thất bại!", Toast.LENGTH_LONG).show();
-                    // doc tu local
                     SaveNewsReg saveNewsReg = new SaveNewsReg();
                     List<NewsReg> newsRegs = saveNewsReg.getAllNewsReg();
                     List<String> stringList = new ArrayList<>();
@@ -508,7 +481,6 @@ public class Fragment_setting extends Fragment {
                             @Override
                             public void onResponse(String response) {
                                 if (response.equals("true")) {
-                                    // da xoa thong tin thanh cong
                                     logout();
 
                                 }

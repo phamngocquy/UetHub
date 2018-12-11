@@ -41,7 +41,6 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private CallbackManager callbackManager;
-    private LoginButton loginButton;
     private SaveUser saveUser = new SaveUser();
 
     @Override
@@ -55,7 +54,7 @@ public class LoginActivity extends AppCompatActivity {
         AppEventsLogger.activateApp(this);
 
 
-        loginButton = findViewById(R.id.login_button);
+        LoginButton loginButton = findViewById(R.id.login_button);
         callbackManager = CallbackManager.Factory.create();
 
 
@@ -72,8 +71,6 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess(LoginResult loginResult) {
                 // App code
-
-
                 nextScreen(loginResult.getAccessToken());
             }
 
@@ -125,29 +122,18 @@ public class LoginActivity extends AppCompatActivity {
             GraphRequest request = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
                 @Override
                 public void onCompleted(JSONObject object, GraphResponse response) {
+                    String email = null;
                     try {
-                        String email = object.getString("email");
-
-                        if (email != null) {
-                            try {
-                                getAndStoreMSV(email);
-
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-                            try {
-                                getAndStoreNewsReg(email);
-                            } catch (Exception e) {
-                                e.printStackTrace();
-                            }
-
-                        }
-
+                        email = object.getString("email");
                     } catch (JSONException e) {
                         e.printStackTrace();
-                    } catch (NullPointerException e) {
-                        e.printStackTrace();
                     }
+
+                    if (email != null) {
+                        getAndStoreMSV(email);
+                        getAndStoreNewsReg(email);
+                    }
+
                 }
 
 
@@ -164,21 +150,12 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void getAndStoreNewsReg(final String email) {
-        // doc tu serrver roi luu vao local
-        // dung api nao day
-        // t nho m code r
-        // copy sang, go lai lam chi
+
         String url = Configuration.HOST + Configuration.API_PATH_GET_NEW_SW;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 List<String> stringList = Helper.getReg(response);
-                // m code luu o day
-                // oke
-                // that oke
-                // de t test nha
-                // cho mot ty
-                // dung co tat teamview
                 SaveNewsReg saveNewsReg = new SaveNewsReg();
                 List<NewsReg> newsRegList = saveNewsReg.getAllNewsReg();
                 for (int i = 0; i < newsRegList.size(); i++) {
@@ -187,24 +164,31 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 for (int i = 0; i < stringList.size(); i++) {
                     NewsReg newsReg = new NewsReg();
-                    if (stringList.get(i).equals("UET")) {
-                        newsReg.setNewsName("UET");
-                        newsReg.setChecked(true);
-                    } else if (stringList.get(i).equals("FIT")) {
-                        newsReg.setNewsName("FIT");
-                        newsReg.setChecked(true);
-                    } else if (stringList.get(i).equals("FET")) {
-                        newsReg.setNewsName("FET");
-                        newsReg.setChecked(true);
-                    } else if (stringList.get(i).equals("FEPN")) {
-                        newsReg.setNewsName("FEPN");
-                        newsReg.setChecked(true);
-                    } else if (stringList.get(i).equals("EXAM")) {
-                        newsReg.setNewsName("EXAM");
-                        newsReg.setChecked(true);
-                    } else if (stringList.get(i).equals("GRADE")) {
-                        newsReg.setNewsName("GRADE");
-                        newsReg.setChecked(true);
+                    switch (stringList.get(i)) {
+                        case "UET":
+                            newsReg.setNewsName("UET");
+                            newsReg.setChecked(true);
+                            break;
+                        case "FIT":
+                            newsReg.setNewsName("FIT");
+                            newsReg.setChecked(true);
+                            break;
+                        case "FET":
+                            newsReg.setNewsName("FET");
+                            newsReg.setChecked(true);
+                            break;
+                        case "FEPN":
+                            newsReg.setNewsName("FEPN");
+                            newsReg.setChecked(true);
+                            break;
+                        case "EXAM":
+                            newsReg.setNewsName("EXAM");
+                            newsReg.setChecked(true);
+                            break;
+                        case "GRADE":
+                            newsReg.setNewsName("GRADE");
+                            newsReg.setChecked(true);
+                            break;
                     }
                     saveNewsReg.saveNewsReg(newsReg);
                 }
@@ -233,7 +217,6 @@ public class LoginActivity extends AppCompatActivity {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Log.d("Result: ", response);
                 if (response.equals("true")) {
                     Log.d("updatefcm", "oke");
                 }
@@ -247,18 +230,15 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 Map<String, String> params = new HashMap<>();
-
                 String firebaseID = FirebaseInstanceId.getInstance().getToken();
-                if (firebaseID == null) {
-                    firebaseID = "";
-                }
                 params.put("email", email);
                 params.put("fcm", firebaseID);
-                params.put("msv", saveUser.getMSV());
+                if (saveUser.getMSV() == null) {
+                    params.put("msv", String.valueOf(R.string.nullMsv));
+                }
                 return params;
             }
         };
-
         VolleySingleton.getInstance(getBaseContext()).addToRequestQueue(stringRequest);
     }
 
@@ -270,10 +250,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 try {
                     JSONObject jsonObject = new JSONObject(response);
-                    System.out.println("object: " + jsonObject.toString());
                     String msv = jsonObject.getString("msv");
                     if (msv != null && !msv.equals("") && !msv.equals("null")) {
-
                         if (!msv.equals(saveUser.getMSV())) {
                             saveUser.saveMSV(msv);
                         }
@@ -293,8 +271,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() {
                 final Map<String, String> params = new HashMap<>();
-                params.put("email", email);
                 String fcm = FirebaseInstanceId.getInstance().getToken();
+                params.put("email", email);
                 params.put("fcm", fcm);
                 return params;
             }

@@ -41,6 +41,8 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:ellipsize="end"
+                    android:maxLines="1"
                     android:id="@+id/txtFormName"
                     style="@style/formTitle"
                     android:layout_width="match_parent"
@@ -81,8 +83,8 @@
                 android:layout_weight="0.5">
 
                 <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:layout_gravity="center"
                     android:src="@drawable/arrow" />
             </LinearLayout>

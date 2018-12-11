@@ -118,7 +118,6 @@ public class MyFirebaseInstanceIDService extends FirebaseInstanceIdService {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("email", email);
                 params.put("fcm", fcmToken);
-
                 return params;
             }
         };

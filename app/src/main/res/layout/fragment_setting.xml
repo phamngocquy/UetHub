@@ -9,14 +9,14 @@
 
     <Button
         android:id="@+id/btnLogout"
-        android:layout_width="176dp"
-        android:layout_height="28dp"
-        android:layout_alignParentBottom="true"
+        android:layout_width="128px"
+        android:layout_height="128px"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
+        android:layout_alignParentBottom="true"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginBottom="15dp"
         android:background="@drawable/logout" />
 
     <android.support.design.widget.FloatingActionButton
@@ -24,9 +24,9 @@
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="15dp"
         android:background="#1E88E5"
         android:src="@drawable/ic_float_upgrade"
         android:textColor="#fff"
@@ -35,60 +35,76 @@
 
 
     <LinearLayout
+
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:padding="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/avatar"
+                android:elevation="10dp"
+                android:src="@drawable/ic_launcher_background" />
+            <TextView
+                android:layout_below="@+id/imgAvt"
+                android:layout_centerHorizontal="true"
+                android:id="@+id/txtUserName"
+                style="@style/textEmailFb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/txtUserName"
+                android:id="@+id/txtEmail"
+                style="@style/textEmailFb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvt"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:contentDescription="@string/avatar"
-            android:elevation="10dp"
-            android:src="@drawable/ic_launcher_background"
-            tools:ignore="UnusedAttribute" />
+        <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="0dp"-->
+        <!--android:layout_height="60dp"-->
+        <!--android:layout_margin="5dp"-->
+        <!--android:layout_weight="4"-->
+        <!--app:cardCornerRadius="15dp">-->
 
+        <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
 
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_margin="5dp"
-            android:layout_weight="4"
-            app:cardCornerRadius="15dp">
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:orientation="vertical">-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <!--<TextView-->
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+        <!--android:id="@+id/txtUserName"-->
+        <!--style="@style/textEmailFb"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
 
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        style="@style/textEmailFb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp" />
+        <!--<TextView-->
+        <!--android:id="@+id/txtEmail"-->
+        <!--style="@style/textEmailFb"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" />-->
+        <!--</LinearLayout>-->
+        <!--</RelativeLayout>-->
 
-                    <TextView
-                        android:id="@+id/txtEmail"
-                        style="@style/textEmailFb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginStart="40dp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
+        <!--</android.support.v7.widget.CardView>-->
 
     </LinearLayout>
 
@@ -140,8 +156,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtMasinhvien"
-                android:layout_marginLeft="10dp"
                 android:layout_marginStart="10dp"
+                android:layout_marginLeft="10dp"
                 android:text="@string/edit_msv" />
 
             <TextView
