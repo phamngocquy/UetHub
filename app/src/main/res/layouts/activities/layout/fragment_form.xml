@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment.fragment_viewpager.Fragment_form">
+
+
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/listgrad"
+        tools:targetApi="lollipop">
+
+        <android.support.v7.widget.SearchView
+            android:layout_width="match_parent"
+            app:queryHint="tim kiem"
+            android:layout_height="match_parent"></android.support.v7.widget.SearchView>
+
+    </android.support.v7.widget.Toolbar>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rclViewForm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+        android:layout_height="match_parent"
+        android:background="@drawable/listgrad_opa" />
 
 
 </LinearLayout>

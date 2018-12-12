@@ -10,7 +10,7 @@
         android:id="@+id/readNewsToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/status_bar_color"
+        android:background="@drawable/listgrad"
         android:elevation="6dp"
         app:titleTextColor="@color/white" />
 

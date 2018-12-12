@@ -8,8 +8,8 @@
     <ImageView
         android:id="@+id/setting_ic"
         android:layout_marginTop="@dimen/img_indicator_margin_top"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center_horizontal"
         android:src="@drawable/ic_settings_off" />
 

@@ -74,7 +74,12 @@ public class SaveNew {
                 if(entity.getNewsName().equals(newsName)) {
                     NewsEntity newsEntity = new NewsEntity();
                     newsEntity.setTitle(entity.getTitle());
-                    newsEntity.setDescription(entity.getDescription());
+                    if (entity.getDescription().length() > 100){
+                        newsEntity.setDescription((entity.getDescription().substring(0,100)));
+                    }else {
+                        newsEntity.setDescription(entity.getDescription());
+                    }
+
                     newsEntity.setCategories(entity.getCategories());
                     newsEntity.setPublictime(entity.getPublictime());
                     newsEntity.setAuthor(entity.getAuthor());

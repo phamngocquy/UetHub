@@ -2,11 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white"
     android:orientation="vertical">
 
+    <android.support.design.widget.TabLayout
+        android:elevation="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@drawable/listgrad"
+        app:tabIndicatorColor="@color/white"
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/NavigationTabTextAppeareance"
+        app:tabTextColor="@color/tabTextColor"
+        tools:targetApi="lollipop" />
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rclViewResult"
+        android:background="@drawable/listgrad_opa"
+
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

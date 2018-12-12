@@ -4,29 +4,37 @@
     xmlns:materialdesign="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/listgrad_opa">
 
 
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="176dp"
-        android:layout_height="28dp"
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/logout" />
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="1dp">
+
+        <Button
+
+            android:id="@+id/btnLogout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#d21450"
+            android:text="Đăng xuất"
+
+            android:textColor="#ffffff" />
+    </android.support.v7.widget.CardView>
+
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/btnUpdate"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="15dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginBottom="15dp"
         android:background="#1E88E5"
         android:src="@drawable/ic_float_upgrade"
         android:textColor="#fff"
@@ -37,58 +45,54 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
+        android:background="@drawable/listgrad"
         android:orientation="horizontal">
 
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgAvt"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="center"
-            android:layout_margin="10dp"
-            android:contentDescription="@string/avatar"
-            android:elevation="10dp"
-            android:src="@drawable/ic_launcher_background"
-            tools:ignore="UnusedAttribute" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/imgAvt"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
+                android:layout_marginLeft="8dp"
+                android:contentDescription="@string/avatar"
+                android:elevation="10dp"
+                android:src="@drawable/ic_launcher_background"
+                tools:ignore="UnusedAttribute" />
 
-        <android.support.v7.widget.CardView
-            android:layout_width="0dp"
-            android:layout_height="60dp"
-            android:layout_margin="5dp"
-            android:layout_weight="4"
-            app:cardCornerRadius="15dp">
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/imgAvt"
+                android:orientation="vertical">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <LinearLayout
+                <TextView
+                    android:id="@+id/txtUserName"
+                    android:textSize="16sp"
+                    android:textColor="#ffffff"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="4dp" />
 
-                    <TextView
-                        android:id="@+id/txtUserName"
-                        style="@style/textEmailFb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginStart="40dp"
-                        android:layout_marginTop="5dp" />
+                <TextView
+                    android:id="@+id/txtEmail"
+                    style="@style/textEmailFb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginLeft="40dp" />
+            </LinearLayout>
+        </RelativeLayout>
 
-                    <TextView
-                        android:id="@+id/txtEmail"
-                        style="@style/textEmailFb"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="40dp"
-                        android:layout_marginStart="40dp" />
-                </LinearLayout>
-            </RelativeLayout>
-
-        </android.support.v7.widget.CardView>
 
     </LinearLayout>
 
@@ -97,30 +101,35 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="15dp">
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="2dp">
 
         <TextView
-            style="@style/txtSettingItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
             android:text="@string/nhantinmoi"
-            android:textSize="20sp"
+            android:textColor="#383838"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <include
             layout="@layout/setting_item"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="50dp" />
+            android:layout_marginTop="32dp" />
     </android.support.v7.widget.CardView>
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardView_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/cardView_2"
-        android:layout_margin="5dp"
-        app:cardCornerRadius="15dp">
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginRight="2dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -128,33 +137,34 @@
 
             <TextView
                 android:id="@+id/txtMasinhvien"
-                style="@style/txtSettingItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/msv"
-                android:textSize="20sp"
+                android:textColor="#383838"
+                android:textSize="18sp"
                 android:textStyle="bold" />
-
-            <com.gc.materialdesign.views.ButtonFlat
-                android:id="@+id/btnEditMsv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/txtMasinhvien"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:text="@string/edit_msv" />
 
             <TextView
                 android:id="@+id/txtMsv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtMasinhvien"
-                android:layout_marginTop="5dp"
-                android:layout_toEndOf="@+id/btnEditMsv"
-                android:layout_toRightOf="@+id/btnEditMsv"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
                 android:text="@string/_15021169"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:textColor="#383838"
+                android:textSize="14sp" />
+
+            <com.gc.materialdesign.views.ButtonFlat
+                android:id="@+id/btnEditMsv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/txtMasinhvien"
+                android:layout_alignParentRight="true"
+                android:text="@string/edit_msv" />
+
 
         </RelativeLayout>
 

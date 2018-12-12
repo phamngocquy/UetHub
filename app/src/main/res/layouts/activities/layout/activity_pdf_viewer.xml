@@ -11,7 +11,7 @@
         android:id="@+id/readerPdf_toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/status_bar_color"
+        android:background="@drawable/listgrad"
         android:elevation="8dp"
         tools:targetApi="lollipop" />
 
