@@ -2,180 +2,225 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_margin="8dp"
+    android:background="@color/gray"
     android:layout_height="match_parent">
 
     <android.support.v7.widget.CardView
+        android:id="@+id/cardViewExam"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginLeft="2dp"
-        android:layout_marginRight="2dp">
-
-        <TextView
-            android:id="@+id/txt_name_exam"
-            style="@style/textsNameExamResult"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:layout_marginTop="4dp"
-            android:layout_marginLeft="8dp"
-            android:layout_marginStart="8dp" />
-
+        android:layout_margin="6dp"
+        app:cardCornerRadius="10dp">
         <LinearLayout
-            android:layout_marginLeft="4dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="28dp"
-            android:padding="4dp"
-            android:layout_marginStart="4dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtSbd"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/sdb" />
-
-                        <TextView
-                            android:id="@+id/txt_candidate_number"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@id/txtSbd"
-                            android:layout_toRightOf="@id/txtSbd" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtDateExam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/date_exam" />
-
-                        <TextView
-                            android:id="@+id/date_exam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtDateExam"
-                            android:layout_toRightOf="@+id/txtDateExam" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/txtTypeExam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/typeExam" />
-
-                        <TextView
-                            android:id="@+id/type_exam"
-                            style="@style/txtSubjectExam"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_toEndOf="@+id/txtTypeExam"
-                            android:layout_toRightOf="@+id/txtTypeExam" />
-
-                    </RelativeLayout>
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
+            android:orientation="horizontal">
+            <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
+                android:id="@+id/icon_exam"
+                android:padding="7dp"
+                android:layout_weight="0.7">
+                <ImageView
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="35dp"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/schedule"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/icon_exam"
+                android:layout_marginLeft="5dp"
+                android:layout_width="wrap_content">
 
-                <RelativeLayout
+                <LinearLayout
+                    android:id="@+id/main_lnlayout"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/txtMsv"
-                        style="@style/txtSubjectExam"
-                        android:layout_width="wrap_content"
+                        android:id="@+id/txt_name_exam"
+                        style="@style/textsNameExamSchedule"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/msv2" />
+                        android:layout_marginLeft="0dp"
+                        android:fontFamily="sans-serif-medium" />
 
-                    <TextView
-                        android:id="@+id/txt_msv"
-                        style="@style/txtSubjectExam"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/txtMsv"
-                        android:layout_toRightOf="@+id/txtMsv" />
-                </RelativeLayout>
+                        android:layout_marginLeft="0dp"
+                        android:paddingBottom="0dp"
+                        android:paddingTop="3dp">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
 
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
 
-                    <TextView
-                        android:id="@+id/txtMmh"
-                        style="@style/txtSubjectExam"
+                                    <TextView
+                                        android:id="@+id/txtSbd"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/sdb" />
+
+                                    <TextView
+                                        android:id="@+id/txt_candidate_number"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toEndOf="@id/txtSbd"
+                                        android:layout_toRightOf="@id/txtSbd" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/txtDateExam"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/date_exam" />
+
+                                    <TextView
+                                        android:id="@+id/date_exam"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toEndOf="@+id/txtDateExam"
+                                        android:layout_toRightOf="@+id/txtDateExam" />
+                                </RelativeLayout>
+
+
+                                <RelativeLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content">
+
+                                    <TextView
+                                        android:id="@+id/txtRoomExam"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/roomExam" />
+
+                                    <TextView
+                                        android:id="@+id/room_exam"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toEndOf="@+id/txtRoomExam"
+                                        android:layout_toRightOf="@+id/txtRoomExam" />
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/examTypeRL"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:id="@+id/txtTypeExam"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/typeExam" />
+
+                                    <TextView
+                                        android:id="@+id/type_exam"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toEndOf="@+id/txtTypeExam"
+                                        android:layout_toRightOf="@+id/txtTypeExam" />
+
+                                </RelativeLayout>
+
+                                <RelativeLayout
+                                    android:id="@+id/subjectExamRL"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:id="@+id/txtMsv"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/msv2" />
+
+                                    <TextView
+                                        android:id="@+id/txt_msv"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_toEndOf="@+id/txtMsv"
+                                        android:layout_toRightOf="@+id/txtMsv" />
+                                </RelativeLayout>
+
+
+                                <RelativeLayout
+                                    android:id="@+id/mmhRL"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:visibility="gone">
+
+                                    <TextView
+                                        android:id="@+id/txtMmh"
+                                        style="@style/txtSubjectExam"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:text="@string/mmh" />
+
+                                    <TextView
+                                        android:id="@+id/txt_code_subject"
+                                        style="@style/textCodeSubject"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginLeft="10dp"
+                                        android:layout_toEndOf="@+id/txtMmh"
+                                        android:layout_toRightOf="@+id/txtMmh" />
+
+                                </RelativeLayout>
+
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                    <LinearLayout
                         android:layout_width="wrap_content"
+                        android:layout_gravity="center"
                         android:layout_height="wrap_content"
-                        android:text="@string/mmh" />
+                        android:layout_marginRight="70dp"
+                        android:layout_marginBottom="2dp">
+                        <ImageView
+                            android:id="@+id/expandExam"
+                            android:layout_width="18dp"
+                            android:layout_height="18dp"
+                            android:src="@drawable/arrow_down" />
+                    </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/txt_code_subject"
-                        style="@style/txtSubjectExam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_toEndOf="@+id/txtMmh"
-                        android:layout_toRightOf="@+id/txtMmh" />
-                </RelativeLayout>
 
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
-
-                    <TextView
-                        android:id="@+id/txtRoomExam"
-                        style="@style/txtSubjectExam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/roomExam" />
-
-                    <TextView
-                        android:id="@+id/room_exam"
-                        style="@style/txtSubjectExam"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_toEndOf="@+id/txtRoomExam"
-                        android:layout_toRightOf="@+id/txtRoomExam" />
-                </RelativeLayout>
-            </LinearLayout>
-
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
     </android.support.v7.widget.CardView>
 

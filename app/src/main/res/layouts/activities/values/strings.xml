@@ -24,7 +24,7 @@
     <string name="date_exam">Ngày thi:\u0020</string>
     <string name="roomExam">Phòng thi:\u0020</string>
     <string name="typeExam">Hình thức thi:\u0020</string>
-    <string name="time_update_form">Cập nhật lúc:\u0020</string>
+    <string name="time_update_form">Cập nhật :\u0020</string>
     <string name="menu_outer_open">Tới thư mục</string>
     <string name="trash_v1">Cập nhật mã sinh viên để nhận thông báo điểm thi nhé</string>
     <string name="nullMsv">1502xxxxx</string>

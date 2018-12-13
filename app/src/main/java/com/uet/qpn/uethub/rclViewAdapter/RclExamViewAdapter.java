@@ -5,11 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.ResultReceiver;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.daimajia.numberprogressbar.NumberProgressBar;
@@ -47,8 +49,26 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
         holder.date_exam.setText(subjectGroup.getExamDay());
         holder.room_exam.setText(subjectGroup.getExamRoom());
         holder.type_exam.setText(subjectGroup.getTypeExam());
-
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(holder.itemView.findViewById(R.id.examTypeRL).getVisibility() == View.GONE) {
+                    holder.itemView.findViewById(R.id.examTypeRL).setVisibility(View.VISIBLE);
+                    holder.itemView.findViewById(R.id.subjectExamRL).setVisibility(View.VISIBLE);
+                    holder.itemView.findViewById(R.id.mmhRL).setVisibility(View.VISIBLE);
+                    ImageView imageView = holder.itemView.findViewById(R.id.expandExam);
+                    imageView.setImageResource(R.drawable.arrow_top);
+                }else {
+                    holder.itemView.findViewById(R.id.examTypeRL).setVisibility(View.GONE);
+                    holder.itemView.findViewById(R.id.subjectExamRL).setVisibility(View.GONE);
+                    holder.itemView.findViewById(R.id.mmhRL).setVisibility(View.GONE);
+                    ImageView imageView = holder.itemView.findViewById(R.id.expandExam);
+                    imageView.setImageResource(R.drawable.arrow_down);
+                }
+            }
+        });
     }
+
 
     @Override
     public int getItemCount() {
@@ -67,7 +87,7 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
         TextView date_exam;
         TextView room_exam;
         TextView type_exam;
-
+        CardView cardView;
         ViewHolder(View itemView) {
             super(itemView);
             txt_name_exam = itemView.findViewById(R.id.txt_name_exam);
@@ -77,6 +97,7 @@ public class RclExamViewAdapter extends RecyclerView.Adapter<RclExamViewAdapter.
             date_exam = itemView.findViewById(R.id.date_exam);
             room_exam = itemView.findViewById(R.id.room_exam);
             type_exam = itemView.findViewById(R.id.type_exam);
+            cardView = itemView.findViewById(R.id.cardViewExam);
         }
     }
 
