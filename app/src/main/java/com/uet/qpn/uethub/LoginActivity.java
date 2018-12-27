@@ -254,7 +254,11 @@ public class LoginActivity extends AppCompatActivity {
                 }
                 params.put("email", email);
                 params.put("fcm", firebaseID);
-                params.put("msv", saveUser.getMSV());
+                if (saveUser.getMSV().equals("")) {
+                    params.put("msv", String.valueOf(R.string.nullMsv));
+                } else {
+                    params.put("msv", saveUser.getMSV());
+                }
                 return params;
             }
         };
