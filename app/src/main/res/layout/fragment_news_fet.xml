@@ -5,15 +5,16 @@
     android:orientation="vertical">
 
 
-   <android.support.v4.widget.SwipeRefreshLayout
-       android:id="@+id/refresh_fet_news"
-       android:layout_width="match_parent"
-       android:layout_height="match_parent">
-       <android.support.v7.widget.RecyclerView
-           android:id="@+id/rclViewNewsFet"
-           android:background="@drawable/listgrad_opa"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent" />
-   </android.support.v4.widget.SwipeRefreshLayout>
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/refresh_fet_news"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rclViewNewsFet"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/listgrad_opa" />
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

@@ -33,11 +33,12 @@ public class SaveNew {
             }
         }
     }
+
     public List<NewsEntity> getAllNews() {
         Realm realm = Realm.getDefaultInstance();
         List<NewsEntity> newsEntities = new ArrayList<>();
         try {
-            Log.w("getAllNews","get all of new");
+            Log.w("getAllNews", "get all of new");
             RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();
             Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
             Iterator<NewsEntity> iterator = entities.iterator();
@@ -56,30 +57,26 @@ public class SaveNew {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            Collections.sort( newsEntities);
+            Collections.sort(newsEntities);
             realm.close();
         }
         return newsEntities;
     }
+
     public ArrayList<NewsEntity> getNewsByNewsName(String newsName) {
         Realm realm = Realm.getDefaultInstance();
         ArrayList<NewsEntity> newsEntities = new ArrayList<>();
         try {
-            Log.w("getNewsByNewsName","get news by newsName");
+            Log.w("getNewsByNewsName", "get news by newsName");
             RealmResults<NewsEntity> entities = realm.where(NewsEntity.class).findAll();
             Log.w("count", String.valueOf(realm.where(NewsEntity.class).count()));
             Iterator<NewsEntity> iterator = entities.iterator();
             while (iterator.hasNext()) {
                 NewsEntity entity = iterator.next();
-                if(entity.getNewsName().equals(newsName)) {
+                if (entity.getNewsName().equals(newsName)) {
                     NewsEntity newsEntity = new NewsEntity();
                     newsEntity.setTitle(entity.getTitle());
-                    if (entity.getDescription().length() > 100){
-                        newsEntity.setDescription((entity.getDescription().substring(0,100)));
-                    }else {
-                        newsEntity.setDescription(entity.getDescription());
-                    }
-
+                    newsEntity.setDescription(entity.getDescription());
                     newsEntity.setCategories(entity.getCategories());
                     newsEntity.setPublictime(entity.getPublictime());
                     newsEntity.setAuthor(entity.getAuthor());
@@ -91,7 +88,7 @@ public class SaveNew {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            Collections.sort( newsEntities);
+            Collections.sort(newsEntities);
             Log.w("size", String.valueOf(newsEntities.size()));
             if (realm != null && !realm.isClosed()) {
                 realm.close();
@@ -99,7 +96,6 @@ public class SaveNew {
         }
         return newsEntities;
     }
-
 
 
 }

@@ -1,8 +1,6 @@
 package com.uet.qpn.uethub.fragment.fragment_viewpager;
 
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,17 +19,12 @@ import com.android.volley.toolbox.StringRequest;
 import com.uet.qpn.uethub.Helper;
 import com.uet.qpn.uethub.R;
 import com.uet.qpn.uethub.config.Configuration;
-import com.uet.qpn.uethub.entity.Subject;
 import com.uet.qpn.uethub.entity.SubjectGroup;
-import com.uet.qpn.uethub.rclViewAdapter.RclExamResultViewAdapter;
 import com.uet.qpn.uethub.rclViewAdapter.RclExamViewAdapter;
-import com.uet.qpn.uethub.saveRealm.SaveSubject;
 import com.uet.qpn.uethub.saveRealm.SaveSubjectGroup;
 import com.uet.qpn.uethub.saveRealm.SaveUser;
 import com.uet.qpn.uethub.volleyGetDataNews.VolleySingleton;
 
-import java.lang.invoke.MethodType;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +98,6 @@ public class Fragment_noti_exam extends Fragment {
         };
         VolleySingleton.getInstance(getContext()).addToRequestQueue(stringRequest);
     }
-
 
 
 }

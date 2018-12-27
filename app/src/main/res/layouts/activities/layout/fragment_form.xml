@@ -12,12 +12,13 @@
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="@drawable/listgrad"
+        android:theme="@style/search"
         tools:targetApi="lollipop">
 
         <android.support.v7.widget.SearchView
             android:layout_width="match_parent"
-            app:queryHint="tim kiem"
-            android:layout_height="match_parent"></android.support.v7.widget.SearchView>
+            android:layout_height="match_parent"
+            app:queryHint="@string/title_form" />
 
     </android.support.v7.widget.Toolbar>
 

@@ -28,4 +28,7 @@
     <string name="menu_outer_open">Tới thư mục</string>
     <string name="trash_v1">Cập nhật mã sinh viên để nhận thông báo điểm thi nhé</string>
     <string name="nullMsv">1502xxxxx</string>
+    <string name="logout">Đăng xuất</string>
+    <string name="update">Cập nhật:</string>
+    <string name="monhoc">Mã môn học:</string>
 </resources>

@@ -38,12 +38,12 @@
 
     <style name="newsDescription">
         <item name="android:textColor">#504f4f</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="newsPublicTime">
         <item name="android:textColor">@color/black_gray</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">13sp</item>
     </style>
 
     <style name="textsNameExamResult">
@@ -92,4 +92,8 @@
         <item name="android:textColor">#383838</item>
     </style>
 
+    <style name="search">
+        <item name="android:editTextColor">@color/white</item>
+        <item name="android:textColorHint">@color/gray2</item>
+    </style>
 </resources>

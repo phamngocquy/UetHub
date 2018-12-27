@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:custom="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -9,26 +8,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="3dp"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="3dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="horizontal">
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.7">
+
                 <ImageView
                     android:layout_width="35dp"
                     android:layout_height="35dp"
                     android:layout_centerInParent="true"
-                    android:layout_marginLeft="20dp"
                     android:layout_marginStart="20dp"
+                    android:layout_marginLeft="20dp"
                     android:layout_marginTop="10dp"
-                    android:background="@drawable/pdf"
-                    />
+                    android:background="@drawable/pdf" />
             </RelativeLayout>
+
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -38,40 +39,44 @@
                 <TextView
                     android:id="@+id/txt_name_exam_result"
                     style="@style/textsNameExamResult"
-                    android:fontFamily="sans-serif-medium"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="3dp"/>
+                    android:layout_marginBottom="3dp" />
+
                 <TextView
-                    style="@style/txtSubjectExam"
                     android:id="@+id/mmhtxt"
-                    android:text="Mã môn học: "
+                    style="@style/txtSubjectExam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_name_exam_result" />
+                    android:layout_below="@+id/txt_name_exam_result"
+                    android:text="@string/monhoc" />
 
                 <TextView
                     android:id="@+id/txt_code_subject"
                     style="@style/textCodeSubject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@id/mmhtxt"
-                    android:layout_below="@+id/txt_name_exam_result" />
+                    android:layout_below="@+id/txt_name_exam_result"
+                    android:layout_toEndOf="@id/mmhtxt"
+                    android:layout_toRightOf="@id/mmhtxt" />
+
                 <TextView
-                    style="@style/txtSubjectExam"
                     android:id="@+id/updatetxt"
-                    android:text="Cập nhật: "
+                    style="@style/txtSubjectExam"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/txt_code_subject" />
+                    android:layout_below="@+id/txt_code_subject"
+                    android:text="@string/update" />
+
                 <TextView
                     android:id="@+id/txt_time_public"
                     style="@style/textCodeSubject"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/txt_code_subject"
-                    android:layout_toRightOf="@id/updatetxt"
-                    android:layout_marginBottom="6dp" />
+                    android:layout_marginBottom="6dp"
+                    android:layout_toEndOf="@id/updatetxt"
+                    android:layout_toRightOf="@id/updatetxt" />
 
                 <com.daimajia.numberprogressbar.NumberProgressBar
                     android:id="@+id/number_progress_bar"
@@ -88,10 +93,11 @@
                 android:layout_weight="0.5">
 
                 <Button
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_centerInParent="true"
                     android:background="@drawable/arrow"
+                    android:paddingStart="80dp"
                     android:paddingLeft="80dp" />
             </RelativeLayout>
 

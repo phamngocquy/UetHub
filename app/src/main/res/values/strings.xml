@@ -17,5 +17,8 @@
     <!--facebook setup SDK-->
     <string name="facebook_app_id">817344528473651</string>
     <string name="fb_login_protocol_scheme">fb817344528473651</string>
+    <string name="title_result_frag">Các môn học đã có điểm</string>
+    <string name="title_exam_schedule">Lịch thi học kỳ</string>
+    <string name="title_form">tìm kiếm</string>
 
 </resources>
